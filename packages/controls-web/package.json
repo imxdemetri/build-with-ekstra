@@ -1,11 +1,14 @@
 {
   "name": "@ekstra/controls-web",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "description": "Reference web control profiles for Ekstra.OS",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],

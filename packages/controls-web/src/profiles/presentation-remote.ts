@@ -4,6 +4,8 @@ export const presentationRemote: ControlProfile = {
   id: "presentation.remote",
   title: "Presentation Remote",
   description: "Slide and presentation control profile with simpler directional intent.",
+  category: "presentation",
+  stability: "stable",
   motionAxis: {
     horizontal: "yaw",
     vertical: "tilt"

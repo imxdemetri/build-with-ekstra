@@ -53,6 +53,13 @@ deploy/docker/         Self-hosted runtime deployment manifests
 - `web-phone-pointer`
 - `presentation-remote`
 - `orbit-3d`
+- `kiosk-nav`
+- `media-remote`
+- `accessibility-nav`
+- `doc-scroll`
+- `model-inspect`
+- `relaxed-pointer`
+- `pointer-precision`
 
 These are control profiles and starter experiences built on top of the Ekstra runtime.
 They are not the runtime itself.
@@ -64,3 +71,10 @@ For developers to build today, one of these must exist:
 - published Ekstra runtime container images
 
 Until runtime images are published, the hosted sandbox path is the default public onboarding lane.
+
+## Publishing Surfaces
+
+- GitHub Pages: docs and public landing site
+- npm: `@ekstra/controls-web`
+- GHCR: Ekstra runtime images
+- Railway: hosted sandbox runtime

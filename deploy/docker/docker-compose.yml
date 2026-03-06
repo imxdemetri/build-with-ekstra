@@ -1,34 +1,125 @@
 services:
   motiond:
-    image: ghcr.io/imxdemetri/ekstra-motiond:${EKSTRA_TAG:-latest}
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
     restart: unless-stopped
+    command: ["python", "-m", "ekstra_os.tools.motiond", "--host", "0.0.0.0", "--port", "8765"]
     ports:
       - "8765:8765"
 
   ws-bridge:
-    image: ghcr.io/imxdemetri/ekstra-ws-bridge:${EKSTRA_TAG:-latest}
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
     restart: unless-stopped
+    command:
+      [
+        "python",
+        "-m",
+        "ekstra_os.tools.ws_bridge",
+        "--runtime-host",
+        "motiond",
+        "--runtime-port",
+        "8765",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8787",
+        "--topic",
+        "*"
+      ]
     depends_on:
       - motiond
-    environment:
-      EKSTRA_RUNTIME_HOST: motiond
-      EKSTRA_RUNTIME_PORT: "8765"
+    ports:
+      - "8787:8787"
 
   phone-imu-provider:
-    image: ghcr.io/imxdemetri/ekstra-phone-imu-provider:${EKSTRA_TAG:-latest}
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
     restart: unless-stopped
+    command:
+      [
+        "python",
+        "-m",
+        "ekstra_os.tools.phone_imu_provider",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8090",
+        "--daemon-host",
+        "motiond",
+        "--daemon-port",
+        "8765",
+        "--provider-id",
+        "phone-imu",
+        "--actor-id",
+        "actor-1"
+      ]
     depends_on:
       - motiond
-    environment:
-      EKSTRA_RUNTIME_HOST: motiond
-      EKSTRA_RUNTIME_PORT: "8765"
+    ports:
+      - "8090:8090"
+
+  detection-pipeline:
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    command:
+      [
+        "python",
+        "-m",
+        "ekstra_os.tools.run_detection_pipeline",
+        "--host",
+        "motiond",
+        "--port",
+        "8765",
+        "--duration",
+        "86400",
+        "--gesture-specs",
+        "ekstra_os/surface_packs/builtin/web_phone_pointer_demo/gestures.json",
+        "--detector-configs",
+        "examples/web_phone_pointer_demo/detectors.json"
+      ]
+    depends_on:
+      - motiond
+
+  surface-pack:
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    command:
+      [
+        "python",
+        "-m",
+        "ekstra_os.tools.run_surface_pack",
+        "--pack",
+        "web_phone_pointer_demo",
+        "--host",
+        "motiond",
+        "--port",
+        "8765",
+        "--duration",
+        "86400",
+        "--bootstrap-focus"
+      ]
+    depends_on:
+      - motiond
 
   frontdoor:
-    image: ghcr.io/imxdemetri/ekstra-frontdoor:${EKSTRA_TAG:-latest}
+    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
     restart: unless-stopped
+    command:
+      [
+        "python",
+        "-m",
+        "ekstra_os.tools.web_phone_pointer_frontdoor",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8088",
+        "--root",
+        "/app",
+        "--proxy-host",
+        "phone-imu-provider",
+        "--proxy-port",
+        "8090"
+      ]
     depends_on:
       - ws-bridge
       - phone-imu-provider
     ports:
-      - "80:80"
-      - "443:443"
+      - "8088:8088"

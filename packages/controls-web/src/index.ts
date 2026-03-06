@@ -1,4 +1,11 @@
-export type { ControlProfile, AxisMode, ClickMode } from "./types.js";
+export type { ControlProfile, AxisMode, ClickMode, ProfileStability } from "./types.js";
 export { pointerBasic } from "./profiles/pointer-basic.js";
+export { pointerPrecision } from "./profiles/pointer-precision.js";
 export { presentationRemote } from "./profiles/presentation-remote.js";
 export { orbit3d } from "./profiles/orbit-3d.js";
+export { kioskNav } from "./profiles/kiosk-nav.js";
+export { mediaRemote } from "./profiles/media-remote.js";
+export { accessibilityNav } from "./profiles/accessibility-nav.js";
+export { docScroll } from "./profiles/doc-scroll.js";
+export { modelInspect } from "./profiles/model-inspect.js";
+export { relaxedPointer } from "./profiles/relaxed-pointer.js";

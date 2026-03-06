@@ -2,13 +2,12 @@
 
 This folder defines the target self-hosted runtime shape for public developers.
 
-## Required published images
+## Required published image
 
-Before this path works, publish container images for:
-- `ghcr.io/imxdemetri/ekstra-motiond`
-- `ghcr.io/imxdemetri/ekstra-ws-bridge`
-- `ghcr.io/imxdemetri/ekstra-phone-imu-provider`
-- `ghcr.io/imxdemetri/ekstra-frontdoor`
+Before this path works, publish:
+- `ghcr.io/imxdemetri/ekstra-runtime`
+
+The first public deployment uses one shared runtime image with different service start commands.
 
 ## What this deployment gives a developer
 
