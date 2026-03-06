@@ -1,51 +1,76 @@
 # Deployment Modes
 
-## Hosted Sandbox
+Ekstra supports two public developer modes today.
+
+## 1. Hosted Sandbox
 
 Best for:
-- first-time developers
-- demos
-- quick integration trials
 
-Required from Ekstra:
-- runtime WebSocket URL
-- phone ingest URL
-- browser frontdoor URL
+- first-run evaluations
+- product design validation
+- demos and lightweight prototypes
+- teams that want to test motion UX before operating infrastructure
 
-Developer app configuration:
+What Ekstra provides:
 
-```text
-EKSTRA_RUNTIME_WS_URL=wss://example.ekstra.run/ws
-EKSTRA_INGEST_URL=https://example.ekstra.run/api/phone-imu/ingest
-EKSTRA_CONTROLLER_URL=https://example.ekstra.run/controller
-```
+- browser-facing demo/frontdoor URL
+- WebSocket bridge URL
+- phone ingest and health endpoints
 
-## Self-hosted Docker
+What you provide:
+
+- your own front-end code
+- a local static server or hosted web app
+- a phone with a browser
+
+Current public sandbox values are documented in [`hosted-sandbox.md`](hosted-sandbox.md).
+
+## 2. Self-Hosted Docker
 
 Best for:
+
 - production pilots
-- private data flows
-- low-latency browser and device integration
+- internal tools and private networks
+- latency-sensitive experiences
+- teams that need to own runtime topology and upgrades
 
-Required services:
+Self-hosted requires:
+
 - `motiond`
 - `ws_bridge`
 - `phone_imu_provider`
-- frontdoor or reverse proxy
+- a public-facing frontdoor or reverse proxy
 
-See [`../deploy/docker/docker-compose.yml`](../deploy/docker/docker-compose.yml).
+See [`self-hosted-docker.md`](self-hosted-docker.md) and [`../deploy/docker/`](../deploy/docker/).
 
-## What GitHub does and does not do
+## Choosing the Right Mode
+
+Use hosted sandbox if:
+
+- you need to prove the interaction model quickly
+- you are only changing front-end logic
+- you do not yet need private infrastructure
+
+Use self-hosted if:
+
+- you need stable internal endpoints
+- you are integrating additional providers or connectors
+- you need environment control, logs, and deployment ownership
+
+## What GitHub Does and Does Not Do
 
 GitHub is used for:
-- source
-- docs
-- CI
-- package publishing
-- container publishing
+
+- documentation
+- starter code
+- public package source
+- CI workflows
+- Pages
 
 GitHub is not the runtime host.
-The runtime must run on either:
+
+Ekstra runtime services must run on:
+
 - Ekstra-hosted infrastructure
-- a developer machine
-- a VM or cloud service with Docker
+- your own machine
+- your own Docker host or cloud environment

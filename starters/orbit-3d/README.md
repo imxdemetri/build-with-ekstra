@@ -1,13 +1,17 @@
 # Orbit 3D Starter
 
-Status: planned starter
+Status: planned reference starter.
 
-Purpose:
-- object orbit
-- zoom and inspect
-- 3D item viewing and modeling navigation
+Target use case:
 
-Runtime requirements:
-- `EKSTRA_RUNTIME_WS_URL`
-- `EKSTRA_INGEST_URL`
-- `EKSTRA_CONTROLLER_URL`
+- orbit and inspect 3D content
+- motion-driven camera navigation
+- model viewing and design review
+
+Planned runtime contract:
+
+- browser connection to `ws_bridge`
+- phone IMU ingest over HTTPS
+- orbit-specific control profile from `@ekstra/controls-web`
+
+This starter is part of the public roadmap surface, but it is not yet a supported runnable starter.

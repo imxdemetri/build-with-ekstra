@@ -1,21 +1,41 @@
 # Repo Layout
 
+This repository is intentionally narrower than the private Ekstra runtime source tree.
+
 ## `docs/`
 
-Public documentation only.
+Public developer documentation.
+
+Use this first if you are evaluating Ekstra or integrating it into a product.
 
 ## `starters/`
 
-Supported starter apps that developers can clone and adapt.
+Supported starter applications.
+
+These are the fastest way to understand the product and integration flow end to end.
 
 ## `packages/controls-web/`
 
-Reusable control profile package for browser-based motion interactions.
+Browser-oriented control-profile package.
+
+This is where reusable motion interaction modes live, such as pointer, presentation, and orbit behavior.
 
 ## `examples/reference/`
 
-Reference examples that show supported integration patterns.
+Reference integrations that document supported patterns without being the primary onboarding lane.
 
 ## `deploy/docker/`
 
-Official self-hosted runtime manifests.
+Official self-hosted runtime manifests and deployment guidance.
+
+## `site/`
+
+GitHub Pages landing site for public documentation and navigation.
+
+## What Does Not Live Here
+
+This repo does not contain:
+
+- the full internal Ekstra runtime workbench
+- private roadmap and planning material
+- internal-only experimental tooling

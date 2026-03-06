@@ -8,13 +8,32 @@ body {
 }
 
 .shell {
-  max-width: 1040px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 40px 20px 80px;
 }
 
 .hero {
   margin-bottom: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.brand-mark {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+}
+
+.brand-copy {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 .badge {
@@ -37,7 +56,7 @@ h1 {
 }
 
 .lede {
-  max-width: 56ch;
+  max-width: 58ch;
   font-size: 18px;
   line-height: 1.55;
   color: #5a6974;
@@ -50,6 +69,10 @@ h1 {
   margin-top: 18px;
 }
 
+.actions.compact {
+  margin-top: 14px;
+}
+
 .actions a {
   padding: 10px 14px;
   border-radius: 999px;
@@ -59,13 +82,28 @@ h1 {
   text-decoration: none;
 }
 
-.grid {
+.intro,
+.grid,
+.docs-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  margin-bottom: 16px;
 }
 
-.card {
+.intro {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.docs-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card,
+.panel {
   padding: 18px;
   border-radius: 24px;
   background: rgba(255, 251, 245, 0.88);
@@ -73,17 +111,26 @@ h1 {
   box-shadow: 0 22px 50px rgba(23, 32, 39, 0.1);
 }
 
-.card h2 {
+.card h2,
+.panel h2 {
   margin-top: 0;
 }
 
-.card ul {
+.card ul,
+.panel ul,
+.panel ol {
   margin: 0;
   padding-left: 18px;
 }
 
+a {
+  color: #0b7258;
+}
+
 @media (max-width: 860px) {
-  .grid {
+  .intro,
+  .grid,
+  .docs-grid {
     grid-template-columns: 1fr;
   }
 }

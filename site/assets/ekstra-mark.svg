@@ -1,0 +1,38 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgLeft" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(140 420) rotate(43) scale(480 520)">
+      <stop stop-color="#F4F1FF" stop-opacity="0.9"/>
+      <stop offset="0.42" stop-color="#72BDF7" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgRight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720 520) rotate(24) scale(520 560)">
+      <stop stop-color="#FFB1DA" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FF4DE8" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mark" x1="170" y1="290" x2="860" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00B5FF"/>
+      <stop offset="0.45" stop-color="#4554FF"/>
+      <stop offset="0.75" stop-color="#D431FF"/>
+      <stop offset="1" stop-color="#FF5BEA"/>
+    </linearGradient>
+    <filter id="glow" x="40" y="60" width="920" height="880" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="56"/>
+    </filter>
+    <mask id="cutout">
+      <rect width="1000" height="1000" fill="white"/>
+      <path d="M260 417C300 330 365 278 452 278C540 278 606 332 668 417H260Z" fill="black"/>
+      <path d="M248 533H676C607 611 558 662 515 692C474 721 430 723 389 692C332 650 286 593 248 533Z" fill="black"/>
+    </mask>
+  </defs>
+
+  <rect width="1000" height="1000" fill="#000000"/>
+  <circle cx="170" cy="432" r="340" fill="url(#bgLeft)"/>
+  <circle cx="650" cy="535" r="395" fill="url(#bgRight)"/>
+
+  <g filter="url(#glow)">
+    <path d="M120 500C120 301 259 158 453 158C613 158 705 249 770 319L904 455C922 473 922 527 904 545L770 681C705 751 613 842 453 842C259 842 120 699 120 500Z" fill="url(#mark)" opacity="0.95"/>
+  </g>
+
+  <path mask="url(#cutout)" d="M120 500C120 301 259 158 453 158C613 158 705 249 770 319L904 455C922 473 922 527 904 545L770 681C705 751 613 842 453 842C259 842 120 699 120 500Z" fill="url(#mark)"/>
+</svg>

@@ -4,25 +4,59 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Build with Ekstra</title>
+    <link rel="icon" href="./assets/ekstra-mark.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="shell">
       <section class="hero">
-        <div class="badge">Ekstra.OS developer surface</div>
-        <h1>Build motion-native products with Ekstra.</h1>
+        <div class="brand">
+          <img src="./assets/ekstra-mark.svg" alt="Ekstra logo" class="brand-mark" />
+          <div class="brand-copy">Ekstra</div>
+        </div>
+        <div class="badge">Public Developer Surface</div>
+        <h1>Build motion-native web products with Ekstra.</h1>
         <p class="lede">
-          Start with hosted or self-hosted runtime endpoints, use supported starter apps,
-          and choose from a growing library of browser control profiles.
+          Ekstra gives developers a motion runtime, browser integration path, and reusable control profiles for products controlled by phones and other motion sources.
         </p>
         <div class="actions">
           <a href="https://github.com/imxdemetri/build-with-ekstra">GitHub Repo</a>
-          <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Start Here</a>
-          <a href="https://github.com/imxdemetri/build-with-ekstra/tree/main/packages/controls-web">Controls Package</a>
+          <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Quickstart</a>
+          <a href="https://github.com/imxdemetri/build-with-ekstra/wiki">Wiki</a>
+          <a href="https://frontdoor-production.up.railway.app/examples/web_phone_pointer_demo/index.html?wsUrl=wss%3A%2F%2Fwsbridge-production-2ec6.up.railway.app%2Fws">Live Demo</a>
         </div>
       </section>
 
+      <section class="intro">
+        <article class="panel">
+          <h2>Available now</h2>
+          <ul>
+            <li>Hosted Ekstra sandbox for evaluation and prototyping</li>
+            <li>`web-phone-pointer` starter with phone browser control</li>
+            <li>Public docs, GitHub wiki, and Pages site</li>
+            <li>`@ekstra/controls-web` package scaffold with ten profile definitions</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Developer workflow</h2>
+          <ol>
+            <li>Clone the repo</li>
+            <li>Serve `starters/web-phone-pointer` locally</li>
+            <li>Point it at the hosted sandbox</li>
+            <li>Scan the QR code with a phone and start streaming motion</li>
+          </ol>
+        </article>
+      </section>
+
       <section class="grid">
+        <article class="card">
+          <h2>Runtime Model</h2>
+          <p>
+            Ekstra is not just a static library. The runtime is a set of services:
+            <code>motiond</code>, <code>ws_bridge</code>, <code>phone_imu_provider</code>,
+            and a browser-facing frontdoor.
+          </p>
+        </article>
         <article class="card">
           <h2>Starters</h2>
           <ul>
@@ -46,13 +80,29 @@
             <li>pointer.relaxed</li>
           </ul>
         </article>
-        <article class="card">
-          <h2>Deployment</h2>
+      </section>
+
+      <section class="docs-grid">
+        <article class="panel">
+          <h2>Documentation</h2>
+          <ul>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Start Here</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/concepts.md">Core Concepts</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/architecture.md">Architecture</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/hosted-sandbox.md">Hosted Sandbox</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/self-hosted-docker.md">Self-Hosted Docker</a></li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Hosted Sandbox</h2>
           <p>
-            Run Ekstra on hosted infrastructure or self-host it with Docker.
-            The runtime always includes <code>motiond</code>, <code>ws_bridge</code>,
-            <code>phone_imu_provider</code>, and a browser-facing frontdoor.
+            The current public sandbox is intended for evaluation and prototype work. It is the fastest path for developers who want to integrate Ekstra without first operating the runtime themselves.
           </p>
+          <div class="actions compact">
+            <a href="https://frontdoor-production.up.railway.app/examples/phone_imu_controller/index.html">Phone Controller</a>
+            <a href="https://frontdoor-production.up.railway.app/api/phone-imu/health">Ingest Health</a>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/tree/main/starters/web-phone-pointer">Starter Source</a>
+          </div>
         </article>
       </section>
     </main>

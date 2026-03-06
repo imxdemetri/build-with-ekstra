@@ -1,13 +1,17 @@
 # Presentation Remote Starter
 
-Status: planned starter
+Status: planned reference starter.
 
-Purpose:
+Target use case:
+
 - slide navigation
-- pointer mode
-- room-friendly presentation controls
+- motion-driven pointer mode
+- presentation control from a phone without installing an app
 
-Runtime requirements:
-- `EKSTRA_RUNTIME_WS_URL`
-- `EKSTRA_INGEST_URL`
-- `EKSTRA_CONTROLLER_URL`
+Planned runtime contract:
+
+- browser connection to `ws_bridge`
+- phone IMU ingest over HTTPS
+- reusable presentation control profile from `@ekstra/controls-web`
+
+This starter is documented publicly so developers can see the intended product direction, but it is not yet a supported runnable lane.

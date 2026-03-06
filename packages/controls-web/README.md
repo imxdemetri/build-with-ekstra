@@ -1,8 +1,17 @@
 # `@ekstra/controls-web`
 
-Reference web control profiles for Ekstra-based browser experiences.
+`@ekstra/controls-web` is the browser control-profile package for Ekstra-powered web experiences.
 
-Initial profiles:
+It defines reusable interaction defaults for motion-driven products such as:
+
+- pointers
+- presentation remotes
+- kiosk navigation
+- document scroll
+- model inspection
+
+## Current Profiles
+
 - `pointerBasic`
 - `pointerPrecision`
 - `presentationRemote`
@@ -14,5 +23,20 @@ Initial profiles:
 - `modelInspect`
 - `relaxedPointer`
 
-This package defines browser-facing control profile metadata and defaults.
-It does not replace the Ekstra runtime or browser bridge.
+## What This Package Is
+
+This package contains:
+
+- control-profile metadata
+- profile defaults
+- a stable import surface for browser integrations
+
+## What This Package Is Not
+
+This package does not replace:
+
+- the Ekstra runtime
+- the browser bridge
+- the phone IMU ingest service
+
+It is intended to sit on top of the runtime and help developers standardize motion interaction behavior in their own products.
