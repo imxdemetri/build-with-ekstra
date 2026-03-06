@@ -1,0 +1,15 @@
+export type ClickMode = "runtime" | "gesture" | "wrist_snap";
+
+export type AxisMode = "tilt" | "yaw" | "roll" | "mixed";
+
+export type ControlProfile = {
+  id: string;
+  title: string;
+  description: string;
+  motionAxis: {
+    horizontal: AxisMode;
+    vertical: AxisMode;
+  };
+  clickMode: ClickMode;
+  notes: string[];
+};

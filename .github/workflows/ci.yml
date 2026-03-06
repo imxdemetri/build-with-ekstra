@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  controls-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        working-directory: packages/controls-web
+        run: npm ci
+
+      - name: Typecheck controls package
+        working-directory: packages/controls-web
+        run: npm run typecheck
+
+  repo-shape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify public repo structure
+        shell: bash
+        run: |
+          test -d docs
+          test -d starters
+          test -d packages/controls-web
+          test -d examples/reference
+          test -d deploy/docker

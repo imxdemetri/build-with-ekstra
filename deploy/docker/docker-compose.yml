@@ -1,0 +1,34 @@
+services:
+  motiond:
+    image: ghcr.io/imxdemetri/ekstra-motiond:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+
+  ws-bridge:
+    image: ghcr.io/imxdemetri/ekstra-ws-bridge:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      - motiond
+    environment:
+      EKSTRA_RUNTIME_HOST: motiond
+      EKSTRA_RUNTIME_PORT: "8765"
+
+  phone-imu-provider:
+    image: ghcr.io/imxdemetri/ekstra-phone-imu-provider:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      - motiond
+    environment:
+      EKSTRA_RUNTIME_HOST: motiond
+      EKSTRA_RUNTIME_PORT: "8765"
+
+  frontdoor:
+    image: ghcr.io/imxdemetri/ekstra-frontdoor:${EKSTRA_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      - ws-bridge
+      - phone-imu-provider
+    ports:
+      - "80:80"
+      - "443:443"

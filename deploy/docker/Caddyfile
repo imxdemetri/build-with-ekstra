@@ -1,0 +1,15 @@
+:80 {
+  encode gzip
+
+  handle_path /api/phone-imu/* {
+    reverse_proxy phone-imu-provider:8090
+  }
+
+  handle_path /ws* {
+    reverse_proxy ws-bridge:8787
+  }
+
+  handle {
+    reverse_proxy frontdoor:8088
+  }
+}
