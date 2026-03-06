@@ -133,6 +133,9 @@ site/                  GitHub Pages landing site
 - Support: [`SUPPORT.md`](SUPPORT.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Telegram: `https://t.me/ekstraai`
+- X: `https://x.com/ekstraai`
+- Discord: coming soon
 
 ## Status
 

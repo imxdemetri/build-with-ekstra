@@ -82,6 +82,16 @@ h1 {
   text-decoration: none;
 }
 
+.coming-soon {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 32, 39, 0.12);
+  background: rgba(255, 255, 255, 0.58);
+  color: #5a6974;
+}
+
 .intro,
 .grid,
 .docs-grid {

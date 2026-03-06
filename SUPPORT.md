@@ -7,6 +7,12 @@
 - GitHub Pages: `https://imxdemetri.github.io/build-with-ekstra/`
 - Wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
 
+## Community
+
+- Telegram: `https://t.me/ekstraai`
+- X: `https://x.com/ekstraai`
+- Discord: coming soon
+
 ## When To Open An Issue
 
 Open a GitHub issue for:
