@@ -1,0 +1,9 @@
+[
+  {
+    "type": "impulse",
+    "params": {
+      "acceleration_threshold": 5.0,
+      "cooldown_seconds": 0.28
+    }
+  }
+]

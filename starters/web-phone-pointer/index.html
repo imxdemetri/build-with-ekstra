@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ekstra.OS Phone Pointer Demo</title>
+    <style>
+      :root{--bg:#f3ede1;--ink:#1b2228;--muted:#5f6b75;--line:rgba(27,34,40,.12);--panel:rgba(255,252,246,.9);--accent:#0d8968;--shadow:0 24px 60px rgba(27,34,40,.14)}
+      *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:var(--ink);font-family:"Avenir Next","Segoe UI",Tahoma,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,173,.35),transparent 28%),linear-gradient(180deg,#fbf7ef 0%,var(--bg) 56%,#e8dfd0 100%)}
+      .shell{max-width:1140px;margin:0 auto;padding:28px 20px 120px}.hero,.layout{display:grid;gap:18px}.hero{grid-template-columns:minmax(0,1.3fr) minmax(320px,.9fr)}.layout{grid-template-columns:minmax(0,1fr) 320px;margin-top:22px}
+      .panel{background:var(--panel);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+      .copy,.pair,.surface,.sidebar{padding:22px}.eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(13,137,104,.09);border:1px solid rgba(13,137,104,.18);color:#0b6e54;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+      h1{margin:16px 0 10px;font-size:clamp(40px,6vw,72px);line-height:.94;letter-spacing:-.05em}.lede,.sub,.card p,.section p,.pair-note,.log{color:var(--muted)}.lede{max-width:58ch;font-size:17px;line-height:1.55;margin:0 0 18px}
+      .pill-row,.toolbar,.cta{display:flex;flex-wrap:wrap;gap:10px}.pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(27,34,40,.1);background:rgba(255,255,255,.78);font-size:13px}.ok{color:#0b6e54;background:rgba(13,137,104,.1);border-color:rgba(13,137,104,.22)}.warn{color:#8d3f1d;background:rgba(201,91,47,.1);border-color:rgba(201,91,47,.22)}
+      button,a.action{border:1px solid rgba(27,34,40,.12);border-radius:999px;padding:10px 15px;background:rgba(255,255,255,.82);color:var(--ink);font:inherit;text-decoration:none;cursor:pointer}.mode-on{background:rgba(13,137,104,.12);border-color:rgba(13,137,104,.32);color:#0b6e54}
+      .mini-grid,.card-grid{display:grid;gap:12px}.mini-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:18px}.mini,.card,.section,details,.stat,.story{border:1px solid rgba(27,34,40,.08);border-radius:18px;background:rgba(255,255,255,.76)}
+      .mini,.stat,.story{padding:14px}.mini strong,.stat strong{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.mini span,.stat span{display:block;margin-top:8px}
+      .pair-grid{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}.qr{padding:12px;border-radius:20px;background:linear-gradient(180deg,#fffdf8 0%,#f4ebdd 100%);border:1px solid rgba(27,34,40,.08)}.qr img{display:block;width:100%;aspect-ratio:1;border-radius:14px;background:#fff}
+      .field{margin-bottom:12px}.field label{display:block;margin-bottom:6px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.field input{width:100%;padding:11px 12px;border-radius:14px;border:1px solid rgba(27,34,40,.12);background:rgba(255,255,255,.82);font:inherit}
+      .surface-top{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}.section{padding:20px;margin-bottom:16px}.section h2,.section h3{margin:0 0 10px}.card-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px}.card{padding:18px}.card h4{margin:0 0 8px}.card .meta{font-size:12px;color:#0b6e54;text-transform:uppercase;letter-spacing:.08em}
+      .sidebar{position:sticky;top:18px}.story strong{display:block;font-size:26px;line-height:1}.story p{margin:10px 0 0}.stats{display:grid;gap:10px;margin-top:14px}.stat span{font-size:20px}.log{margin-top:14px;padding:12px;min-height:220px;max-height:320px;overflow:auto;border-radius:18px;background:#10181d;color:#befad8;font:12px/1.5 Consolas,monospace}.debug-state{min-height:180px;max-height:260px;color:#dcecf5}
+      details{padding:14px 16px} summary{cursor:pointer;font-weight:600} details p{margin:10px 0 0} [data-ekstra-clickable].ekstra-hover,button.ekstra-hover,a.ekstra-hover,summary.ekstra-hover{outline:3px solid rgba(13,137,104,.34);outline-offset:3px}
+      .cursor{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:999px;pointer-events:none;z-index:40;transform:translate(-999px,-999px);background:radial-gradient(circle at 35% 35%,#fff 0%,#f7fef9 18%,#2fb88d 19%,#0f7f61 100%);box-shadow:0 12px 22px rgba(15,127,97,.35)}.cursor.click{box-shadow:0 0 0 12px rgba(47,184,141,.14),0 16px 28px rgba(15,127,97,.42)}
+      .cursor-label{position:absolute;left:32px;top:-4px;padding:6px 9px;border-radius:999px;background:rgba(16,24,29,.92);color:#eafaf3;font-size:12px;white-space:nowrap}
+      .zone{position:fixed;left:18px;right:18px;height:90px;border-radius:22px;border:1px dashed transparent;pointer-events:none;z-index:10;opacity:0}.zone.active{opacity:1}.zone.top{top:14px}.zone.bottom{bottom:14px}.zone.up.active{background:rgba(13,137,104,.08);border-color:rgba(13,137,104,.2)}.zone.down.active{background:rgba(201,91,47,.09);border-color:rgba(201,91,47,.2)}
+      @media (max-width:980px){.hero,.layout,.pair-grid,.surface-top,.mini-grid,.card-grid{grid-template-columns:1fr}.sidebar{position:static}}
+    </style>
+  </head>
+  <body>
+    <div id="zone-up" class="zone top up"></div>
+    <div id="zone-down" class="zone bottom down"></div>
+    <div id="cursor" class="cursor"><div id="cursor-label" class="cursor-label">idle</div></div>
+    <div class="shell">
+      <section class="hero">
+        <div class="panel copy">
+          <div class="eyebrow">Ekstra.OS live website demo</div>
+          <h1>Scan, point, scroll, flick.</h1>
+          <p class="lede">The phone browser streams IMU data into Ekstra.OS. Pointing the phone steers a live cursor, pitching it up or down moves vertically, hovering the top or bottom edge scrolls, and a quick inward wrist snap clicks the hovered element while the opposite snap acts like a right click.</p>
+          <div class="mini-grid">
+            <div class="mini"><strong>Pointer</strong><span>Driven from <code>motion.samples</code> over the browser bridge.</span></div>
+            <div class="mini"><strong>Click</strong><span>Runs through detection, composition, routing, and <code>surface.actions</code>.</span></div>
+            <div class="mini"><strong>No app install</strong><span>The phone uses the browser-only IMU controller page.</span></div>
+          </div>
+          <div class="pill-row" style="margin-top:16px">
+            <span id="ws-pill" class="pill warn">ws: disconnected</span>
+            <span id="sample-pill" class="pill">samples: waiting</span>
+            <span id="action-pill" class="pill">actions: idle</span>
+          </div>
+          <div class="toolbar" style="margin-top:16px">
+            <button id="center">Center Pointer</button>
+            <button id="copy-phone">Copy Phone Link</button>
+            <button id="hand-left" class="mode-on">Left Hand</button>
+            <button id="hand-right">Right Hand</button>
+            <a class="action" href="#lab">Jump to test area</a>
+          </div>
+        </div>
+        <aside class="panel pair">
+          <h2>Pair the phone</h2>
+          <div class="pair-grid">
+            <div class="qr">
+              <img id="qr" alt="Phone pairing QR code" />
+              <div class="sub" style="margin-top:10px;font-size:12px">Scan to open the phone IMU controller page.</div>
+            </div>
+            <div>
+              <div class="field"><label for="controller-base">Phone controller page</label><input id="controller-base" /></div>
+              <div class="field"><label for="ingest-endpoint">Phone ingest endpoint</label><input id="ingest-endpoint" /></div>
+              <div class="field"><label for="phone-url">Generated phone URL</label><input id="phone-url" readonly /></div>
+              <p class="pair-note">Android usually works on local HTTP. iPhone Safari often needs HTTPS for motion permissions, so use an HTTPS tunnel for the controller and ingest URLs when testing on iPhone.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+      <section class="layout">
+        <main class="panel surface">
+          <div class="surface-top">
+            <div class="mini"><strong>1. Scan</strong><span>Use the QR code to open the controller page on the phone.</span></div>
+            <div class="mini"><strong>2. Grant motion</strong><span>Allow motion access, then start streaming.</span></div>
+            <div class="mini"><strong>3. Navigate</strong><span>Point to move, hover edges to scroll, snap inward to click.</span></div>
+          </div>
+          <section class="section">
+            <h2>Motion storefront</h2>
+            <p>This surface is intentionally simple for validating the current end-to-end flow. The cards below are clickable, and the page is long enough to force real scrolling.</p>
+            <div class="card-grid">
+              <article class="card" data-ekstra-clickable data-demo-card="living-room" data-click-label="Living Room Scene"><div class="meta">Scene</div><h4>Living Room Scene</h4><p>Warm lighting, low music, and a subtle evening gradient.</p><button type="button" data-ekstra-clickable data-demo-action="living-room">Preview scene</button></article>
+              <article class="card" data-ekstra-clickable data-demo-card="cinema-mode" data-click-label="Cinema Mode"><div class="meta">Scene</div><h4>Cinema Mode</h4><p>Dim everything, lower distractions, and bring media controls forward.</p><button type="button" data-ekstra-clickable data-demo-action="cinema-mode">Start cinema mode</button></article>
+              <article class="card" data-ekstra-clickable data-demo-card="quiet-focus" data-click-label="Quiet Focus"><div class="meta">Profile</div><h4>Quiet Focus</h4><p>Mute interruptions and favor precise pointer travel.</p><button type="button" data-ekstra-clickable data-demo-action="quiet-focus">Enable focus profile</button></article>
+              <article class="card" data-ekstra-clickable data-demo-card="party-stack" data-click-label="Party Stack"><div class="meta">Profile</div><h4>Party Stack</h4><p>Fast clicks, loose damping, brighter color, punchier feedback.</p><button type="button" data-ekstra-clickable data-demo-action="party-stack">Apply stack</button></article>
+            </div>
+          </section>
+          <section class="section">
+            <h3>Feature walkthrough</h3>
+            <p>The content below is long on purpose so you can validate edge-scrolling with the phone cursor. Point the phone left or right to steer, pitch it up or down for vertical motion, then use a quick inward or outward wrist snap for primary or secondary click.</p>
+            <div class="cta" style="margin-top:16px">
+              <a href="#lab" class="action" data-ekstra-clickable data-click-label="Jump to Lab">Go to Lab</a>
+              <a href="#faq" class="action" data-ekstra-clickable data-click-label="Jump to FAQ">Open FAQ</a>
+              <button type="button" data-ekstra-clickable data-demo-action="bookmark">Bookmark current state</button>
+            </div>
+          </section>
+          <section id="lab" class="section">
+            <h3>Interactive lab</h3>
+            <p>Use the phone cursor to trigger the widgets below. Each click writes a log entry so you can verify the website is responding to runtime actions.</p>
+            <div class="card-grid">
+              <article class="card" data-ekstra-clickable data-demo-card="timeline" data-click-label="Timeline card"><div class="meta">Widget</div><h4>Timeline scrubber</h4><p>Use flick-click to jump playback markers and test repeated interactions.</p><button type="button" data-ekstra-clickable data-demo-action="timeline">Jump marker</button></article>
+              <article class="card" data-ekstra-clickable data-demo-card="checkout" data-click-label="Checkout card"><div class="meta">Widget</div><h4>Checkout lane</h4><p>Confirm a primary CTA and watch the side panel reflect the click target.</p><button type="button" data-ekstra-clickable data-demo-action="checkout">Complete purchase</button></article>
+            </div>
+          </section>
+          <section id="faq" class="section">
+            <h3>FAQ test targets</h3>
+            <p>These are useful for hover confirmation because the summary rows are narrow, clickable targets.</p>
+            <div style="display:grid;gap:12px;margin-top:16px">
+              <details data-ekstra-clickable data-click-label="FAQ: no download"><summary>Does the phone need a native app?</summary><p>No. The current flow uses a browser controller page and the phone's built-in motion APIs.</p></details>
+              <details data-ekstra-clickable data-click-label="FAQ: click path"><summary>Does flick-click go through the runtime?</summary><p>Yes. This demo uses the real <code>run_detection_pipeline</code> plus <code>run_surface_pack</code> path before the browser clicks.</p></details>
+              <details data-ekstra-clickable data-click-label="FAQ: iPhone"><summary>What is different on iPhone?</summary><p>Safari typically requires the controller page to be served over HTTPS before motion permissions are available.</p></details>
+            </div>
+          </section>
+        </main>
+        <aside class="panel sidebar">
+          <div class="story"><strong id="story-title">Waiting for interaction</strong><p id="story-copy">Scan the QR code, start streaming on the phone, then center the pointer here.</p></div>
+          <div class="stats">
+            <div class="stat"><strong>Actor</strong><span id="actor-value">actor-1</span></div>
+            <div class="stat"><strong>Cursor</strong><span id="cursor-value">idle</span></div>
+            <div class="stat"><strong>Samples seen</strong><span id="samples-value">0</span></div>
+            <div class="stat"><strong>Clicks fired</strong><span id="clicks-value">0</span></div>
+            <div class="stat"><strong>Last composition</strong><span id="composition-value">none</span></div>
+          </div>
+          <div id="log" class="log"></div>
+          <div class="sub" style="margin-top:14px;font-size:12px;text-transform:uppercase;letter-spacing:.08em">Debug state</div>
+          <div id="debug-state" class="log debug-state"></div>
+        </aside>
+      </section>
+    </div>
+    <script type="module">
+      import { createMotionClient } from "./vendor/ekstra-motion-web.js";
+      const qs = new URLSearchParams(window.location.search);
+      const actorId = qs.get("actorId") || "actor-1";
+      const surfaceId = qs.get("surfaceId") || "surface:web-pointer-demo";
+      const wsUrl =
+        qs.get("wsUrl") ||
+        `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.hostname}:8787/ws`;
+      const el = (id) => document.getElementById(id);
+      const state = {
+        sampleCount: 0,
+        clickCount: 0,
+        localPrimaryCount: 0,
+        localSecondaryCount: 0,
+        runtimeClickCount: 0,
+        lastComposition: "none",
+        lastSampleAt: 0,
+        lastSampleMeta: null,
+        lastActionAt: 0,
+        lastActionTarget: "none",
+        latestAngles: null,
+        neutral: null,
+        hovered: null,
+        wsState: "disconnected",
+        ingestHealth: null,
+        lastHealthPollAt: 0,
+        loggedWaiting: false,
+        clickProfile: {
+          handedness: qs.get("hand") === "right" ? "right" : "left",
+          lastGamma: null,
+          lastGammaAt: 0,
+          cooldownUntil: 0,
+          lastKind: "none",
+          lastVelocity: 0,
+          lastDeltaFromNeutral: 0,
+          lastTriggerAt: -10000,
+        },
+        pointer: {
+          x: innerWidth * 0.5,
+          y: Math.min(innerHeight * 0.42, 320),
+          targetX: innerWidth * 0.5,
+          targetY: Math.min(innerHeight * 0.42, 320),
+        },
+      };
+      const storyCopy = {
+        "living-room": "A card was selected through the phone-driven click path.",
+        "cinema-mode": "This simulates a primary CTA on a real site.",
+        "quiet-focus": "This target is useful for testing medium-sized hover zones.",
+        "party-stack": "This confirms the page stays responsive while the cursor remains live.",
+        timeline: "This widget stands in for playback or document navigation controls.",
+        checkout: "This simulates a high-intent primary action target.",
+        bookmark: "Secondary controls also work with the same wrist-snap click path.",
+      };
+      const wsPill = el("ws-pill");
+      const samplePill = el("sample-pill");
+      const actionPill = el("action-pill");
+      const logEl = el("log");
+      const debugStateEl = el("debug-state");
+      const cursor = el("cursor");
+      const cursorLabel = el("cursor-label");
+      const zoneUp = el("zone-up");
+      const zoneDown = el("zone-down");
+      const handLeftButton = el("hand-left");
+      const handRightButton = el("hand-right");
+
+      function nowIso() {
+        return new Date().toISOString().split("T")[1].replace("Z", "Z");
+      }
+
+      function log(line) {
+        logEl.textContent += `[${nowIso()}] ${line}\n`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+      }
+
+      function deadzone(v, d) {
+        if (Math.abs(v) <= d) {
+          return 0;
+        }
+        return v > 0 ? v - d : v + d;
+      }
+
+      function angleDeltaDegrees(current, neutral) {
+        let delta = current - neutral;
+        while (delta > 180) {
+          delta -= 360;
+        }
+        while (delta < -180) {
+          delta += 360;
+        }
+        return delta;
+      }
+
+      function setStory(title, copy) {
+        el("story-title").textContent = title;
+        el("story-copy").textContent = copy;
+      }
+
+      function describeTarget(node) {
+        return (
+          node?.getAttribute("data-click-label") ||
+          node?.getAttribute("data-demo-card") ||
+          node?.getAttribute("data-demo-action") ||
+          node?.textContent?.trim().replace(/\s+/g, " ").slice(0, 64) ||
+          "none"
+        );
+      }
+
+      function sampleAgeMs() {
+        if (!state.lastSampleAt) {
+          return null;
+        }
+        return Math.round(performance.now() - state.lastSampleAt);
+      }
+
+      function healthUrl() {
+        const endpoint = el("ingest-endpoint").value.trim();
+        if (!endpoint) {
+          return "";
+        }
+        try {
+          const url = new URL(endpoint, window.location.href);
+          url.pathname = url.pathname.endsWith("/ingest")
+            ? url.pathname.replace(/\/ingest$/, "/health")
+            : "/health";
+          url.search = "";
+          return url.toString();
+        } catch (_) {
+          return "";
+        }
+      }
+
+      function renderDebugState() {
+        debugStateEl.textContent = JSON.stringify(
+          {
+            actorId,
+            surfaceId,
+            wsUrl,
+            wsState: state.wsState,
+            sampleCount: state.sampleCount,
+            sampleAgeMs: sampleAgeMs(),
+            clickCount: state.clickCount,
+            localPrimaryCount: state.localPrimaryCount,
+            localSecondaryCount: state.localSecondaryCount,
+            runtimeClickCount: state.runtimeClickCount,
+            lastComposition: state.lastComposition,
+            latestAngles: state.latestAngles,
+            neutral: state.neutral,
+            hovered: describeTarget(state.hovered),
+            lastSampleMeta: state.lastSampleMeta,
+            lastActionTarget: state.lastActionTarget,
+            clickProfile: state.clickProfile,
+            ingestHealthUrl: healthUrl(),
+            ingestHealth: state.ingestHealth,
+            lastHealthPollAt: state.lastHealthPollAt ? new Date(state.lastHealthPollAt).toISOString() : null,
+          },
+          null,
+          2
+        );
+      }
+
+      function updateStats() {
+        el("actor-value").textContent = actorId;
+        el("samples-value").textContent = String(state.sampleCount);
+        el("clicks-value").textContent = String(state.clickCount);
+        el("composition-value").textContent = state.lastComposition;
+        el("cursor-value").textContent = describeTarget(state.hovered).slice(0, 60);
+        renderDebugState();
+      }
+
+      function setPill(node, text, cls = "") {
+        node.textContent = text;
+        node.className = `pill${cls ? ` ${cls}` : ""}`;
+      }
+
+      function applyHandednessUI() {
+        handLeftButton.classList.toggle("mode-on", state.clickProfile.handedness === "left");
+        handRightButton.classList.toggle("mode-on", state.clickProfile.handedness === "right");
+      }
+
+      function setHandedness(hand) {
+        state.clickProfile.handedness = hand === "right" ? "right" : "left";
+        applyHandednessUI();
+        log(`handedness=${state.clickProfile.handedness}`);
+        setStory(
+          `${state.clickProfile.handedness === "left" ? "Left" : "Right"} hand mode`,
+          "Inward wrist snaps are treated as primary click for the selected hand; the opposite snap becomes secondary click."
+        );
+        updateStats();
+      }
+
+      function refreshPhoneUrl() {
+        const base = el("controller-base").value.trim();
+        const endpoint = el("ingest-endpoint").value.trim();
+        if (!base || !endpoint) {
+          el("phone-url").value = "";
+          el("qr").removeAttribute("src");
+          updateStats();
+          return;
+        }
+        const url = new URL(base, window.location.href);
+        url.searchParams.set("endpoint", endpoint);
+        url.searchParams.set("demo", "web_phone_pointer_demo");
+        url.searchParams.set("build", "2026-03-06-2");
+        el("phone-url").value = url.toString();
+        el("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encodeURIComponent(url.toString())}`;
+        updateStats();
+      }
+
+      function initPairing() {
+        const pathBase = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
+        el("controller-base").value =
+          qs.get("controllerBase") || `${pathBase}/starters/web-phone-pointer/controller/index.html`;
+        el("ingest-endpoint").value = qs.get("ingestUrl") || `${pathBase}/api/phone-imu/ingest`;
+        refreshPhoneUrl();
+        el("controller-base").addEventListener("input", refreshPhoneUrl);
+        el("ingest-endpoint").addEventListener("input", refreshPhoneUrl);
+      }
+
+      function centerPointer() {
+        if (state.latestAngles) {
+          state.neutral = { ...state.latestAngles };
+          state.clickProfile.lastGamma = state.latestAngles.gamma;
+          state.clickProfile.lastGammaAt = performance.now();
+          setStory("Pointer centered", "Neutral pointing direction and pitch were updated from the latest phone sample.");
+          log(
+            `pointer_centered alpha=${state.neutral.alpha.toFixed(1)} beta=${state.neutral.beta.toFixed(1)} gamma=${state.neutral.gamma.toFixed(1)}`
+          );
+        } else {
+          setStory("No phone sample yet", "Start streaming on the phone first, then center the pointer.");
+          log("pointer_center_failed reason=no_samples");
+        }
+        updateStats();
+      }
+
+      function setHovered(next) {
+        if (state.hovered === next) {
+          return;
+        }
+        if (state.hovered) {
+          state.hovered.classList.remove("ekstra-hover");
+        }
+        state.hovered = next;
+        if (state.hovered) {
+          state.hovered.classList.add("ekstra-hover");
+        }
+        updateStats();
+      }
+
+      function trackHover() {
+        const hit = document.elementFromPoint(state.pointer.x, state.pointer.y);
+        const clickable =
+          hit?.closest("[data-ekstra-clickable],button,a,summary,[role='button']") || null;
+        setHovered(clickable);
+        cursorLabel.textContent = describeTarget(clickable).slice(0, 32);
+      }
+
+      function updateZones() {
+        const size = 92;
+        const top = clamp((size - state.pointer.y) / size, 0, 1);
+        const bottom = clamp((state.pointer.y - (innerHeight - size)) / size, 0, 1);
+        zoneUp.classList.toggle("active", top > 0);
+        zoneDown.classList.toggle("active", bottom > 0);
+        if (top > 0) {
+          scrollBy({ top: -16 * top, left: 0, behavior: "auto" });
+        } else if (bottom > 0) {
+          scrollBy({ top: 16 * bottom, left: 0, behavior: "auto" });
+        }
+      }
+
+      function animate() {
+        state.pointer.x += (state.pointer.targetX - state.pointer.x) * 0.18;
+        state.pointer.y += (state.pointer.targetY - state.pointer.y) * 0.18;
+        cursor.style.transform = `translate(${state.pointer.x - 13}px,${state.pointer.y - 13}px)`;
+        trackHover();
+        updateZones();
+        requestAnimationFrame(animate);
+      }
+
+      function handleSample(msg) {
+        const sample = msg.event || {};
+        if (String(sample.actor_id || "") !== actorId) {
+          return;
+        }
+        const raw = sample?.metadata?.raw_euler_deg;
+        if (!raw || typeof raw !== "object") {
+          log("motion_sample_ignored reason=missing_raw_euler_deg");
+          return;
+        }
+        const alpha = Number(raw.alpha ?? 0);
+        const beta = Number(raw.beta ?? 0);
+        const gamma = Number(raw.gamma ?? 0);
+        if (!Number.isFinite(alpha) || !Number.isFinite(beta) || !Number.isFinite(gamma)) {
+          log("motion_sample_ignored reason=non_finite_angles");
+          return;
+        }
+        state.latestAngles = { alpha, beta, gamma };
+        state.lastSampleAt = performance.now();
+        state.lastSampleMeta = {
+          timestamp: sample.timestamp,
+          providerId: sample.provider_id || sample.source_provider_id || null,
+          alpha,
+          beta,
+          gamma,
+        };
+        state.sampleCount += 1;
+        state.loggedWaiting = false;
+        if (!state.neutral) {
+          state.neutral = { alpha, beta, gamma };
+          log(
+            `pointer_neutralized alpha=${alpha.toFixed(1)} beta=${beta.toFixed(1)} gamma=${gamma.toFixed(1)}`
+          );
+        }
+        const yawDx = deadzone(angleDeltaDegrees(alpha, state.neutral.alpha), 5);
+        const rollDx = deadzone(gamma - state.neutral.gamma, 7) * 0.35;
+        const dx = -(yawDx !== 0 ? yawDx : rollDx);
+        const dy = deadzone(beta - state.neutral.beta, 4.5);
+        state.pointer.targetX = clamp(innerWidth * 0.5 + (dx / 40) * (innerWidth * 0.4), 24, innerWidth - 24);
+        state.pointer.targetY = clamp(innerHeight * 0.45 - (dy / 28) * (innerHeight * 0.34), 24, innerHeight - 24);
+        maybeHandleSnapClick(gamma);
+        if (state.sampleCount <= 5 || state.sampleCount % 20 === 0) {
+          log(
+            `motion_sample count=${state.sampleCount} alpha=${alpha.toFixed(2)} beta=${beta.toFixed(2)} gamma=${gamma.toFixed(2)}`
+          );
+        }
+        setPill(samplePill, `samples: live (${state.sampleCount})`, "ok");
+        updateStats();
+      }
+
+      function flashCursor() {
+        cursor.classList.add("click");
+        setTimeout(() => cursor.classList.remove("click"), 170);
+      }
+
+      function firePointerIntent(kind, source, metrics = null) {
+        state.clickCount += 1;
+        state.lastActionAt = Date.now();
+        state.lastActionTarget = describeTarget(state.hovered);
+        state.clickProfile.lastKind = kind;
+        state.clickProfile.lastTriggerAt = performance.now();
+        if (kind === "primary" && source !== "runtime") {
+          state.localPrimaryCount += 1;
+        }
+        if (kind === "secondary") {
+          state.localSecondaryCount += 1;
+        }
+        setPill(
+          actionPill,
+          kind === "primary"
+            ? `actions: click (${state.clickCount})`
+            : `actions: right click (${state.clickCount})`,
+          "ok"
+        );
+        flashCursor();
+        if (!state.hovered) {
+          log(`${source}_${kind}_click target=none`);
+          updateStats();
+          return;
+        }
+        const targetLabel = describeTarget(state.hovered);
+        if (kind === "primary") {
+          log(
+            `${source}_primary_click target=${targetLabel}` +
+              (metrics ? ` gamma=${metrics.gamma.toFixed(2)} velocity=${metrics.velocity.toFixed(2)}` : "")
+          );
+          state.hovered.click();
+        } else {
+          log(
+            `${source}_secondary_click target=${targetLabel}` +
+              (metrics ? ` gamma=${metrics.gamma.toFixed(2)} velocity=${metrics.velocity.toFixed(2)}` : "")
+          );
+          const event = new MouseEvent("contextmenu", {
+            bubbles: true,
+            cancelable: true,
+            button: 2,
+            clientX: state.pointer.x,
+            clientY: state.pointer.y,
+          });
+          state.hovered.dispatchEvent(event);
+        }
+        updateStats();
+      }
+
+      function maybeHandleSnapClick(gamma) {
+        if (!state.neutral) {
+          return;
+        }
+        const now = performance.now();
+        const previousGamma = state.clickProfile.lastGamma;
+        const previousAt = state.clickProfile.lastGammaAt;
+        state.clickProfile.lastGamma = gamma;
+        state.clickProfile.lastGammaAt = now;
+        if (previousGamma === null || previousAt <= 0) {
+          return;
+        }
+        const dtMs = now - previousAt;
+        if (dtMs < 12 || dtMs > 180 || now < state.clickProfile.cooldownUntil) {
+          return;
+        }
+        const gammaVelocity = angleDeltaDegrees(gamma, previousGamma) / (dtMs / 1000);
+        const deltaFromNeutral = gamma - state.neutral.gamma;
+        state.clickProfile.lastVelocity = gammaVelocity;
+        state.clickProfile.lastDeltaFromNeutral = deltaFromNeutral;
+        const primarySign = state.clickProfile.handedness === "left" ? 1 : -1;
+        const secondarySign = -primarySign;
+        const snapAngleThreshold = 10;
+        const snapVelocityThreshold = 120;
+        if (
+          deltaFromNeutral * primarySign > snapAngleThreshold &&
+          gammaVelocity * primarySign > snapVelocityThreshold
+        ) {
+          state.clickProfile.cooldownUntil = now + 480;
+          firePointerIntent("primary", "wrist", { gamma, velocity: gammaVelocity });
+          return;
+        }
+        if (
+          deltaFromNeutral * secondarySign > snapAngleThreshold &&
+          gammaVelocity * secondarySign > snapVelocityThreshold
+        ) {
+          state.clickProfile.cooldownUntil = now + 480;
+          firePointerIntent("secondary", "wrist", { gamma, velocity: gammaVelocity });
+        }
+      }
+
+      function handleAction(msg) {
+        const action = msg.event || {};
+        if (String(action.surface_id || "") !== surfaceId || String(action.intent || "") !== "pointer.click") {
+          return;
+        }
+        if (performance.now() - state.clickProfile.lastTriggerAt < 650) {
+          log("runtime_primary_click_ignored reason=recent_local_wrist_click");
+          return;
+        }
+        state.runtimeClickCount += 1;
+        firePointerIntent("primary", "runtime");
+      }
+
+      function handleComposition(msg) {
+        const event = msg.event || {};
+        if (String(event.actor_id || "") !== actorId) {
+          return;
+        }
+        state.lastComposition = String(event.composition_type || "unknown");
+        log(`composition=${state.lastComposition} confidence=${Number(event.confidence ?? 0).toFixed(2)}`);
+        updateStats();
+      }
+
+      function wireDemo() {
+        document.querySelectorAll("[data-demo-card]").forEach((node) =>
+          node.addEventListener("click", () => {
+            const key = node.getAttribute("data-demo-card") || "";
+            document.querySelectorAll("[data-demo-card]").forEach((other) => {
+              other.style.background = other === node ? "rgba(13,137,104,.12)" : "rgba(255,255,255,.76)";
+            });
+            setStory(
+              (node.querySelector("h4")?.textContent || "Card selected").trim(),
+              storyCopy[key] ||
+                "This click path came from the current phone pointer control profile."
+            );
+          })
+        );
+        document.querySelectorAll("[data-demo-action]").forEach((node) =>
+          node.addEventListener("click", () => {
+            const key = node.getAttribute("data-demo-action") || "";
+            setStory(
+              `Action: ${String(key).replace(/-/g, " ")}`,
+              storyCopy[key] || "The demo registered a click against a concrete website action target."
+            );
+          })
+        );
+        document.querySelectorAll("[data-ekstra-clickable],button,a,summary,[role='button']").forEach((node) =>
+          node.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            const targetLabel = describeTarget(event.currentTarget);
+            setStory(
+              `Secondary click: ${targetLabel}`,
+              "The demo treated the outward wrist snap as a secondary click on the hovered target."
+            );
+          })
+        );
+      }
+
+      async function pollIngestHealth() {
+        const url = healthUrl();
+        if (!url) {
+          state.ingestHealth = { status: "missing_endpoint" };
+          updateStats();
+          setTimeout(pollIngestHealth, 1200);
+          return;
+        }
+        try {
+          const resp = await fetch(url, { method: "GET" });
+          const data = await resp.json();
+          state.ingestHealth = data;
+          state.lastHealthPollAt = Date.now();
+          if (state.sampleCount === 0) {
+            log(
+              `ingest_health count=${data.ingest_count ?? "?"} last_error=${String(data.last_error ?? "none")}`
+            );
+          }
+        } catch (err) {
+          state.ingestHealth = { status: "fetch_error", detail: String(err) };
+          state.lastHealthPollAt = Date.now();
+          log(`ingest_health_error detail=${String(err)}`);
+        }
+        updateStats();
+        setTimeout(pollIngestHealth, 1200);
+      }
+
+      function healthLoop() {
+        const age = sampleAgeMs();
+        if (age === null || age > 2200) {
+          setPill(samplePill, "samples: waiting");
+          if (!state.loggedWaiting) {
+            const ingestCount = state.ingestHealth?.ingest_count;
+            log(`samples_waiting age_ms=${age === null ? "none" : age} ingest_count=${ingestCount ?? "unknown"}`);
+            state.loggedWaiting = true;
+          }
+        }
+        updateStats();
+        setTimeout(healthLoop, 500);
+      }
+
+      const motion = createMotionClient({
+        url: wsUrl,
+        reconnect: true,
+        reconnectInitialMs: 250,
+        reconnectMaxMs: 4000,
+      });
+
+      motion.onState((s) => {
+        state.wsState = s.state;
+        setPill(wsPill, `ws: ${s.state}`, s.state === "connected" ? "ok" : "warn");
+        log(`ws_state=${JSON.stringify(s)}`);
+        updateStats();
+      });
+      motion.onTopic("motion.samples", handleSample);
+      motion.onTopic("surface.actions", handleAction);
+      motion.onTopic("events.composition", handleComposition);
+
+      handLeftButton.addEventListener("click", () => setHandedness("left"));
+      handRightButton.addEventListener("click", () => setHandedness("right"));
+      el("center").addEventListener("click", centerPointer);
+      el("copy-phone").addEventListener("click", async () => {
+        if (!el("phone-url").value.trim()) {
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(el("phone-url").value.trim());
+          setStory("Phone link copied", "Paste the controller URL anywhere if scanning the QR code is not convenient.");
+          log("phone_url_copied");
+        } catch {
+          setStory("Copy failed", "Clipboard access was blocked. The full phone URL is still visible in the pairing panel.");
+          log("phone_url_copy_failed");
+        }
+      });
+
+      initPairing();
+      wireDemo();
+      applyHandednessUI();
+      updateStats();
+      animate();
+      healthLoop();
+      pollIngestHealth();
+      motion.connect().catch((err) => log(`connect_error=${String(err)}`));
+      setStory(
+        "Ready to pair",
+        "Open the QR code on the phone, grant motion permission, and the cursor will wake up as soon as samples arrive."
+      );
+    </script>
+  </body>
+</html>
