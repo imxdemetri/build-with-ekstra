@@ -50,7 +50,7 @@ jobs:
           sleep 2
           curl -fsS http://127.0.0.1:8080/index.html | grep -q "Ekstra.OS Phone Pointer Demo"
           curl -fsS http://127.0.0.1:8080/controller/index.html | grep -q "phone-pointer build"
-          curl -fsS http://127.0.0.1:8080/vendor/ekstra-motion-web.js | grep -q "EkstraMotionWebClient"
+          curl -fsS http://127.0.0.1:8080/vendor/ekstra-motion-web.js | grep -q "createMotionClient"
           kill $SERVER_PID
           wait $SERVER_PID || true
           trap - EXIT
@@ -64,7 +64,7 @@ jobs:
           sleep 2
           curl -fsS http://127.0.0.1:8081/index.html | grep -q "Ekstra.OS Presentation Remote"
           curl -fsS http://127.0.0.1:8081/controller/index.html | grep -q "presentation-remote build"
-          curl -fsS http://127.0.0.1:8081/vendor/ekstra-motion-web.js | grep -q "EkstraMotionWebClient"
+          curl -fsS http://127.0.0.1:8081/vendor/ekstra-motion-web.js | grep -q "createMotionClient"
           kill $SERVER_PID
           wait $SERVER_PID || true
           trap - EXIT
