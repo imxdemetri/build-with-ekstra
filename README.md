@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="site/assets/ekstra-mark.svg" alt="Ekstra logo" width="140" />
+  <img src="site/assets/ekstra-logo.png" alt="Ekstra logo" width="180" />
 </p>
 
 # Build with Ekstra
