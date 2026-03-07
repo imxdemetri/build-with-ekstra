@@ -48,6 +48,7 @@ Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 - Hosted demo frontdoor: `https://frontdoor-production.up.railway.app/`
 - Hosted WebSocket bridge: `wss://wsbridge-production-2ec6.up.railway.app/ws`
 - GitHub wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
+- GitHub project board: `https://github.com/users/imxdemetri/projects/1`
 
 ## Available Now vs Planned
 

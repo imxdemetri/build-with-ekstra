@@ -30,3 +30,4 @@ This directory contains the public, developer-facing documentation for `build-wi
 
 - GitHub Pages: `https://imxdemetri.github.io/build-with-ekstra/`
 - Wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
+- Project board: `https://github.com/users/imxdemetri/projects/1`
