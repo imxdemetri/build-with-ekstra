@@ -4,7 +4,7 @@ If you believe you have found a security issue in the public Ekstra developer su
 
 - do not open a public issue with exploit details
 - use GitHub private vulnerability reporting if it is enabled for this repository
-- otherwise contact the maintainer privately through GitHub
+- otherwise contact the maintainer privately through GitHub or `info@ekstra.ai`
 
 For non-sensitive runtime hardening issues, a normal issue or pull request is acceptable.
 

@@ -9,6 +9,7 @@
 
 ## Community
 
+- Email: `info@ekstra.ai`
 - Telegram: `https://t.me/ekstraai`
 - X: `https://x.com/ekstraai`
 - Discord: coming soon
@@ -30,3 +31,4 @@ Include:
 - hosted sandbox or self-hosted mode
 - browser and phone platform
 - exact endpoint shape or query parameters when relevant
+- a reply address if GitHub notifications are not enough
