@@ -9,7 +9,7 @@ It currently exposes typed profile metadata, named exports, and lookup helpers f
 - package surface: `public preview`
 - source is public in this repo
 - first npm release is being prepared
-- primary supported profile today: `pointer.basic`
+- supported profiles today: `pointer.basic` and `presentation.remote`
 
 This package is not yet a full runtime SDK. It sits above the runtime and helps developers standardize control behavior in browser products.
 
@@ -44,7 +44,7 @@ console.log(controlProfiles.length);
 | --- | --- | --- | --- |
 | `pointer.basic` | Supported | `web-phone-pointer` | Primary public control profile |
 | `pointer.precision` | Supported | none | Public metadata profile |
-| `presentation.remote` | Preview | planned | Public metadata, starter not shipped yet |
+| `presentation.remote` | Supported | `presentation-remote` | Public starter for discrete deck navigation |
 | `orbit.3d` | Preview | planned | Public metadata, starter not shipped yet |
 | `kiosk.nav` | Preview | none | Public metadata |
 | `media.remote` | Preview | none | Public metadata |

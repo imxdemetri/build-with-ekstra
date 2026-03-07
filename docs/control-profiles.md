@@ -27,7 +27,7 @@ Profiles currently exposed in `@ekstra/controls-web`:
 | --- | --- | --- | --- | --- |
 | `pointerBasic` | `pointer.basic` | Supported | `web-phone-pointer` | Primary supported public profile |
 | `pointerPrecision` | `pointer.precision` | Supported | none | Public metadata profile |
-| `presentationRemote` | `presentation.remote` | Preview | planned | Starter not yet shipped |
+| `presentationRemote` | `presentation.remote` | Supported | `presentation-remote` | Public starter for discrete deck navigation |
 | `orbit3d` | `orbit.3d` | Preview | planned | Starter not yet shipped |
 | `kioskNav` | `kiosk.nav` | Preview | none | Public metadata profile |
 | `mediaRemote` | `media.remote` | Preview | none | Public metadata profile |
@@ -42,13 +42,14 @@ Today:
 
 - `pointer.basic` is the primary supported public control profile
 - `pointer.precision` is publicly documented metadata, but does not yet have a dedicated starter
-- `presentation.remote` and `orbit.3d` are exposed as preview profile definitions
+- `presentation.remote` is now backed by a public starter
+- `orbit.3d` remains a preview profile definition
 - several additional profiles exist to show direction, not to imply finished public products
 
 That means the safe claim is:
 
 - the profile system is real
-- the pointer wedge is supported
+- the public surface now proves both pointer and presentation control
 - broader profile coverage is public and typed, but not equally mature yet
 
 ## Package API

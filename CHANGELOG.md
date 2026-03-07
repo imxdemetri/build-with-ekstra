@@ -22,3 +22,4 @@ Current public hardening work:
 - supported versus preview status matrix
 - tighter security and hosted sandbox expectations
 - stronger package metadata and control profile support semantics
+- `presentation-remote` as the second public starter

@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ekstra.OS Presentation Remote</title>
+    <style>
+      :root {
+        --bg-0: #f7f1e4;
+        --bg-1: #efe1cb;
+        --ink: #182027;
+        --muted: #5d6872;
+        --line: rgba(24, 32, 39, 0.11);
+        --panel: rgba(255, 252, 245, 0.88);
+        --panel-strong: rgba(255, 255, 255, 0.94);
+        --accent: #0d856c;
+        --accent-2: #d26c2c;
+        --shadow: 0 28px 60px rgba(24, 32, 39, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Avenir Next", "Segoe UI", Tahoma, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(255, 208, 158, 0.46), transparent 28%),
+          radial-gradient(circle at top right, rgba(127, 180, 255, 0.24), transparent 32%),
+          linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+      }
+      .shell {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 20px 110px;
+      }
+      .hero,
+      .layout {
+        display: grid;
+        gap: 18px;
+      }
+      .hero {
+        grid-template-columns: minmax(0, 1.24fr) minmax(320px, 0.76fr);
+      }
+      .layout {
+        grid-template-columns: minmax(0, 1fr) 320px;
+        margin-top: 20px;
+      }
+      .panel,
+      .stage,
+      .sidebar {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+      .copy,
+      .pair,
+      .stage,
+      .sidebar {
+        padding: 22px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(13, 133, 108, 0.1);
+        border: 1px solid rgba(13, 133, 108, 0.2);
+        color: #0b6c57;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      h1 {
+        margin: 16px 0 12px;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+      }
+      h2,
+      h3 {
+        margin: 0 0 10px;
+      }
+      .lede,
+      .sub,
+      .label,
+      .hint,
+      .note-copy,
+      .log {
+        color: var(--muted);
+      }
+      .lede {
+        max-width: 60ch;
+        font-size: 17px;
+        line-height: 1.58;
+        margin: 0 0 18px;
+      }
+      .toolbar,
+      .pills,
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(24, 32, 39, 0.1);
+        background: rgba(255, 255, 255, 0.8);
+        font-size: 13px;
+      }
+      .ok {
+        color: #0b6c57;
+        background: rgba(13, 133, 108, 0.1);
+        border-color: rgba(13, 133, 108, 0.24);
+      }
+      .warn {
+        color: #985022;
+        background: rgba(210, 108, 44, 0.1);
+        border-color: rgba(210, 108, 44, 0.22);
+      }
+      button,
+      a.action {
+        border: 1px solid rgba(24, 32, 39, 0.12);
+        border-radius: 999px;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.84);
+        color: var(--ink);
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .pair-grid,
+      .deck-grid,
+      .stat-grid,
+      .thumb-grid {
+        display: grid;
+        gap: 12px;
+      }
+      .pair-grid {
+        grid-template-columns: 210px minmax(0, 1fr);
+      }
+      .qr {
+        padding: 12px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #fffdf9 0%, #f2e5d1 100%);
+        border: 1px solid rgba(24, 32, 39, 0.08);
+      }
+      .qr img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 16px;
+        background: #fff;
+      }
+      .field {
+        margin-bottom: 12px;
+      }
+      .field label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .field input {
+        width: 100%;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(24, 32, 39, 0.12);
+        background: rgba(255, 255, 255, 0.84);
+        font: inherit;
+      }
+      .deck-grid {
+        grid-template-columns: minmax(0, 1fr) 280px;
+        margin-top: 16px;
+      }
+      .stage-shell {
+        border-radius: 28px;
+        padding: 24px;
+        background:
+          radial-gradient(circle at top right, rgba(88, 129, 255, 0.26), transparent 34%),
+          linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 242, 233, 0.96) 100%);
+        border: 1px solid rgba(24, 32, 39, 0.08);
+      }
+      .stage-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      .stage-number {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .stage-title {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 54px);
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+      .stage-body {
+        margin-top: 16px;
+        font-size: 18px;
+        line-height: 1.6;
+        max-width: 58ch;
+      }
+      .bullets {
+        margin: 18px 0 0;
+        padding: 0 0 0 20px;
+        display: grid;
+        gap: 10px;
+      }
+      .bullets li {
+        line-height: 1.5;
+      }
+      .notes-panel,
+      .thumb,
+      .stat {
+        border: 1px solid rgba(24, 32, 39, 0.08);
+        border-radius: 20px;
+        background: var(--panel-strong);
+      }
+      .notes-panel {
+        padding: 18px;
+        min-height: 180px;
+      }
+      .notes-panel.hidden {
+        opacity: 0.45;
+      }
+      .note-tag {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(13, 133, 108, 0.08);
+        border: 1px solid rgba(13, 133, 108, 0.16);
+        color: #0b6c57;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .progress {
+        margin-top: 18px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(24, 32, 39, 0.08);
+        overflow: hidden;
+      }
+      .progress > div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #0d856c 0%, #3b8cf0 100%);
+        border-radius: 999px;
+        transition: width 180ms ease-out;
+      }
+      .thumb-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 16px;
+      }
+      .thumb {
+        padding: 14px;
+        min-height: 146px;
+        cursor: pointer;
+        transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      }
+      .thumb.active {
+        border-color: rgba(13, 133, 108, 0.3);
+        background: rgba(13, 133, 108, 0.08);
+        transform: translateY(-2px);
+      }
+      .thumb .slide-kicker {
+        color: #0b6c57;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .thumb h4 {
+        margin: 8px 0 8px;
+        font-size: 20px;
+        line-height: 1.05;
+      }
+      .sidebar {
+        position: sticky;
+        top: 18px;
+      }
+      .stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .stat {
+        padding: 14px;
+      }
+      .stat strong {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .stat span {
+        display: block;
+        margin-top: 8px;
+        font-size: 19px;
+      }
+      .log {
+        margin-top: 14px;
+        padding: 12px;
+        min-height: 180px;
+        max-height: 300px;
+        overflow: auto;
+        border-radius: 18px;
+        background: #10181d;
+        color: #befad8;
+        font: 12px/1.5 Consolas, monospace;
+      }
+      .debug {
+        min-height: 220px;
+        color: #ddebf5;
+      }
+      @media (max-width: 980px) {
+        .hero,
+        .layout,
+        .pair-grid,
+        .deck-grid,
+        .thumb-grid,
+        .stat-grid {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div class="panel copy">
+          <div class="eyebrow">Ekstra.OS presentation remote</div>
+          <h1>One runtime. A different interaction.</h1>
+          <p class="lede">
+            This starter uses the same hosted phone IMU flow as the pointer demo, but turns it into discrete deck navigation. Roll the phone right to advance, roll left to go back, pitch down to reveal speaker notes, and recenter the hold angle whenever you change posture.
+          </p>
+          <div class="pills">
+            <span id="ws-pill" class="pill warn">ws: disconnected</span>
+            <span id="sample-pill" class="pill">samples: waiting</span>
+            <span id="remote-pill" class="pill">remote: idle</span>
+            <span id="notes-pill" class="pill">notes: hidden</span>
+          </div>
+          <div class="toolbar" style="margin-top:16px">
+            <button id="center-remote">Center Remote</button>
+            <button id="prev-slide">Previous</button>
+            <button id="next-slide">Next</button>
+            <button id="toggle-notes">Toggle Notes</button>
+            <button id="copy-phone">Copy Phone Link</button>
+          </div>
+        </div>
+        <aside class="panel pair">
+          <h2>Pair the phone</h2>
+          <div class="pair-grid">
+            <div class="qr">
+              <img id="qr" alt="Phone pairing QR code" />
+              <div class="sub" style="margin-top:10px;font-size:12px">Scan to open the presentation controller page.</div>
+            </div>
+            <div>
+              <div class="field"><label for="controller-base">Phone controller page</label><input id="controller-base" /></div>
+              <div class="field"><label for="ingest-endpoint">Phone ingest endpoint</label><input id="ingest-endpoint" /></div>
+              <div class="field"><label for="phone-url">Generated phone URL</label><input id="phone-url" readonly /></div>
+              <p class="hint">For local development, this starter defaults to the hosted HTTPS controller and ingest path so iPhone Safari motion permissions work reliably.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="layout">
+        <main class="stage">
+          <div class="stage-meta">
+            <div>
+              <div id="slide-number" class="stage-number">Slide 1 of 6</div>
+              <div id="slide-kicker" class="eyebrow" style="margin-top:10px">Opening</div>
+            </div>
+            <div class="sub">Profile: <strong>presentation.remote</strong></div>
+          </div>
+
+          <div class="deck-grid">
+            <div class="stage-shell">
+              <h2 id="slide-title" class="stage-title">Motion is still fragmented.</h2>
+              <div id="slide-body" class="stage-body"></div>
+              <ul id="slide-bullets" class="bullets"></ul>
+              <div class="progress"><div id="progress-fill"></div></div>
+            </div>
+
+            <aside id="notes-panel" class="notes-panel hidden">
+              <div class="note-tag">Speaker notes</div>
+              <h3 id="notes-title">Notes hidden</h3>
+              <p id="notes-copy" class="note-copy">Pitch the phone down from neutral to reveal notes, or use the toggle button.</p>
+            </aside>
+          </div>
+
+          <div id="thumb-grid" class="thumb-grid"></div>
+        </main>
+
+        <aside class="panel sidebar">
+          <h2>Remote status</h2>
+          <div class="stat-grid">
+            <div class="stat"><strong>Current slide</strong><span id="current-slide">1</span></div>
+            <div class="stat"><strong>Samples</strong><span id="sample-count">0</span></div>
+            <div class="stat"><strong>Last gesture</strong><span id="last-gesture">none</span></div>
+            <div class="stat"><strong>Last composition</strong><span id="last-composition">none</span></div>
+            <div class="stat"><strong>Roll delta</strong><span id="roll-delta">0.0 deg</span></div>
+            <div class="stat"><strong>Pitch delta</strong><span id="pitch-delta">0.0 deg</span></div>
+          </div>
+          <div id="log" class="log"></div>
+          <div class="label" style="margin-top:14px">Debug state</div>
+          <div id="debug" class="log debug"></div>
+        </aside>
+      </section>
+    </div>
+
+    <script type="module">
+      import { createMotionClient } from "./vendor/ekstra-motion-web.js";
+
+      const qs = new URLSearchParams(window.location.search);
+      const actorId = qs.get("actorId") || "actor-1";
+      const wsUrl = qs.get("wsUrl") || "wss://ekstra.ai/ws";
+
+      const slides = [
+        {
+          kicker: "Opening",
+          title: "Motion is still fragmented.",
+          body: "We already live in a world full of sensors. What is missing is the layer that turns those sensors into a reusable product capability.",
+          bullets: [
+            "Phones, cameras, XR hardware, and radios all sense motion differently.",
+            "Most products still wire that motion path from scratch.",
+            "Ekstra treats motion as infrastructure instead of as a one-off feature."
+          ],
+          notes: "Open with the platform thesis. The goal is not a single gesture demo. The goal is a stable motion layer that products can build on."
+        },
+        {
+          kicker: "Runtime",
+          title: "One runtime. Many surfaces.",
+          body: "The current public browser wedge keeps the runtime boundary visible: phone IMU in, normalized motion samples out, product behavior layered above it.",
+          bullets: [
+            "Phone browser -> phone_imu_provider -> motiond -> ws_bridge -> web app",
+            "Control profiles define behavior without hardcoding product semantics into the runtime.",
+            "The same runtime can power pointer, presentation, kiosk, or 3D flows."
+          ],
+          notes: "This is the slide that makes the system model legible. Keep it simple and concrete."
+        },
+        {
+          kicker: "Starter",
+          title: "This starter proves a second interaction pattern.",
+          body: "Instead of steering a cursor, the phone becomes a presentation remote. The runtime path stays the same, but the interaction model changes completely.",
+          bullets: [
+            "Quick right roll advances the deck.",
+            "Quick left roll goes back.",
+            "Pitch reveals or hides speaker notes."
+          ],
+          notes: "Call out that this raises trust because the repo now proves more than one public interaction slice."
+        },
+        {
+          kicker: "Profiles",
+          title: "Control profiles are where products get their feel.",
+          body: "The runtime should stay stable. Interaction posture, cadence, and semantics should move quickly at the control-profile layer.",
+          bullets: [
+            "Pointer and presentation should not share the same motion tuning.",
+            "A profile can prioritize precision, comfort, or discrete commands.",
+            "This lets teams reuse and tune motion behavior without forking the runtime."
+          ],
+          notes: "This is the bridge between the public package and the runtime story."
+        },
+        {
+          kicker: "Launch",
+          title: "The first public launch needs proof density.",
+          body: "Contracts, a supported starter, a live sandbox, and a real package surface matter more than another vision page.",
+          bullets: [
+            "Publish the browser-facing contract.",
+            "Harden the supported starters.",
+            "Show one more proof point each time the public surface grows."
+          ],
+          notes: "This slide should feel like the founder knows what matters for developer trust."
+        },
+        {
+          kicker: "Next",
+          title: "After this comes orbit, media, and ambient motion.",
+          body: "The point of the starter catalog is not to ship ten demos at once. It is to prove the same motion substrate across distinct product behaviors.",
+          bullets: [
+            "Presentation is the second public slice.",
+            "Orbit 3D is the next high-signal proof point.",
+            "Camera, XR, and CSI belong to the broader platform direction."
+          ],
+          notes: "Close with a roadmap that feels grounded rather than inflated."
+        },
+      ];
+
+      const state = {
+        sampleCount: 0,
+        slideIndex: 0,
+        wsState: "disconnected",
+        notesVisible: false,
+        neutral: null,
+        latestAngles: null,
+        lastComposition: "none",
+        ingestHealth: null,
+        lastHealthPollAt: 0,
+        remote: {
+          lastGamma: null,
+          lastSampleAt: 0,
+          cooldownUntil: 0,
+          lastGesture: "none",
+          lastVelocity: 0,
+          rollDelta: 0,
+          pitchDelta: 0,
+        },
+      };
+
+      const motion = createMotionClient({ url: wsUrl, reconnect: true });
+
+      const el = (id) => document.getElementById(id);
+      const wsPill = el("ws-pill");
+      const samplePill = el("sample-pill");
+      const remotePill = el("remote-pill");
+      const notesPill = el("notes-pill");
+      const logEl = el("log");
+      const debugEl = el("debug");
+
+      function nowIso() {
+        return new Date().toISOString().split("T")[1].replace("Z", "Z");
+      }
+
+      function log(line) {
+        logEl.textContent += `[${nowIso()}] ${line}\n`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function setPill(node, text, cls = "") {
+        node.textContent = text;
+        node.className = `pill${cls ? ` ${cls}` : ""}`;
+      }
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function healthUrl() {
+        const endpoint = el("ingest-endpoint").value.trim();
+        if (!endpoint) return "";
+        try {
+          const url = new URL(endpoint, window.location.href);
+          url.pathname = url.pathname.endsWith("/ingest")
+            ? url.pathname.replace(/\/ingest$/, "/health")
+            : "/health";
+          url.search = "";
+          return url.toString();
+        } catch (_) {
+          return "";
+        }
+      }
+
+      function renderDebug() {
+        debugEl.textContent = JSON.stringify(
+          {
+            actorId,
+            wsUrl,
+            wsState: state.wsState,
+            sampleCount: state.sampleCount,
+            slideIndex: state.slideIndex,
+            notesVisible: state.notesVisible,
+            neutral: state.neutral,
+            latestAngles: state.latestAngles,
+            lastComposition: state.lastComposition,
+            remote: state.remote,
+            ingestHealthUrl: healthUrl(),
+            ingestHealth: state.ingestHealth,
+            lastHealthPollAt: state.lastHealthPollAt ? new Date(state.lastHealthPollAt).toISOString() : null,
+          },
+          null,
+          2
+        );
+      }
+
+      function renderSlide() {
+        const slide = slides[state.slideIndex];
+        el("slide-number").textContent = `Slide ${state.slideIndex + 1} of ${slides.length}`;
+        el("slide-kicker").textContent = slide.kicker;
+        el("slide-title").textContent = slide.title;
+        el("slide-body").textContent = slide.body;
+        el("current-slide").textContent = String(state.slideIndex + 1);
+        const bullets = el("slide-bullets");
+        bullets.innerHTML = "";
+        for (const bullet of slide.bullets) {
+          const li = document.createElement("li");
+          li.textContent = bullet;
+          bullets.appendChild(li);
+        }
+        const fill = ((state.slideIndex + 1) / slides.length) * 100;
+        el("progress-fill").style.width = `${fill}%`;
+        const notesTitle = el("notes-title");
+        const notesCopy = el("notes-copy");
+        const notesPanel = el("notes-panel");
+        if (state.notesVisible) {
+          notesTitle.textContent = slide.title;
+          notesCopy.textContent = slide.notes;
+          notesPanel.classList.remove("hidden");
+        } else {
+          notesTitle.textContent = "Notes hidden";
+          notesCopy.textContent = "Pitch the phone down from neutral to reveal notes, or use the toggle button.";
+          notesPanel.classList.add("hidden");
+        }
+        renderThumbs();
+        renderDebug();
+      }
+
+      function renderThumbs() {
+        const grid = el("thumb-grid");
+        grid.innerHTML = "";
+        slides.forEach((slide, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `thumb${index === state.slideIndex ? " active" : ""}`;
+          button.innerHTML = `
+            <div class="slide-kicker">${slide.kicker}</div>
+            <h4>${slide.title}</h4>
+            <div class="sub">${slide.body}</div>
+          `;
+          button.addEventListener("click", () => goToSlide(index, "thumbnail"));
+          grid.appendChild(button);
+        });
+      }
+
+      function setNotesVisible(next, reason) {
+        if (state.notesVisible === next) return;
+        state.notesVisible = next;
+        setPill(notesPill, `notes: ${next ? "visible" : "hidden"}`, next ? "ok" : "");
+        log(`notes=${next ? "visible" : "hidden"} reason=${reason}`);
+        renderSlide();
+      }
+
+      function goToSlide(index, reason) {
+        const clamped = clamp(index, 0, slides.length - 1);
+        if (clamped === state.slideIndex) return;
+        state.slideIndex = clamped;
+        state.remote.lastGesture = reason;
+        el("last-gesture").textContent = reason;
+        setPill(remotePill, `remote: ${reason}`, "ok");
+        log(`slide=${state.slideIndex + 1} reason=${reason}`);
+        renderSlide();
+      }
+
+      function nextSlide(reason) {
+        goToSlide(state.slideIndex + 1, reason);
+      }
+
+      function previousSlide(reason) {
+        goToSlide(state.slideIndex - 1, reason);
+      }
+
+      function centerRemote(source = "manual") {
+        if (!state.latestAngles) {
+          log("center_remote_failed reason=no_samples");
+          return;
+        }
+        state.neutral = { ...state.latestAngles };
+        state.remote.lastGamma = state.latestAngles.gamma;
+        state.remote.lastSampleAt = performance.now();
+        log(
+          `center_remote source=${source} alpha=${state.neutral.alpha.toFixed(1)} beta=${state.neutral.beta.toFixed(1)} gamma=${state.neutral.gamma.toFixed(1)}`
+        );
+        renderDebug();
+      }
+
+      function detectRollGesture(gamma) {
+        const now = performance.now();
+        const remote = state.remote;
+        if (remote.lastGamma === null) {
+          remote.lastGamma = gamma;
+          remote.lastSampleAt = now;
+          return;
+        }
+        const delta = gamma - remote.lastGamma;
+        const dtMs = Math.max(1, now - remote.lastSampleAt);
+        const velocity = (delta / dtMs) * 1000;
+        remote.lastGamma = gamma;
+        remote.lastSampleAt = now;
+        remote.lastVelocity = velocity;
+        remote.rollDelta = gamma - (state.neutral?.gamma ?? gamma);
+
+        if (!state.neutral || now < remote.cooldownUntil) {
+          return;
+        }
+        const displacedEnough = Math.abs(remote.rollDelta) >= 16;
+        const fastEnough = Math.abs(velocity) >= 85;
+        if (!displacedEnough || !fastEnough) {
+          return;
+        }
+        remote.cooldownUntil = now + 900;
+        if (velocity > 0) {
+          nextSlide("roll right");
+        } else {
+          previousSlide("roll left");
+        }
+      }
+
+      function updateNotesFromPitch(beta) {
+        if (!state.neutral) return;
+        const pitchDelta = beta - state.neutral.beta;
+        state.remote.pitchDelta = pitchDelta;
+        if (!state.notesVisible && pitchDelta >= 18) {
+          setNotesVisible(true, "pitch down");
+        } else if (state.notesVisible && pitchDelta <= 8) {
+          setNotesVisible(false, "return to stage");
+        }
+      }
+
+      function handleComposition(msg) {
+        const event = msg.event || {};
+        state.lastComposition = event.composition_type || "none";
+        el("last-composition").textContent = state.lastComposition;
+        renderDebug();
+      }
+
+      function handleSample(msg) {
+        const event = msg.event || {};
+        const raw = event.metadata?.raw_euler_deg;
+        if (!raw) {
+          return;
+        }
+        const angles = {
+          alpha: Number(raw.alpha ?? 0),
+          beta: Number(raw.beta ?? 0),
+          gamma: Number(raw.gamma ?? 0),
+        };
+        state.sampleCount += 1;
+        state.latestAngles = angles;
+        el("sample-count").textContent = String(state.sampleCount);
+        setPill(samplePill, `samples: live (${state.sampleCount})`, "ok");
+        if (!state.neutral) {
+          centerRemote("auto");
+        }
+        detectRollGesture(angles.gamma);
+        updateNotesFromPitch(angles.beta);
+        el("roll-delta").textContent = `${state.remote.rollDelta.toFixed(1)} deg`;
+        el("pitch-delta").textContent = `${state.remote.pitchDelta.toFixed(1)} deg`;
+        renderDebug();
+      }
+
+      function refreshPhoneUrl() {
+        const base = el("controller-base").value.trim();
+        const endpoint = el("ingest-endpoint").value.trim();
+        if (!base || !endpoint) {
+          el("phone-url").value = "";
+          el("qr").removeAttribute("src");
+          return;
+        }
+        const url = new URL(base, window.location.href);
+        url.searchParams.set("endpoint", endpoint);
+        url.searchParams.set("demo", "presentation_remote");
+        url.searchParams.set("build", "2026-03-07-1");
+        el("phone-url").value = url.toString();
+        el("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encodeURIComponent(url.toString())}`;
+        renderDebug();
+      }
+
+      function initPairing() {
+        el("controller-base").value =
+          qs.get("controllerBase") || "https://ekstra.ai/build-with-ekstra/controller";
+        el("ingest-endpoint").value =
+          qs.get("ingestUrl") || "https://ekstra.ai/api/phone-imu/ingest";
+        refreshPhoneUrl();
+        el("controller-base").addEventListener("input", refreshPhoneUrl);
+        el("ingest-endpoint").addEventListener("input", refreshPhoneUrl);
+      }
+
+      async function pollHealth() {
+        const url = healthUrl();
+        if (!url) return;
+        try {
+          const response = await fetch(url, { method: "GET" });
+          if (response.ok) {
+            state.ingestHealth = await response.json();
+            state.lastHealthPollAt = Date.now();
+          }
+        } catch (_) {
+          // Keep the demo resilient when health polling fails.
+        } finally {
+          renderDebug();
+          setTimeout(pollHealth, 3000);
+        }
+      }
+
+      function initButtons() {
+        el("center-remote").addEventListener("click", () => centerRemote("manual"));
+        el("prev-slide").addEventListener("click", () => previousSlide("button previous"));
+        el("next-slide").addEventListener("click", () => nextSlide("button next"));
+        el("toggle-notes").addEventListener("click", () => setNotesVisible(!state.notesVisible, "button toggle"));
+        el("copy-phone").addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(el("phone-url").value);
+            log("phone_url_copied");
+          } catch (_) {
+            log("phone_url_copy_failed");
+          }
+        });
+      }
+
+      motion.onState((payload) => {
+        state.wsState = payload.state;
+        const cls = payload.state === "connected" ? "ok" : payload.state === "error" ? "warn" : "";
+        setPill(wsPill, `ws: ${payload.state}`, cls);
+        renderDebug();
+      });
+      motion.onTopic("motion.samples", handleSample);
+      motion.onTopic("events.composition", handleComposition);
+
+      initPairing();
+      initButtons();
+      renderSlide();
+      renderDebug();
+      pollHealth();
+
+      motion
+        .connect()
+        .then(() => log(`ws_connected url=${wsUrl}`))
+        .catch((error) => log(`ws_connect_error detail=${String(error)}`));
+    </script>
+  </body>
+</html>

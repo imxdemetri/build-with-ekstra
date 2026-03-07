@@ -28,10 +28,11 @@ That distinction matters because the internal Ekstra platform is broader than th
 | Browser bridge contract at `wss://ekstra.ai/ws` | Supported | See [`public-contract.md`](public-contract.md) |
 | Phone IMU ingest at `https://ekstra.ai/api/phone-imu/ingest` | Supported | Current no-download onboarding path |
 | `web-phone-pointer` starter | Supported | Primary public starter |
+| `presentation-remote` starter | Supported | Second public starter proving a discrete command pattern |
 | `@ekstra/controls-web` metadata API | Preview | Public package source exists; first npm release is still pending |
 | `pointer.basic` profile | Supported | Primary profile for current starter |
 | `pointer.precision` profile | Supported | Public profile metadata, no dedicated starter yet |
-| `presentation.remote` profile | Preview | Public profile metadata, starter not shipped yet |
+| `presentation.remote` profile | Supported | Backed by a public starter |
 | `orbit.3d` profile | Preview | Public profile metadata, starter not shipped yet |
 | `kiosk.nav` profile | Preview | Public profile metadata |
 | `media.remote` profile | Preview | Public profile metadata |
@@ -39,7 +40,6 @@ That distinction matters because the internal Ekstra platform is broader than th
 | `doc.scroll` profile | Experimental | Directional profile metadata |
 | `model.inspect` profile | Experimental | Directional profile metadata |
 | `relaxed.pointer` profile | Experimental | Directional profile metadata |
-| `presentation-remote` starter | Directional | Planned next public starter |
 | `orbit-3d` starter | Directional | Planned next public starter |
 
 ## Modality Coverage
@@ -58,7 +58,7 @@ If you are building now, the safe public contract is:
 
 - use the hosted browser bridge and phone IMU ingest endpoints
 - build on top of `motion.samples`, `events.composition`, and `surface.actions`
-- start from `web-phone-pointer`
+- start from `web-phone-pointer` or `presentation-remote`
 - treat additional profiles as reusable metadata, not as finished starters
 
 ## What To Avoid Assuming

@@ -23,6 +23,7 @@ https://ekstra.ai/build-with-ekstra/demo
 ```
 
 This is the fastest way to validate the end-to-end browser flow before editing local code.
+The current hosted reference demo is the pointer flow. The presentation remote is the second supported starter and is intended to be served locally against the same hosted endpoints.
 
 ### 2. Clone the repo
 
@@ -31,10 +32,19 @@ git clone https://github.com/imxdemetri/build-with-ekstra
 cd build-with-ekstra
 ```
 
-### 3. Serve the starter locally
+### 3. Serve a supported starter locally
+
+Pointer:
 
 ```powershell
 cd starters\web-phone-pointer
+python -m http.server 8080
+```
+
+Presentation remote:
+
+```powershell
+cd starters\presentation-remote
 python -m http.server 8080
 ```
 
@@ -64,15 +74,15 @@ Before modifying the app, confirm:
 - the phone page shows `status=streaming`
 - the phone page `sent` counter increases over time
 
-If the phone streams but the desktop does not move, use [`web-phone-pointer.md`](web-phone-pointer.md) for troubleshooting.
+If the phone streams but the desktop does not move, use [`web-phone-pointer.md`](web-phone-pointer.md) or [`presentation-remote.md`](presentation-remote.md) for troubleshooting.
 
 ### 7. Start modifying the starter
 
-The `web-phone-pointer` starter is deliberately simple:
+The supported starters are deliberately simple:
 
 - browser page receives `motion.samples` over WebSocket
 - phone controller posts IMU data over HTTPS
-- the page maps motion into pointer and click behavior
+- the page maps motion into pointer or presentation behavior
 
 The normal first change is to replace the demo UI with your own UI while keeping the motion connection path intact.
 
@@ -99,3 +109,4 @@ See [`self-hosted-docker.md`](self-hosted-docker.md).
 - [`concepts.md`](concepts.md)
 - [`architecture.md`](architecture.md)
 - [`web-phone-pointer.md`](web-phone-pointer.md)
+- [`presentation-remote.md`](presentation-remote.md)

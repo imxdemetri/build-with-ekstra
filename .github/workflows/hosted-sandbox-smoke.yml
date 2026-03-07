@@ -1,0 +1,23 @@
+name: hosted-sandbox-smoke
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify developer landing route
+        run: curl -fsSIL https://ekstra.ai/build-with-ekstra
+
+      - name: Verify hosted pointer demo
+        run: curl -fsSL https://ekstra.ai/build-with-ekstra/demo | grep -q "Ekstra.OS Phone Pointer Demo"
+
+      - name: Verify hosted phone controller
+        run: curl -fsSL https://ekstra.ai/build-with-ekstra/controller | grep -q "Ekstra.OS Phone IMU Controller"
+
+      - name: Verify hosted ingest health
+        run: curl -fsSL https://ekstra.ai/api/phone-imu/health | grep -q '"status":"ok"'

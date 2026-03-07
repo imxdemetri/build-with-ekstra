@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ekstra.OS Presentation Remote Controller</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f5f7fb;
+        color: #1e2124;
+      }
+      .card {
+        max-width: 640px;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid #d9dde3;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 8px 24px rgba(15, 22, 28, 0.06);
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      input {
+        border: 1px solid #cfd5dd;
+        border-radius: 8px;
+        padding: 8px 10px;
+        min-width: 280px;
+      }
+      button {
+        border: 1px solid #cfd5dd;
+        background: #fff;
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+      }
+      button.primary {
+        border-color: #b8e7d1;
+        background: #ecfff5;
+        color: #0a6c43;
+      }
+      .status {
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      .ok { color: #0a6c43; }
+      .warn { color: #8a2f16; }
+      .mono {
+        font-family: Consolas, monospace;
+        font-size: 12px;
+        background: #0f1519;
+        color: #b8ffcf;
+        border-radius: 8px;
+        padding: 8px;
+        min-height: 110px;
+      }
+      .badge {
+        display: inline-block;
+        margin-bottom: 8px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        border: 1px solid #b8e7d1;
+        background: #ecfff5;
+        color: #0a6c43;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .hint {
+        margin: 0 0 10px;
+        font-size: 12px;
+        color: #5d676f;
+      }
+      .section-title {
+        margin: 14px 0 8px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #5d676f;
+      }
+      .log-box {
+        min-height: 160px;
+        max-height: 260px;
+        overflow: auto;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div id="build-badge" class="badge">presentation-remote build 2026-03-07-1</div>
+      <h2>Ekstra.OS Presentation Remote Controller</h2>
+      <p id="hint" class="hint">QR-prefill ready.</p>
+      <p>
+        Streams phone orientation/motion to <code>phone_imu_provider</code>:
+        <code>POST /ingest</code>.
+      </p>
+      <div class="row">
+        <input id="endpoint" value="" />
+      </div>
+      <div class="row">
+        <button id="grant" class="primary">Grant Motion Permission</button>
+        <button id="start" class="primary">Start Streaming</button>
+        <button id="stop">Stop</button>
+        <button id="test-endpoint">Test Endpoint</button>
+      </div>
+      <div id="status" class="status warn">status=idle</div>
+      <div id="stats" class="mono"></div>
+      <div class="section-title">Debug Log</div>
+      <div id="debug-log" class="mono log-box"></div>
+    </div>
+
+    <script>
+      const qs = new URLSearchParams(window.location.search);
+      let latest = {
+        alpha: 0.0,
+        beta: 0.0,
+        gamma: 0.0,
+        accel_x: 0.0,
+        accel_y: 0.0,
+        accel_z: 0.0,
+        gyro_x: 0.0,
+        gyro_y: 0.0,
+        gyro_z: 0.0,
+      };
+      let interval = null;
+      let sent = 0;
+      let failed = 0;
+      let orientationEvents = 0;
+      let motionEvents = 0;
+      let lastOrientationAt = null;
+      let lastMotionAt = null;
+      let lastPostStatus = "idle";
+      let lastPostDetail = "";
+      let lastHealthStatus = "idle";
+      let lastHealthDetail = "";
+      let permissionState = "unknown";
+
+      const statusEl = document.getElementById("status");
+      const statsEl = document.getElementById("stats");
+      const logEl = document.getElementById("debug-log");
+      const endpointEl = document.getElementById("endpoint");
+      const hintEl = document.getElementById("hint");
+      const endpointFromQuery = qs.get("endpoint");
+      const demoName = qs.get("demo");
+      const buildTag = qs.get("build");
+      endpointEl.value = `${window.location.origin}/api/phone-imu/ingest`;
+      if (demoName || buildTag) {
+        const parts = ["QR-prefill ready"];
+        if (demoName) {
+          parts.push(`demo=${demoName}`);
+        }
+        if (buildTag) {
+          parts.push(`build=${buildTag}`);
+        }
+        hintEl.textContent = parts.join(" | ");
+      }
+      if (endpointFromQuery) {
+        endpointEl.value = endpointFromQuery;
+        hintEl.textContent += " | endpoint loaded from QR";
+      }
+
+      function nowIso() {
+        return new Date().toISOString().split("T")[1].replace("Z", "Z");
+      }
+
+      function appendLog(line) {
+        logEl.textContent += `[${nowIso()}] ${line}\n`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function healthUrl() {
+        const endpoint = endpointEl.value.trim();
+        if (!endpoint) {
+          return "";
+        }
+        try {
+          const url = new URL(endpoint);
+          url.pathname = url.pathname.endsWith("/ingest")
+            ? url.pathname.replace(/\/ingest$/, "/health")
+            : "/health";
+          url.search = "";
+          return url.toString();
+        } catch (_) {
+          return "";
+        }
+      }
+
+      function setStatus(text, ok) {
+        statusEl.textContent = text;
+        statusEl.className = "status " + (ok ? "ok" : "warn");
+      }
+
+      function renderStats() {
+        statsEl.textContent = JSON.stringify(
+          {
+            sent,
+            failed,
+            permissionState,
+            secureContext: window.isSecureContext,
+            visibilityState: document.visibilityState,
+            endpointHealth: healthUrl(),
+            orientationEvents,
+            motionEvents,
+            lastOrientationAt,
+            lastMotionAt,
+            lastPostStatus,
+            lastPostDetail,
+            lastHealthStatus,
+            lastHealthDetail,
+            endpoint: endpointEl.value.trim(),
+            latest,
+          },
+          null,
+          2
+        );
+      }
+
+      async function grantPermissionIfNeeded() {
+        const maybe = window.DeviceMotionEvent;
+        if (maybe && typeof maybe.requestPermission === "function") {
+          const resp = await maybe.requestPermission();
+          if (resp !== "granted") {
+            throw new Error("motion permission not granted");
+          }
+          permissionState = "granted";
+        }
+        const maybeOri = window.DeviceOrientationEvent;
+        if (maybeOri && typeof maybeOri.requestPermission === "function") {
+          const resp = await maybeOri.requestPermission();
+          if (resp !== "granted") {
+            throw new Error("orientation permission not granted");
+          }
+          permissionState = "granted";
+        }
+        if (permissionState === "unknown") {
+          permissionState = "not_required";
+        }
+        appendLog(`permission_state=${permissionState}`);
+        renderStats();
+      }
+
+      function attachListeners() {
+        window.addEventListener("deviceorientation", (ev) => {
+          latest.alpha = Number(ev.alpha ?? 0.0);
+          latest.beta = Number(ev.beta ?? 0.0);
+          latest.gamma = Number(ev.gamma ?? 0.0);
+          orientationEvents += 1;
+          lastOrientationAt = nowIso();
+          if (orientationEvents <= 5 || orientationEvents % 30 === 0) {
+            appendLog(
+              `deviceorientation count=${orientationEvents} beta=${latest.beta.toFixed(2)} gamma=${latest.gamma.toFixed(2)}`
+            );
+          }
+        });
+        window.addEventListener("devicemotion", (ev) => {
+          latest.accel_x = Number(ev.accelerationIncludingGravity?.x ?? 0.0);
+          latest.accel_y = Number(ev.accelerationIncludingGravity?.y ?? 0.0);
+          latest.accel_z = Number(ev.accelerationIncludingGravity?.z ?? 0.0);
+          latest.gyro_x = Number(ev.rotationRate?.alpha ?? 0.0);
+          latest.gyro_y = Number(ev.rotationRate?.beta ?? 0.0);
+          latest.gyro_z = Number(ev.rotationRate?.gamma ?? 0.0);
+          motionEvents += 1;
+          lastMotionAt = nowIso();
+          if (motionEvents <= 5 || motionEvents % 30 === 0) {
+            appendLog(
+              `devicemotion count=${motionEvents} accel=(${latest.accel_x.toFixed(2)},${latest.accel_y.toFixed(2)},${latest.accel_z.toFixed(2)})`
+            );
+          }
+        });
+      }
+
+      async function testEndpoint() {
+        const url = healthUrl();
+        if (!url) {
+          lastHealthStatus = "invalid_health_url";
+          lastHealthDetail = "Could not derive /health from endpoint";
+          appendLog(lastHealthDetail);
+          renderStats();
+          return;
+        }
+        try {
+          const resp = await fetch(url, { method: "GET" });
+          const text = await resp.text();
+          lastHealthStatus = String(resp.status);
+          lastHealthDetail = text.slice(0, 220);
+          appendLog(`health_check status=${resp.status} body=${lastHealthDetail}`);
+        } catch (err) {
+          lastHealthStatus = "network_error";
+          lastHealthDetail = String(err);
+          appendLog(`health_check_error detail=${lastHealthDetail}`);
+        }
+        renderStats();
+      }
+
+      async function postSample() {
+        const body = {
+          source_timestamp_ms: Date.now(),
+          alpha: latest.alpha,
+          beta: latest.beta,
+          gamma: latest.gamma,
+          accel_x: latest.accel_x,
+          accel_y: latest.accel_y,
+          accel_z: latest.accel_z,
+          gyro_x: latest.gyro_x,
+          gyro_y: latest.gyro_y,
+          gyro_z: latest.gyro_z,
+          confidence: 0.95,
+        };
+        try {
+          const resp = await fetch(endpointEl.value.trim(), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          const detail = await resp.text();
+          if (!resp.ok) {
+            failed += 1;
+            lastPostStatus = String(resp.status);
+            lastPostDetail = detail.slice(0, 220);
+            setStatus("status=streaming_with_errors", false);
+            appendLog(`post_failed status=${resp.status} detail=${lastPostDetail}`);
+          } else {
+            sent += 1;
+            lastPostStatus = String(resp.status);
+            lastPostDetail = detail.slice(0, 220);
+            setStatus("status=streaming", true);
+            if (sent <= 5 || sent % 20 === 0) {
+              appendLog(`post_ok count=${sent} beta=${latest.beta.toFixed(2)} gamma=${latest.gamma.toFixed(2)} detail=${lastPostDetail}`);
+            }
+          }
+        } catch (err) {
+          failed += 1;
+          lastPostStatus = "network_error";
+          lastPostDetail = String(err);
+          setStatus("status=streaming_with_errors", false);
+          appendLog(`post_error detail=${lastPostDetail}`);
+        }
+        renderStats();
+      }
+
+      document.getElementById("grant").onclick = async () => {
+        try {
+          await grantPermissionIfNeeded();
+          setStatus("status=permission_granted", true);
+          appendLog("grant_clicked result=ok");
+        } catch (err) {
+          permissionState = "failed";
+          setStatus("status=permission_failed", false);
+          appendLog(`grant_clicked result=error detail=${String(err)}`);
+          console.error(err);
+          renderStats();
+        }
+      };
+
+      document.getElementById("start").onclick = async () => {
+        try {
+          await grantPermissionIfNeeded();
+          if (!interval) {
+            interval = setInterval(postSample, 33);
+          }
+          setStatus("status=streaming", true);
+          appendLog(`stream_started endpoint=${endpointEl.value.trim()}`);
+          await testEndpoint();
+        } catch (err) {
+          setStatus("status=start_failed", false);
+          appendLog(`stream_start_failed detail=${String(err)}`);
+          console.error(err);
+        }
+      };
+
+      document.getElementById("test-endpoint").onclick = async () => {
+        await testEndpoint();
+      };
+
+      document.getElementById("stop").onclick = () => {
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+        setStatus("status=stopped", false);
+        appendLog("stream_stopped");
+      };
+
+      document.addEventListener("visibilitychange", () => {
+        appendLog(`visibility_change state=${document.visibilityState}`);
+        renderStats();
+      });
+
+      attachListeners();
+      appendLog(`controller_loaded secure=${window.isSecureContext} userAgent=${navigator.userAgent}`);
+      renderStats();
+    </script>
+  </body>
+</html>

@@ -19,6 +19,7 @@ This directory contains the public, developer-facing documentation for `build-wi
 
 ## Starters and Packages
 
+- [`presentation-remote.md`](presentation-remote.md)
 - [`web-phone-pointer.md`](web-phone-pointer.md)
 - [`control-profiles.md`](control-profiles.md)
 

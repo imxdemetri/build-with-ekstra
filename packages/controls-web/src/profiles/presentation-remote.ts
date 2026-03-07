@@ -5,10 +5,10 @@ export const presentationRemote: ControlProfile = {
   title: "Presentation Remote",
   description: "Slide and presentation control profile with simpler directional intent.",
   category: "presentation",
-  stability: "preview",
+  stability: "supported",
   starter: {
     slug: "presentation-remote",
-    availability: "planned",
+    availability: "supported",
   },
   motionAxis: {
     horizontal: "yaw",

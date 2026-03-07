@@ -25,6 +25,50 @@ jobs:
         working-directory: packages/controls-web
         run: npm run typecheck
 
+      - name: Verify package contents
+        working-directory: packages/controls-web
+        run: npm pack --dry-run
+
+  starter-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Smoke test web-phone-pointer starter
+        shell: bash
+        run: |
+          python -m http.server 8080 --directory starters/web-phone-pointer >/tmp/web-phone-pointer.log 2>&1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          sleep 2
+          curl -fsS http://127.0.0.1:8080/index.html | grep -q "Ekstra.OS Phone Pointer Demo"
+          curl -fsS http://127.0.0.1:8080/controller/index.html | grep -q "phone-pointer build"
+          curl -fsS http://127.0.0.1:8080/vendor/ekstra-motion-web.js | grep -q "EkstraMotionWebClient"
+          kill $SERVER_PID
+          wait $SERVER_PID || true
+          trap - EXIT
+
+      - name: Smoke test presentation-remote starter
+        shell: bash
+        run: |
+          python -m http.server 8081 --directory starters/presentation-remote >/tmp/presentation-remote.log 2>&1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID" EXIT
+          sleep 2
+          curl -fsS http://127.0.0.1:8081/index.html | grep -q "Ekstra.OS Presentation Remote"
+          curl -fsS http://127.0.0.1:8081/controller/index.html | grep -q "presentation-remote build"
+          curl -fsS http://127.0.0.1:8081/vendor/ekstra-motion-web.js | grep -q "EkstraMotionWebClient"
+          kill $SERVER_PID
+          wait $SERVER_PID || true
+          trap - EXIT
+
   repo-shape:
     runs-on: ubuntu-latest
     timeout-minutes: 5
