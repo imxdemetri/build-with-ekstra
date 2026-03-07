@@ -16,8 +16,14 @@ jobs:
       - name: Verify hosted pointer demo
         run: curl -fsSL https://ekstra.ai/build-with-ekstra/demo | grep -q "Ekstra.OS Phone Pointer Demo"
 
+      - name: Verify hosted presentation remote
+        run: curl -fsSL https://ekstra.ai/build-with-ekstra/presentation-remote | grep -q "Ekstra.OS Presentation Remote"
+
       - name: Verify hosted phone controller
         run: curl -fsSL https://ekstra.ai/build-with-ekstra/controller | grep -q "Ekstra.OS Phone IMU Controller"
+
+      - name: Verify hosted presentation controller
+        run: curl -fsSL "https://ekstra.ai/build-with-ekstra/presentation-controller?actorId=actor-smoke" | grep -q "Ekstra.OS Phone IMU Controller"
 
       - name: Verify hosted ingest health
         run: curl -fsSL https://ekstra.ai/api/phone-imu/health | grep -q '"status":"ok"'

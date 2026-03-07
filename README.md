@@ -32,6 +32,7 @@ Immediate live demo:
 
 ```text
 https://ekstra.ai/build-with-ekstra/demo
+https://ekstra.ai/build-with-ekstra/presentation-remote
 ```
 
 Quickstart:
@@ -73,6 +74,7 @@ Supported now:
 - hosted sandbox runtime for evaluation and prototype work
 - `web-phone-pointer` starter
 - `presentation-remote` starter
+- same-domain hosted pointer and presentation remote routes at `ekstra.ai`
 - documented browser bridge and phone IMU ingest contract
 - public docs, GitHub Pages, and wiki
 
@@ -139,6 +141,10 @@ Best for:
 - private networks
 - custom providers and connectors
 - tighter operational control
+
+Current status:
+- deployment assets are public
+- runtime image access is still preview-gated until the GHCR package is opened for anonymous pulls
 
 Use [`deploy/docker/`](deploy/docker/) for self-hosted runtime deployment.
 

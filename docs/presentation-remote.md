@@ -43,6 +43,14 @@ The point is not slide decks by themselves. The point is public proof that:
 
 ## First Run
 
+Hosted route:
+
+```text
+https://ekstra.ai/build-with-ekstra/presentation-remote
+```
+
+Local route:
+
 Serve the starter locally:
 
 ```powershell
@@ -56,7 +64,7 @@ Then open:
 http://127.0.0.1:18081/index.html
 ```
 
-When this starter is served from `localhost` or `127.0.0.1`, it automatically targets the hosted `ekstra.ai` browser bridge and phone controller path unless you override the endpoints.
+When this starter is served from `localhost` or `127.0.0.1`, it automatically targets the hosted `ekstra.ai` browser bridge, presentation controller path, and phone ingest endpoint unless you override the endpoints.
 
 ## Read Next
 

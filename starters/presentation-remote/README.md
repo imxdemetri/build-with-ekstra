@@ -15,6 +15,14 @@ Current state: supported starter for evaluation and prototyping.
 
 ## Fastest Live Check
 
+Hosted route:
+
+```text
+https://ekstra.ai/build-with-ekstra/presentation-remote
+```
+
+Local route:
+
 Serve the starter locally:
 
 ```powershell
@@ -36,7 +44,7 @@ This starter can be configured with three query parameters:
 - `controllerBase`
 - `ingestUrl`
 
-If you serve it from `localhost` or `127.0.0.1`, it defaults to the hosted `ekstra.ai` sandbox automatically.
+If you serve it from `localhost` or `127.0.0.1`, it defaults to the hosted `ekstra.ai` sandbox automatically, including the dedicated presentation controller route.
 
 ## Included Files
 

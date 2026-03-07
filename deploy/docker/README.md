@@ -2,6 +2,12 @@
 
 This folder defines the target self-hosted runtime shape for public developers.
 
+Current public status:
+
+- the manifests in this folder are public
+- the runtime image access path is still preview-grade until the GHCR package is opened for anonymous pulls
+- if the image is private in your environment, run `docker login ghcr.io` before compose bring-up
+
 ## Required published image
 
 Before this path works, publish:

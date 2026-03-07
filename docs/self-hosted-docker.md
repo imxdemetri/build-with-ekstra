@@ -2,6 +2,12 @@
 
 Self-hosting is the recommended path once you move beyond prototype evaluation.
 
+Current public status:
+
+- deployment manifests are public in this repo
+- the runtime image path is still preview-grade until the GHCR package is opened for anonymous pulls
+- treat self-hosted Docker as a serious path, but not yet the zero-friction public onboarding wedge
+
 ## Use Self-Hosted When
 
 - you need stable private endpoints
@@ -37,6 +43,11 @@ docker compose -f deploy/docker/docker-compose.yml up -d
 ```
 
 After the services are healthy, point a supported starter at your self-hosted WebSocket bridge, phone controller, and ingest endpoint.
+
+If `docker compose` fails before containers start, check these two things first:
+
+- Docker Desktop or Docker Engine is actually running
+- you can authenticate to `ghcr.io` if the runtime image is not yet public to anonymous pulls
 
 ## Operational Expectations
 

@@ -20,10 +20,11 @@ Open:
 
 ```text
 https://ekstra.ai/build-with-ekstra/demo
+https://ekstra.ai/build-with-ekstra/presentation-remote
 ```
 
 This is the fastest way to validate the end-to-end browser flow before editing local code.
-The current hosted reference demo is the pointer flow. The presentation remote is the second supported starter and is intended to be served locally against the same hosted endpoints.
+The current hosted reference demos are the pointer flow and the presentation remote. The same hosted runtime powers both.
 
 ### 2. Clone the repo
 
