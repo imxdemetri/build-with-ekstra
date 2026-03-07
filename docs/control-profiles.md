@@ -21,7 +21,7 @@ Ekstra keeps the runtime stable and pushes product-specific interaction behavior
 
 ## Public Profile Matrix
 
-Profiles currently exposed in `@ekstra/controls-web`:
+Profiles currently exposed in `@ekstraai/controls-web`:
 
 | Export | Profile ID | Status | Starter | Notes |
 | --- | --- | --- | --- | --- |
@@ -79,3 +79,4 @@ Do not treat a profile definition by itself as a finished product starter.
 - [`support-status.md`](support-status.md)
 - [`public-contract.md`](public-contract.md)
 - [`../packages/controls-web/README.md`](../packages/controls-web/README.md)
+

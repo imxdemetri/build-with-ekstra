@@ -10,7 +10,7 @@ It is the document a developer should read before wiring Ekstra into a real prod
 - release phase: `public developer preview`
 - contract source of truth:
   - this document
-  - the `@ekstra/controls-web` package source in this repo
+  - the `@ekstraai/controls-web` package source in this repo
   - [`CHANGELOG.md`](../CHANGELOG.md)
 
 For the public preview, breaking changes to documented surfaces should be called out in the changelog before they are reflected in the hosted sandbox and starter docs.
@@ -23,7 +23,7 @@ This public contract covers:
 - the browser WebSocket bridge message format
 - the phone IMU ingest endpoint used by the public starter
 - the topic and payload shapes consumed by `web-phone-pointer`
-- the exported metadata surface of `@ekstra/controls-web`
+- the exported metadata surface of `@ekstraai/controls-web`
 
 This public contract does not cover:
 
@@ -386,7 +386,7 @@ Example health response:
 - the public starter defaults to `actor-1` and `surface:web-pointer-demo`
 - production integrations should set their own actor and surface identifiers explicitly
 
-## `@ekstra/controls-web` Contract
+## `@ekstraai/controls-web` Contract
 
 The public package contract is currently:
 
@@ -415,3 +415,4 @@ For the current preview:
 - [`support-status.md`](support-status.md)
 - [`hosted-sandbox.md`](hosted-sandbox.md)
 - [`web-phone-pointer.md`](web-phone-pointer.md)
+

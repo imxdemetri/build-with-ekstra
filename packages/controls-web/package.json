@@ -1,6 +1,6 @@
 {
-  "name": "@ekstra/controls-web",
-  "version": "0.1.0-preview.1",
+  "name": "@ekstraai/controls-web",
+  "version": "0.1.0-preview.2",
   "private": false,
   "description": "Reference web control profiles for Ekstra.OS",
   "type": "module",
@@ -51,3 +51,4 @@
     "typescript": "^5.9.2"
   }
 }
+

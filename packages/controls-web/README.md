@@ -1,6 +1,6 @@
-# `@ekstra/controls-web`
+# `@ekstraai/controls-web`
 
-`@ekstra/controls-web` is the public browser control-profile package for Ekstra-powered web experiences.
+`@ekstraai/controls-web` is the public browser control-profile package for Ekstra-powered web experiences.
 
 It currently exposes typed profile metadata, named exports, and lookup helpers for motion-driven browser interaction modes.
 
@@ -30,7 +30,7 @@ import {
   getControlProfile,
   pointerBasic,
   supportedControlProfiles,
-} from "@ekstra/controls-web";
+} from "@ekstraai/controls-web";
 
 console.log(pointerBasic.id);
 console.log(supportedControlProfiles.map((profile) => profile.id));
@@ -43,7 +43,7 @@ console.log(controlProfiles.length);
 The first npm preview release is intended to publish on the `preview` dist-tag.
 
 ```bash
-npm install @ekstra/controls-web@preview
+npm install @ekstraai/controls-web@preview
 ```
 
 Until that first publish lands, use the package source directly from this repo.
@@ -102,3 +102,4 @@ For runtime contracts, see:
 For package release steps, see:
 
 - [`./RELEASING.md`](./RELEASING.md)
+

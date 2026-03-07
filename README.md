@@ -75,7 +75,7 @@ Supported now:
 - public docs, GitHub Pages, and wiki
 
 Preview now:
-- `@ekstra/controls-web` package source
+- `@ekstraai/controls-web` package source
 - public control profile catalog beyond the two supported starters
 - same-domain `ekstra.ai` developer routes and hosted demo flow
 
@@ -170,3 +170,4 @@ site/                  GitHub Pages landing site
 ## Status
 
 Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments. The current supported public wedge is the browser phone IMU flow across pointer and presentation starters, with broader profiles and modalities exposed more cautiously as preview or directional surfaces.
+

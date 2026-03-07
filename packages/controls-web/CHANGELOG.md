@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.1.0-preview.1 - 2026-03-06
+## 0.1.0-preview.2 - 2026-03-06
 
-Initial npm preview release preparation for `@ekstra/controls-web`.
+Initial npm preview release preparation for `@ekstraai/controls-web`.
 
 - typed metadata exports for public control profiles
 - supported browser-facing profiles:
@@ -11,3 +11,5 @@ Initial npm preview release preparation for `@ekstra/controls-web`.
   - `presentation.remote`
 - preview and experimental profile metadata for additional control directions
 - release-check script for tarball and export validation
+- package renamed from the unavailable `@ekstra` scope to `@ekstraai`
+

@@ -11,7 +11,7 @@ Initial public developer preview baseline:
 - public developer landing and docs
 - hosted sandbox under `ekstra.ai`
 - `web-phone-pointer` as the primary supported public starter
-- `@ekstra/controls-web` package scaffold and public profile catalog
+- `@ekstraai/controls-web` package scaffold and public profile catalog
 - GitHub wiki, support surface, and public launch board
 
 ## Unreleased
@@ -23,3 +23,4 @@ Current public hardening work:
 - tighter security and hosted sandbox expectations
 - stronger package metadata and control profile support semantics
 - `presentation-remote` as the second public starter
+

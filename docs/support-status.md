@@ -29,7 +29,7 @@ That distinction matters because the internal Ekstra platform is broader than th
 | Phone IMU ingest at `https://ekstra.ai/api/phone-imu/ingest` | Supported | Current no-download onboarding path |
 | `web-phone-pointer` starter | Supported | Primary public starter |
 | `presentation-remote` starter | Supported | Second public starter proving a discrete command pattern |
-| `@ekstra/controls-web` metadata API | Preview | Public package source exists; first npm release is still pending |
+| `@ekstraai/controls-web` metadata API | Preview | Public package source exists; first npm release is still pending |
 | `pointer.basic` profile | Supported | Primary profile for current starter |
 | `pointer.precision` profile | Supported | Public profile metadata, no dedicated starter yet |
 | `presentation.remote` profile | Supported | Backed by a public starter |
@@ -75,3 +75,4 @@ Do not assume:
 - [`public-contract.md`](public-contract.md)
 - [`control-profiles.md`](control-profiles.md)
 - [`hosted-sandbox.md`](hosted-sandbox.md)
+

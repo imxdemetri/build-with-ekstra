@@ -12,6 +12,7 @@ Planned runtime contract:
 
 - browser connection to `ws_bridge`
 - phone IMU ingest over HTTPS
-- orbit-specific control profile from `@ekstra/controls-web`
+- orbit-specific control profile from `@ekstraai/controls-web`
 
 This starter is part of the public roadmap surface, but it is not yet a supported runnable starter.
+

@@ -24,7 +24,7 @@ function ensure(condition, message) {
 
 const pkg = JSON.parse(readFileSync(packageJsonPath, "utf8"));
 
-ensure(pkg.name === "@ekstra/controls-web", "package name must remain @ekstra/controls-web");
+ensure(pkg.name === "@ekstraai/controls-web", "package name must remain @ekstraai/controls-web");
 ensure(typeof pkg.version === "string" && pkg.version.length > 0, "package version is missing");
 ensure(pkg.private === false, "package must be publishable");
 ensure(pkg.type === "module", "package must be ESM");
@@ -37,7 +37,7 @@ ensure(existsSync(distIndexPath), "dist/index.js is missing. Run npm run build")
 ensure(existsSync(distTypesPath), "dist/index.d.ts is missing. Run npm run build");
 
 const readme = readFileSync(readmePath, "utf8");
-ensure(readme.includes("@ekstra/controls-web"), "README must mention package name");
+ensure(readme.includes("@ekstraai/controls-web"), "README must mention package name");
 
 const moduleNs = await import(pathToFileURL(distIndexPath).href);
 const {
@@ -98,3 +98,4 @@ console.log(
     2,
   ),
 );
+
