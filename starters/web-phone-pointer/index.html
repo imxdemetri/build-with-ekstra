@@ -59,7 +59,15 @@
           <div class="pair-grid">
             <div class="qr">
               <img id="qr" alt="Phone pairing QR code" />
-              <div class="sub" style="margin-top:10px;font-size:12px">Scan to open the phone IMU controller page.</div>
+              <div id="qr-status" class="sub" style="margin-top:10px;font-size:12px">Scan to open the phone IMU controller page.</div>
+              <a
+                id="phone-open-link"
+                class="action"
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                style="display:none;margin-top:10px"
+              >Open controller directly</a>
             </div>
             <div>
               <div class="field"><label for="controller-base">Phone controller page</label><input id="controller-base" /></div>
@@ -323,12 +331,62 @@
         updateStats();
       }
 
+      function qrCandidates(urlString) {
+        const encoded = encodeURIComponent(urlString);
+        const candidates = [];
+        if (
+          window.location.hostname === "ekstra.ai" ||
+          window.location.hostname.endsWith(".ekstra.ai")
+        ) {
+          candidates.push(`${window.location.origin}/build-with-ekstra/qr?data=${encoded}`);
+        }
+        candidates.push(
+          `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encoded}`
+        );
+        return candidates;
+      }
+
+      function renderPhoneQr(urlString) {
+        const qrEl = el("qr");
+        const qrStatusEl = el("qr-status");
+        const openLinkEl = el("phone-open-link");
+        const candidates = qrCandidates(urlString);
+        let attempt = 0;
+
+        openLinkEl.href = urlString;
+        openLinkEl.style.display = "inline-flex";
+        qrEl.style.display = "block";
+        qrStatusEl.textContent = "Generating phone pairing QR code...";
+
+        qrEl.onload = () => {
+          qrStatusEl.textContent = "Scan to open the phone IMU controller page.";
+        };
+
+        qrEl.onerror = () => {
+          attempt += 1;
+          if (attempt < candidates.length) {
+            qrStatusEl.textContent = "Primary QR source unavailable. Trying fallback...";
+            qrEl.src = candidates[attempt];
+            return;
+          }
+          qrEl.removeAttribute("src");
+          qrEl.style.display = "none";
+          qrStatusEl.textContent = "QR unavailable right now. Use the direct controller link below.";
+          log("qr_generation_unavailable using=direct_link");
+        };
+
+        qrEl.src = candidates[attempt];
+      }
+
       function refreshPhoneUrl() {
         const base = el("controller-base").value.trim();
         const endpoint = el("ingest-endpoint").value.trim();
         if (!base || !endpoint) {
           el("phone-url").value = "";
           el("qr").removeAttribute("src");
+          el("qr").style.display = "none";
+          el("qr-status").textContent = "Enter controller and ingest URLs to generate a phone link.";
+          el("phone-open-link").style.display = "none";
           updateStats();
           return;
         }
@@ -337,7 +395,7 @@
         url.searchParams.set("demo", "web_phone_pointer_demo");
         url.searchParams.set("build", "2026-03-06-2");
         el("phone-url").value = url.toString();
-        el("qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encodeURIComponent(url.toString())}`;
+        renderPhoneQr(url.toString());
         updateStats();
       }
 
