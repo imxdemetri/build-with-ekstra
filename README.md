@@ -181,6 +181,7 @@ site/                  GitHub Pages landing site
 - Support: [`SUPPORT.md`](SUPPORT.md)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- License: `Apache-2.0` via [`LICENSE`](LICENSE)
 - Email: `info@ekstra.ai`
 - Telegram: `https://t.me/ekstraai`
 - X: `https://x.com/ekstraai`
