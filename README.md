@@ -37,16 +37,18 @@ python -m http.server 8080
 Then open:
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fwsbridge-production-2ec6.up.railway.app%2Fws&controllerBase=https%3A%2F%2Ffrontdoor-production.up.railway.app%2Fexamples%2Fphone_imu_controller%2Findex.html&ingestUrl=https%3A%2F%2Ffrontdoor-production.up.railway.app%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
 ```
 
 Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 
 ## Live Public Surfaces
 
-- Docs site: `https://imxdemetri.github.io/build-with-ekstra/`
-- Hosted demo frontdoor: `https://frontdoor-production.up.railway.app/`
-- Hosted WebSocket bridge: `wss://wsbridge-production-2ec6.up.railway.app/ws`
+- Developer landing: `https://ekstra.ai/build-with-ekstra`
+- Live demo: `https://ekstra.ai/build-with-ekstra/demo`
+- Phone controller: `https://ekstra.ai/build-with-ekstra/controller`
+- Hosted WebSocket bridge: `wss://ekstra.ai/ws`
+- Phone ingest: `https://ekstra.ai/api/phone-imu/ingest`
 - GitHub wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
 - GitHub project board: `https://github.com/users/imxdemetri/projects/1`
 

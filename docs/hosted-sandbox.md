@@ -12,11 +12,12 @@ It is not yet positioned as a production-grade hosted service.
 
 ## Current Public Endpoints
 
-- frontdoor: `https://frontdoor-production.up.railway.app/`
-- WebSocket bridge: `wss://wsbridge-production-2ec6.up.railway.app/ws`
-- phone controller: `https://frontdoor-production.up.railway.app/examples/phone_imu_controller/index.html`
-- phone ingest: `https://frontdoor-production.up.railway.app/api/phone-imu/ingest`
-- phone health: `https://frontdoor-production.up.railway.app/api/phone-imu/health`
+- developer landing: `https://ekstra.ai/build-with-ekstra`
+- live demo: `https://ekstra.ai/build-with-ekstra/demo`
+- WebSocket bridge: `wss://ekstra.ai/ws`
+- phone controller: `https://ekstra.ai/build-with-ekstra/controller`
+- phone ingest: `https://ekstra.ai/api/phone-imu/ingest`
+- phone health: `https://ekstra.ai/api/phone-imu/health`
 
 ## What The Sandbox Includes
 
@@ -46,5 +47,5 @@ For the first integration:
 ## Example Starter URL
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fwsbridge-production-2ec6.up.railway.app%2Fws&controllerBase=https%3A%2F%2Ffrontdoor-production.up.railway.app%2Fexamples%2Fphone_imu_controller%2Findex.html&ingestUrl=https%3A%2F%2Ffrontdoor-production.up.railway.app%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
 ```

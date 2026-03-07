@@ -4,7 +4,7 @@
 
 - [`README.md`](README.md)
 - [`docs/README.md`](docs/README.md)
-- GitHub Pages: `https://imxdemetri.github.io/build-with-ekstra/`
+- Developer landing: `https://ekstra.ai/build-with-ekstra`
 - Wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
 
 ## Community

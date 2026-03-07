@@ -28,6 +28,6 @@ This directory contains the public, developer-facing documentation for `build-wi
 
 ## External Links
 
-- GitHub Pages: `https://imxdemetri.github.io/build-with-ekstra/`
+- Developer landing: `https://ekstra.ai/build-with-ekstra`
 - Wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
 - Project board: `https://github.com/users/imxdemetri/projects/1`
