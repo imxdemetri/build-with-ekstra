@@ -51,6 +51,12 @@ npm view @ekstraai/controls-web version
 npm view @ekstraai/controls-web dist-tags
 ```
 
+For stable releases:
+
+```bash
+npm install @ekstraai/controls-web
+```
+
 For preview releases:
 
 ```bash

@@ -32,10 +32,7 @@ Initial public developer preview baseline:
 
 Current public hardening work:
 
-- explicit public contract documentation
-- supported versus preview status matrix
-- tighter security and hosted sandbox expectations
-- stronger package metadata and control profile support semantics
-- `presentation-remote` as the second public starter
-- first published npm preview release for `@ekstraai/controls-web`
+- stable `@ekstraai/controls-web@0.1.0` package release for supported profiles
+- dedicated controls package API reference
+- publicly pullable GHCR runtime image and validated self-hosted Docker path
 

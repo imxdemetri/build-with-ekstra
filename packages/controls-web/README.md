@@ -6,12 +6,12 @@ It currently exposes typed profile metadata, named exports, and lookup helpers f
 
 ## Current Package Status
 
-- package surface: `public preview`
+- package surface: `stable for supported profiles`
 - source is public in this repo
-- first npm preview release is published on npm
+- stable `0.1.0` release is published on npm
 - supported profiles today: `pointer.basic`, `pointer.precision`, and `presentation.remote`
 
-This package is not yet a full runtime SDK. It sits above the runtime and helps developers standardize control behavior in browser products.
+This package is not a full runtime SDK. It sits above the runtime and helps developers standardize control behavior in browser products.
 
 ## What You Can Do With It Today
 
@@ -59,13 +59,13 @@ In practice, this means you can:
 
 ## Install
 
-The current public preview release is published on npm.
+The current stable package release is published on npm.
 
 ```bash
-npm install @ekstraai/controls-web@preview
+npm install @ekstraai/controls-web
 ```
 
-This package is published as a preview release and should still be treated as a narrow, browser-focused public surface.
+The stable contract applies to the supported profile surface. Preview and experimental profiles remain intentionally looser.
 
 ## Supported Profiles Today
 
@@ -209,6 +209,7 @@ For runtime contracts, see:
 
 - [`../../docs/public-contract.md`](../../docs/public-contract.md)
 - [`../../docs/support-status.md`](../../docs/support-status.md)
+- [`../../docs/controls-web-api-reference.md`](../../docs/controls-web-api-reference.md)
 
 For package release steps, see:
 

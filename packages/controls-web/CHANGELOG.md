@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0 - 2026-03-07
+
+First stable public release for the supported `@ekstraai/controls-web` surface.
+
+- stable support for:
+  - `pointer.basic`
+  - `pointer.precision`
+  - `presentation.remote`
+- typed exports and lookup helpers documented as the stable package contract
+- dedicated API reference added in the public docs
+- preview and experimental profiles remain available as non-stable metadata
+
 ## 0.1.0-preview.2 - 2026-03-06
 
 First public npm preview release for `@ekstraai/controls-web`.

@@ -23,6 +23,7 @@ This directory contains the public, developer-facing documentation for `build-wi
 - [`presentation-remote.md`](presentation-remote.md)
 - [`web-phone-pointer.md`](web-phone-pointer.md)
 - [`control-profiles.md`](control-profiles.md)
+- [`controls-web-api-reference.md`](controls-web-api-reference.md)
 
 ## Operations
 

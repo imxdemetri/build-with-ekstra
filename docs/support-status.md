@@ -30,8 +30,8 @@ That distinction matters because the internal Ekstra platform is broader than th
 | Phone IMU ingest at `https://ekstra.ai/api/phone-imu/ingest` | Supported | Current no-download onboarding path |
 | `web-phone-pointer` starter | Supported | Primary public starter |
 | `presentation-remote` starter | Supported | Second public starter proving a discrete command pattern |
-| Self-hosted Docker deployment assets | Preview | Compose files are public; runtime image access still requires GHCR visibility or auth |
-| `@ekstraai/controls-web` metadata API | Preview | Public npm preview package is published; surface is still intentionally narrow |
+| Self-hosted Docker deployment assets | Supported | Public GHCR runtime image and validated self-hosted compose path are available |
+| `@ekstraai/controls-web` metadata API | Supported | Stable package is published for the supported profile surface; broader profile metadata remains preview or experimental |
 | `pointer.basic` profile | Supported | Primary profile for current starter |
 | `pointer.precision` profile | Supported | Public profile metadata, no dedicated starter yet |
 | `presentation.remote` profile | Supported | Backed by a public starter |

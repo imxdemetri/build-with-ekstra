@@ -17,7 +17,7 @@ It is not the full internal runtime source tree.
 - browser experiences controlled by a phone with no native app install
 - motion-aware websites and dashboards driven by `motion.samples`
 - gesture-driven web interactions built on top of Ekstra composition and routing
-- supported pointer and presentation workflows plus preview control profiles for kiosk, media, and 3D navigation
+- supported pointer and presentation workflows plus additional preview control profiles for kiosk, media, and 3D navigation
 
 ## Start In 10 Minutes
 
@@ -53,7 +53,7 @@ When a supported starter is served from `localhost` or `127.0.0.1`, it automatic
 
 Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 
-Before integrating against the hosted preview, read:
+Before integrating against the hosted sandbox, read:
 
 - [`docs/public-contract.md`](docs/public-contract.md)
 - [`docs/support-status.md`](docs/support-status.md)
@@ -79,24 +79,28 @@ Supported now:
 - public docs, GitHub Pages, and wiki
 
 Preview now:
-- published `@ekstraai/controls-web` preview package
+- additional `@ekstraai/controls-web` preview and experimental profile metadata beyond the supported profile set
 - public control profile catalog beyond the two supported starters
 - same-domain `ekstra.ai` developer routes and hosted demo flow
 
 Planned next:
 - `orbit-3d` starter
-- broader control-profile coverage and stable npm package releases
+- broader control-profile coverage beyond the current stable supported set
 
 ## Latest Package Release
 
-- npm package: `@ekstraai/controls-web@0.1.0-preview.2`
-- GitHub prerelease: `controls-web-v0.1.0-preview.2`
+- npm package: `@ekstraai/controls-web@0.1.0`
+- GitHub release tag: `controls-web-v0.1.0`
 
 Install:
 
 ```bash
-npm install @ekstraai/controls-web@preview
+npm install @ekstraai/controls-web
 ```
+
+API reference:
+
+- [`docs/controls-web-api-reference.md`](docs/controls-web-api-reference.md)
 
 ## Platform Model
 
@@ -144,7 +148,7 @@ Best for:
 
 Current status:
 - deployment assets are public
-- runtime image access is still preview-gated until the GHCR package is opened for anonymous pulls
+- runtime image is publicly pullable from GHCR
 
 Use [`deploy/docker/`](deploy/docker/) for self-hosted runtime deployment.
 
@@ -172,6 +176,7 @@ site/                  GitHub Pages landing site
 - [`docs/hosted-sandbox.md`](docs/hosted-sandbox.md)
 - [`docs/self-hosted-docker.md`](docs/self-hosted-docker.md)
 - [`docs/control-profiles.md`](docs/control-profiles.md)
+- [`docs/controls-web-api-reference.md`](docs/controls-web-api-reference.md)
 - [`docs/presentation-remote.md`](docs/presentation-remote.md)
 - [`docs/web-phone-pointer.md`](docs/web-phone-pointer.md)
 - [`CHANGELOG.md`](CHANGELOG.md)
@@ -190,5 +195,5 @@ site/                  GitHub Pages landing site
 
 ## Status
 
-Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments. The current supported public wedge is the browser phone IMU flow across pointer and presentation starters, with broader profiles and modalities exposed more cautiously as preview or directional surfaces.
+Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments. The current supported public wedge is the browser phone IMU flow across pointer and presentation starters. `@ekstraai/controls-web` is now stable for the supported profile surface, while broader profiles and modalities remain preview or directional surfaces.
 

@@ -394,20 +394,23 @@ The public package contract is currently:
 - named profile exports
 - aggregate profile lookup helpers
 
-It is not yet a full motion runtime SDK.
+For the supported profile surface, this package is now stable at `0.1.0`.
+
+It is not a full motion runtime SDK.
 
 Current public package docs:
 
 - [`docs/control-profiles.md`](control-profiles.md)
+- [`docs/controls-web-api-reference.md`](controls-web-api-reference.md)
 - [`packages/controls-web/README.md`](../packages/controls-web/README.md)
 
 ## Compatibility Policy
 
-For the current preview:
+For the current hosted preview:
 
 - the hosted browser event envelope documented here is the compatibility target
 - undocumented topics or fields may change without notice
-- supported starter wiring and supported package exports should only change with changelog coverage
+- supported starter wiring and stable supported package exports should only change with changelog coverage
 - preview and experimental surfaces may evolve more quickly than supported ones
 
 ## Related Reading

@@ -50,6 +50,7 @@ That means the safe claim is:
 
 - the profile system is real
 - the public surface now proves both pointer and presentation control
+- the stable package surface covers the supported profiles
 - broader profile coverage is public and typed, but not equally mature yet
 
 ## Package API
@@ -78,5 +79,6 @@ Do not treat a profile definition by itself as a finished product starter.
 
 - [`support-status.md`](support-status.md)
 - [`public-contract.md`](public-contract.md)
+- [`controls-web-api-reference.md`](controls-web-api-reference.md)
 - [`../packages/controls-web/README.md`](../packages/controls-web/README.md)
 

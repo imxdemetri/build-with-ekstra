@@ -1,6 +1,6 @@
 {
   "name": "@ekstraai/controls-web",
-  "version": "0.1.0-preview.2",
+  "version": "0.1.0",
   "private": false,
   "description": "Reference web control profiles for Ekstra.OS",
   "license": "Apache-2.0",
@@ -52,4 +52,3 @@
     "typescript": "^5.9.2"
   }
 }
-
