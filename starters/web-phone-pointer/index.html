@@ -5,25 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ekstra.OS Phone Pointer Demo</title>
     <style>
-      :root{--bg:#f3ede1;--ink:#1b2228;--muted:#5f6b75;--line:rgba(27,34,40,.12);--panel:rgba(255,252,246,.9);--accent:#0d8968;--shadow:0 24px 60px rgba(27,34,40,.14)}
-      *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:var(--ink);font-family:"Avenir Next","Segoe UI",Tahoma,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,173,.35),transparent 28%),linear-gradient(180deg,#fbf7ef 0%,var(--bg) 56%,#e8dfd0 100%)}
-      .shell{max-width:1140px;margin:0 auto;padding:28px 20px 120px}.hero,.layout{display:grid;gap:18px}.hero{grid-template-columns:minmax(0,1.3fr) minmax(320px,.9fr)}.layout{grid-template-columns:minmax(0,1fr) 320px;margin-top:22px}
-      .panel{background:var(--panel);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
-      .copy,.pair,.surface,.sidebar{padding:22px}.eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(13,137,104,.09);border:1px solid rgba(13,137,104,.18);color:#0b6e54;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-      h1{margin:16px 0 10px;font-size:clamp(40px,6vw,72px);line-height:.94;letter-spacing:-.05em}.lede,.sub,.card p,.section p,.pair-note,.log{color:var(--muted)}.lede{max-width:58ch;font-size:17px;line-height:1.55;margin:0 0 18px}
-      .pill-row,.toolbar,.cta{display:flex;flex-wrap:wrap;gap:10px}.pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(27,34,40,.1);background:rgba(255,255,255,.78);font-size:13px}.ok{color:#0b6e54;background:rgba(13,137,104,.1);border-color:rgba(13,137,104,.22)}.warn{color:#8d3f1d;background:rgba(201,91,47,.1);border-color:rgba(201,91,47,.22)}
-      button,a.action{border:1px solid rgba(27,34,40,.12);border-radius:999px;padding:10px 15px;background:rgba(255,255,255,.82);color:var(--ink);font:inherit;text-decoration:none;cursor:pointer}.mode-on{background:rgba(13,137,104,.12);border-color:rgba(13,137,104,.32);color:#0b6e54}
-      .mini-grid,.card-grid{display:grid;gap:12px}.mini-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:18px}.mini,.card,.section,details,.stat,.story{border:1px solid rgba(27,34,40,.08);border-radius:18px;background:rgba(255,255,255,.76)}
-      .mini,.stat,.story{padding:14px}.mini strong,.stat strong{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.mini span,.stat span{display:block;margin-top:8px}
-      .pair-grid{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}.qr{padding:12px;border-radius:20px;background:linear-gradient(180deg,#fffdf8 0%,#f4ebdd 100%);border:1px solid rgba(27,34,40,.08)}.qr img{display:block;width:100%;aspect-ratio:1;border-radius:14px;background:#fff}
+      :root{--bg:#f3ede1;--ink:#1b2228;--muted:#5f6b75;--line:rgba(27,34,40,.12);--panel:rgba(255,252,246,.92);--accent:#0d8968;--shadow:0 24px 60px rgba(27,34,40,.14)}
+      *{box-sizing:border-box} html{scroll-behavior:auto} body{margin:0;color:var(--ink);font-family:"Avenir Next","Segoe UI",Tahoma,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,173,.35),transparent 28%),linear-gradient(180deg,#fbf7ef 0%,var(--bg) 56%,#e8dfd0 100%)}
+      .shell{max-width:1020px;margin:0 auto;padding:28px 20px 120px;display:grid;gap:20px}
+      .panel{background:var(--panel);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);backdrop-filter:blur(10px);padding:24px}
+      .eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(13,137,104,.09);border:1px solid rgba(13,137,104,.18);color:#0b6e54;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+      .hero{text-align:center}
+      .brand-logo{display:block;width:132px;height:132px;object-fit:contain;margin:0 auto 10px}
+      h1{margin:14px 0 10px;font-size:clamp(38px,6vw,66px);line-height:.96;letter-spacing:-.05em}
+      .lede,.sub,.pair-note,.target-card p,.log,.advanced-copy{color:var(--muted)}
+      .lede{max-width:66ch;margin:0 auto 18px;font-size:17px;line-height:1.55}
+      .pill-row,.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(27,34,40,.1);background:rgba(255,255,255,.78);font-size:13px}.ok{color:#0b6e54;background:rgba(13,137,104,.1);border-color:rgba(13,137,104,.22)}.warn{color:#8d3f1d;background:rgba(201,91,47,.1);border-color:rgba(201,91,47,.22)}
+      button,a.action{border:1px solid rgba(27,34,40,.12);border-radius:999px;padding:10px 15px;background:rgba(255,255,255,.82);color:var(--ink);font:inherit;text-decoration:none;cursor:pointer}
+      .pair-shell{display:grid;grid-template-columns:minmax(180px,1fr) minmax(260px,340px) minmax(180px,1fr);gap:18px;align-items:center;margin-top:22px}
+      .hand-choice{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;min-height:220px;padding:24px;border-radius:26px;border:1px solid rgba(27,34,40,.12);background:rgba(255,255,255,.72);transition:transform .12s ease,background .12s ease,border-color .12s ease}
+      .hand-choice strong{font-size:28px;letter-spacing:-.03em}
+      .hand-choice span{max-width:16ch;color:var(--muted);text-align:center;line-height:1.4}
+      .hand-choice.mode-on{background:rgba(13,137,104,.12);border-color:rgba(13,137,104,.32);color:#0b6e54;transform:translateY(-2px)}
+      .qr-card{padding:16px;border-radius:24px;background:linear-gradient(180deg,#fffdf8 0%,#f4ebdd 100%);border:1px solid rgba(27,34,40,.08)}
+      .qr-wrap{padding:12px;border-radius:20px;background:#fff}
+      .qr-wrap img{display:block;width:100%;aspect-ratio:1;border-radius:14px;background:#fff}
+      .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+      .step,.story,.stat,.target-card,details{border:1px solid rgba(27,34,40,.08);border-radius:18px;background:rgba(255,255,255,.76)}
+      .step,.story,.stat{padding:14px}
+      .step strong,.stat strong{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+      .step span,.stat span{display:block;margin-top:8px}
+      .targets-head h2,.targets-head p,.story p,.advanced-copy p{margin:0}
+      .targets-head p,.story p{margin-top:10px}
+      .target-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+      .target-card{padding:18px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+      .target-card .meta{font-size:12px;color:#0b6e54;text-transform:uppercase;letter-spacing:.08em}
+      .target-card h4{margin:8px 0}.target-card button{align-self:flex-start}
+      .spacer{min-height:42vh;display:flex;align-items:center;justify-content:center;margin-top:18px;padding:20px;border-radius:24px;border:1px dashed rgba(27,34,40,.16);color:var(--muted);text-align:center;background:rgba(255,255,255,.48)}
+      .story strong{display:block;font-size:26px;line-height:1}
+      .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+      .stat span{font-size:20px}
+      details{padding:16px;margin-top:16px} summary{cursor:pointer;font-weight:600}
+      .advanced-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px}
       .field{margin-bottom:12px}.field label{display:block;margin-bottom:6px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.field input{width:100%;padding:11px 12px;border-radius:14px;border:1px solid rgba(27,34,40,.12);background:rgba(255,255,255,.82);font:inherit}
-      .surface-top{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}.section{padding:20px;margin-bottom:16px}.section h2,.section h3{margin:0 0 10px}.card-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px}.card{padding:18px}.card h4{margin:0 0 8px}.card .meta{font-size:12px;color:#0b6e54;text-transform:uppercase;letter-spacing:.08em}
-      .sidebar{position:sticky;top:18px}.story strong{display:block;font-size:26px;line-height:1}.story p{margin:10px 0 0}.stats{display:grid;gap:10px;margin-top:14px}.stat span{font-size:20px}.log{margin-top:14px;padding:12px;min-height:220px;max-height:320px;overflow:auto;border-radius:18px;background:#10181d;color:#befad8;font:12px/1.5 Consolas,monospace}.debug-state{min-height:180px;max-height:260px;color:#dcecf5}
-      details{padding:14px 16px} summary{cursor:pointer;font-weight:600} details p{margin:10px 0 0} [data-ekstra-clickable].ekstra-hover,button.ekstra-hover,a.ekstra-hover,summary.ekstra-hover{outline:3px solid rgba(13,137,104,.34);outline-offset:3px}
+      .log{margin-top:10px;padding:12px;min-height:220px;max-height:320px;overflow:auto;border-radius:18px;background:#10181d;color:#befad8;font:12px/1.5 Consolas,monospace}.debug-state{min-height:180px;max-height:260px;color:#dcecf5}
+      [data-ekstra-clickable].ekstra-hover,button.ekstra-hover,a.ekstra-hover,summary.ekstra-hover,[role='button'].ekstra-hover{outline:3px solid rgba(13,137,104,.34);outline-offset:3px}
       .cursor{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:999px;pointer-events:none;z-index:40;transform:translate(-999px,-999px);background:radial-gradient(circle at 35% 35%,#fff 0%,#f7fef9 18%,#2fb88d 19%,#0f7f61 100%);box-shadow:0 12px 22px rgba(15,127,97,.35)}.cursor.click{box-shadow:0 0 0 12px rgba(47,184,141,.14),0 16px 28px rgba(15,127,97,.42)}
       .cursor-label{position:absolute;left:32px;top:-4px;padding:6px 9px;border-radius:999px;background:rgba(16,24,29,.92);color:#eafaf3;font-size:12px;white-space:nowrap}
       .zone{position:fixed;left:18px;right:18px;height:90px;border-radius:22px;border:1px dashed transparent;pointer-events:none;z-index:10;opacity:0}.zone.active{opacity:1}.zone.top{top:14px}.zone.bottom{bottom:14px}.zone.up.active{background:rgba(13,137,104,.08);border-color:rgba(13,137,104,.2)}.zone.down.active{background:rgba(201,91,47,.09);border-color:rgba(201,91,47,.2)}
-      @media (max-width:980px){.hero,.layout,.pair-grid,.surface-top,.mini-grid,.card-grid{grid-template-columns:1fr}.sidebar{position:static}}
+      @media (max-width:860px){.pair-shell,.steps,.target-grid,.stats{grid-template-columns:1fr}.hand-choice{min-height:150px}.brand-logo{width:110px;height:110px}}
     </style>
   </head>
   <body>
@@ -31,110 +56,129 @@
     <div id="zone-down" class="zone bottom down"></div>
     <div id="cursor" class="cursor"><div id="cursor-label" class="cursor-label">idle</div></div>
     <div class="shell">
-      <section class="hero">
-        <div class="panel copy">
-          <div class="eyebrow">Ekstra.OS live website demo</div>
-          <h1>Scan, point, scroll, flick.</h1>
-          <p class="lede">The phone browser streams IMU data into Ekstra.OS. Pointing the phone steers a live cursor, pitching it up or down moves vertically, hovering the top or bottom edge scrolls, and a quick inward wrist snap clicks the hovered element while the opposite snap acts like a right click.</p>
-          <div class="mini-grid">
-            <div class="mini"><strong>Pointer</strong><span>Driven from <code>motion.samples</code> over the browser bridge.</span></div>
-            <div class="mini"><strong>Click</strong><span>Runs through detection, composition, routing, and <code>surface.actions</code>.</span></div>
-            <div class="mini"><strong>No app install</strong><span>The phone uses the browser-only IMU controller page.</span></div>
-          </div>
-          <div class="pill-row" style="margin-top:16px">
-            <span id="ws-pill" class="pill warn">ws: disconnected</span>
-            <span id="sample-pill" class="pill">samples: waiting</span>
-            <span id="action-pill" class="pill">actions: idle</span>
-          </div>
-          <div class="toolbar" style="margin-top:16px">
-            <button id="center">Center Pointer</button>
-            <button id="copy-phone">Copy Phone Link</button>
-            <button id="hand-left" class="mode-on">Left Hand</button>
-            <button id="hand-right">Right Hand</button>
-            <a class="action" href="#lab">Jump to test area</a>
-          </div>
+      <section class="panel hero">
+        <img class="brand-logo" src="https://ekstra.ai/ekstra-logo.png" alt="Ekstra logo" />
+        <div class="eyebrow">Ekstra.OS live demo</div>
+        <h1>Use your phone as a pointer.</h1>
+        <p class="lede">Scan the QR code, grant motion access, and point your phone to move the cursor. Hover the hand you are using, then make a quick inward wrist snap to confirm it. Hover the top or bottom edge of the page to scroll.</p>
+        <div class="pill-row" style="margin-top:16px">
+          <span id="ws-pill" class="pill warn">ws: disconnected</span>
+          <span id="sample-pill" class="pill">samples: waiting</span>
+          <span id="action-pill" class="pill">actions: idle</span>
         </div>
-        <aside class="panel pair">
-          <h2>Pair the phone</h2>
-          <div class="pair-grid">
-            <div class="qr">
-              <img id="qr" alt="Phone pairing QR code" />
-              <div id="qr-status" class="sub" style="margin-top:10px;font-size:12px">Scan to open the phone IMU controller page.</div>
-              <a
-                id="phone-open-link"
-                class="action"
-                href="#"
-                target="_blank"
-                rel="noreferrer"
-                style="display:none;margin-top:10px"
-              >Open controller directly</a>
+        <div class="pair-shell">
+          <button id="hand-left" class="hand-choice mode-on" data-ekstra-clickable data-click-label="Left hand mode">
+            <strong>Left hand</strong>
+            <span>Hover this button and do a quick inward wrist snap to select left-hand mode.</span>
+          </button>
+          <div class="qr-card">
+            <div class="qr-wrap"><img id="qr" alt="Phone pairing QR code" /></div>
+            <div id="qr-status" class="sub" style="margin-top:10px;font-size:12px">Scan to open the phone IMU controller page.</div>
+            <a id="phone-open-link" class="action" href="#" target="_blank" rel="noreferrer" style="display:none;margin-top:10px">Open controller directly</a>
+            <div class="toolbar" style="margin-top:12px">
+              <button id="center">Center pointer</button>
+              <button id="copy-phone">Copy phone link</button>
+            </div>
+          </div>
+          <button id="hand-right" class="hand-choice" data-ekstra-clickable data-click-label="Right hand mode">
+            <strong>Right hand</strong>
+            <span>Hover this button and do a quick inward wrist snap to select right-hand mode.</span>
+          </button>
+        </div>
+        <p class="pair-note" style="margin-top:14px">iPhone Safari needs HTTPS for motion permission. This hosted demo already uses the correct secure path.</p>
+        <div class="steps">
+          <div class="step"><strong>1. Scan</strong><span>Open the phone controller with the QR code or direct link.</span></div>
+          <div class="step"><strong>2. Allow motion</strong><span>Grant motion access, then start streaming on the phone.</span></div>
+          <div class="step"><strong>3. Point to move</strong><span>Point left, right, up, or down to steer the cursor.</span></div>
+          <div class="step"><strong>4. Snap to confirm</strong><span>Use a quick inward wrist snap to click the hovered target.</span></div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="targets-head">
+          <h2>Try the demo</h2>
+          <p>These cards are intentionally large. Move the phone until the cursor hovers a target, then use a quick inward wrist snap to click it.</p>
+        </div>
+        <div class="target-grid">
+          <article class="target-card" data-ekstra-clickable data-demo-card="lights" data-click-label="Lights scene">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Lights scene</h4>
+              <p>Use this as your first simple click target.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="lights-on">Activate lights</button>
+          </article>
+          <article class="target-card" data-ekstra-clickable data-demo-card="playlist" data-click-label="Playlist target">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Playlist</h4>
+              <p>Good for testing repeat clicks and hover confidence.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="playlist-open">Open playlist</button>
+          </article>
+          <article class="target-card" data-ekstra-clickable data-demo-card="door" data-click-label="Door control">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Door control</h4>
+              <p>Shows how the same motion path can trigger a physical-world style action.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="door-preview">Preview unlock</button>
+          </article>
+          <article class="target-card" data-ekstra-clickable data-demo-card="scene" data-click-label="Scene launch">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Scene launch</h4>
+              <p>A larger CTA for quick end-to-end validation.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="scene-run">Run scene</button>
+          </article>
+        </div>
+        <div class="spacer">Keep the cursor near the top or bottom edge of the page to test scrolling, then continue down to the final targets.</div>
+        <div class="target-grid">
+          <article class="target-card" data-ekstra-clickable data-demo-card="mute" data-click-label="Mute room">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Mute room</h4>
+              <p>Use a smaller target after scrolling back into position.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="mute-room">Mute room</button>
+          </article>
+          <article class="target-card" data-ekstra-clickable data-demo-card="confirm" data-click-label="Confirm selection">
+            <div>
+              <div class="meta">Target</div>
+              <h4>Confirm selection</h4>
+              <p>This is the final confirmation target for the demo pass.</p>
+            </div>
+            <button type="button" data-ekstra-clickable data-demo-action="confirm-selection">Confirm</button>
+          </article>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="story"><strong id="story-title">Waiting for interaction</strong><p id="story-copy">Scan the QR code, start streaming on the phone, then hover a target and use an inward wrist snap to confirm it.</p></div>
+        <div class="stats">
+          <div class="stat"><strong>Hand</strong><span id="handedness-value">left</span></div>
+          <div class="stat"><strong>Hover</strong><span id="cursor-value">idle</span></div>
+          <div class="stat"><strong>Samples seen</strong><span id="samples-value">0</span></div>
+          <div class="stat"><strong>Clicks fired</strong><span id="clicks-value">0</span></div>
+          <div class="stat"><strong>Last signal</strong><span id="composition-value">none</span></div>
+          <div class="stat"><strong>Actor</strong><span id="actor-value">actor-1</span></div>
+        </div>
+        <details>
+          <summary>Advanced pairing and diagnostics</summary>
+          <div class="advanced-grid">
+            <div class="advanced-copy">
+              <p>These fields are kept here for troubleshooting and self-hosted testing, but the hosted demo should work without touching them.</p>
             </div>
             <div>
               <div class="field"><label for="controller-base">Phone controller page</label><input id="controller-base" /></div>
               <div class="field"><label for="ingest-endpoint">Phone ingest endpoint</label><input id="ingest-endpoint" /></div>
               <div class="field"><label for="phone-url">Generated phone URL</label><input id="phone-url" readonly /></div>
-              <p class="pair-note">Android usually works on local HTTP. iPhone Safari often needs HTTPS for motion permissions, so use an HTTPS tunnel for the controller and ingest URLs when testing on iPhone.</p>
             </div>
+            <div class="sub" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em">Live log</div>
+            <div id="log" class="log"></div>
+            <div class="sub" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em">Debug state</div>
+            <div id="debug-state" class="log debug-state"></div>
           </div>
-        </aside>
-      </section>
-      <section class="layout">
-        <main class="panel surface">
-          <div class="surface-top">
-            <div class="mini"><strong>1. Scan</strong><span>Use the QR code to open the controller page on the phone.</span></div>
-            <div class="mini"><strong>2. Grant motion</strong><span>Allow motion access, then start streaming.</span></div>
-            <div class="mini"><strong>3. Navigate</strong><span>Point to move, hover edges to scroll, snap inward to click.</span></div>
-          </div>
-          <section class="section">
-            <h2>Motion storefront</h2>
-            <p>This surface is intentionally simple for validating the current end-to-end flow. The cards below are clickable, and the page is long enough to force real scrolling.</p>
-            <div class="card-grid">
-              <article class="card" data-ekstra-clickable data-demo-card="living-room" data-click-label="Living Room Scene"><div class="meta">Scene</div><h4>Living Room Scene</h4><p>Warm lighting, low music, and a subtle evening gradient.</p><button type="button" data-ekstra-clickable data-demo-action="living-room">Preview scene</button></article>
-              <article class="card" data-ekstra-clickable data-demo-card="cinema-mode" data-click-label="Cinema Mode"><div class="meta">Scene</div><h4>Cinema Mode</h4><p>Dim everything, lower distractions, and bring media controls forward.</p><button type="button" data-ekstra-clickable data-demo-action="cinema-mode">Start cinema mode</button></article>
-              <article class="card" data-ekstra-clickable data-demo-card="quiet-focus" data-click-label="Quiet Focus"><div class="meta">Profile</div><h4>Quiet Focus</h4><p>Mute interruptions and favor precise pointer travel.</p><button type="button" data-ekstra-clickable data-demo-action="quiet-focus">Enable focus profile</button></article>
-              <article class="card" data-ekstra-clickable data-demo-card="party-stack" data-click-label="Party Stack"><div class="meta">Profile</div><h4>Party Stack</h4><p>Fast clicks, loose damping, brighter color, punchier feedback.</p><button type="button" data-ekstra-clickable data-demo-action="party-stack">Apply stack</button></article>
-            </div>
-          </section>
-          <section class="section">
-            <h3>Feature walkthrough</h3>
-            <p>The content below is long on purpose so you can validate edge-scrolling with the phone cursor. Point the phone left or right to steer, pitch it up or down for vertical motion, then use a quick inward or outward wrist snap for primary or secondary click.</p>
-            <div class="cta" style="margin-top:16px">
-              <a href="#lab" class="action" data-ekstra-clickable data-click-label="Jump to Lab">Go to Lab</a>
-              <a href="#faq" class="action" data-ekstra-clickable data-click-label="Jump to FAQ">Open FAQ</a>
-              <button type="button" data-ekstra-clickable data-demo-action="bookmark">Bookmark current state</button>
-            </div>
-          </section>
-          <section id="lab" class="section">
-            <h3>Interactive lab</h3>
-            <p>Use the phone cursor to trigger the widgets below. Each click writes a log entry so you can verify the website is responding to runtime actions.</p>
-            <div class="card-grid">
-              <article class="card" data-ekstra-clickable data-demo-card="timeline" data-click-label="Timeline card"><div class="meta">Widget</div><h4>Timeline scrubber</h4><p>Use flick-click to jump playback markers and test repeated interactions.</p><button type="button" data-ekstra-clickable data-demo-action="timeline">Jump marker</button></article>
-              <article class="card" data-ekstra-clickable data-demo-card="checkout" data-click-label="Checkout card"><div class="meta">Widget</div><h4>Checkout lane</h4><p>Confirm a primary CTA and watch the side panel reflect the click target.</p><button type="button" data-ekstra-clickable data-demo-action="checkout">Complete purchase</button></article>
-            </div>
-          </section>
-          <section id="faq" class="section">
-            <h3>FAQ test targets</h3>
-            <p>These are useful for hover confirmation because the summary rows are narrow, clickable targets.</p>
-            <div style="display:grid;gap:12px;margin-top:16px">
-              <details data-ekstra-clickable data-click-label="FAQ: no download"><summary>Does the phone need a native app?</summary><p>No. The current flow uses a browser controller page and the phone's built-in motion APIs.</p></details>
-              <details data-ekstra-clickable data-click-label="FAQ: click path"><summary>Does flick-click go through the runtime?</summary><p>Yes. This demo uses the real <code>run_detection_pipeline</code> plus <code>run_surface_pack</code> path before the browser clicks.</p></details>
-              <details data-ekstra-clickable data-click-label="FAQ: iPhone"><summary>What is different on iPhone?</summary><p>Safari typically requires the controller page to be served over HTTPS before motion permissions are available.</p></details>
-            </div>
-          </section>
-        </main>
-        <aside class="panel sidebar">
-          <div class="story"><strong id="story-title">Waiting for interaction</strong><p id="story-copy">Scan the QR code, start streaming on the phone, then center the pointer here.</p></div>
-          <div class="stats">
-            <div class="stat"><strong>Actor</strong><span id="actor-value">actor-1</span></div>
-            <div class="stat"><strong>Cursor</strong><span id="cursor-value">idle</span></div>
-            <div class="stat"><strong>Samples seen</strong><span id="samples-value">0</span></div>
-            <div class="stat"><strong>Clicks fired</strong><span id="clicks-value">0</span></div>
-            <div class="stat"><strong>Last composition</strong><span id="composition-value">none</span></div>
-          </div>
-          <div id="log" class="log"></div>
-          <div class="sub" style="margin-top:14px;font-size:12px;text-transform:uppercase;letter-spacing:.08em">Debug state</div>
-          <div id="debug-state" class="log debug-state"></div>
-        </aside>
+        </details>
       </section>
     </div>
     <script type="module">
@@ -182,13 +226,18 @@
         },
       };
       const storyCopy = {
-        "living-room": "A card was selected through the phone-driven click path.",
-        "cinema-mode": "This simulates a primary CTA on a real site.",
-        "quiet-focus": "This target is useful for testing medium-sized hover zones.",
-        "party-stack": "This confirms the page stays responsive while the cursor remains live.",
-        timeline: "This widget stands in for playback or document navigation controls.",
-        checkout: "This simulates a high-intent primary action target.",
-        bookmark: "Secondary controls also work with the same wrist-snap click path.",
+        lights: "The first large target responded to the current phone pointer path.",
+        playlist: "This target is useful for checking repeat hover and click behavior.",
+        door: "The same motion route can be mapped to a physical-world receiver, not just a website button.",
+        scene: "This large CTA confirms the hosted motion path is still responsive.",
+        mute: "After scrolling, this smaller target confirms cursor precision remains intact.",
+        confirm: "This final target closes the loop on scan, move, scroll, and snap-to-click.",
+        "lights-on": "The demo accepted a concrete click against the lights action target.",
+        "playlist-open": "The playlist target confirmed the current control profile is active.",
+        "door-preview": "This shows how motion can route into other control domains such as entry or access.",
+        "scene-run": "The scene launch target registered a successful confirmation click.",
+        "mute-room": "The muted-room target confirms the pointer stayed accurate after scrolling.",
+        "confirm-selection": "The confirmation target completed the simplified demo path.",
       };
       const wsPill = el("ws-pill");
       const samplePill = el("sample-pill");
@@ -307,6 +356,10 @@
         el("clicks-value").textContent = String(state.clickCount);
         el("composition-value").textContent = state.lastComposition;
         el("cursor-value").textContent = describeTarget(state.hovered).slice(0, 60);
+        if (el("handedness-value")) {
+          el("handedness-value").textContent =
+            state.clickProfile.handedness === "left" ? "left" : "right";
+        }
         renderDebugState();
       }
 
@@ -326,7 +379,7 @@
         log(`handedness=${state.clickProfile.handedness}`);
         setStory(
           `${state.clickProfile.handedness === "left" ? "Left" : "Right"} hand mode`,
-          "Inward wrist snaps are treated as primary click for the selected hand; the opposite snap becomes secondary click."
+          "Inward wrist snaps are treated as primary click for the selected hand. Hover a target, then snap inward to confirm it."
         );
         updateStats();
       }
@@ -400,9 +453,9 @@
       }
 
       function initPairing() {
-        const pathBase = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`;
+        const pathBase = `${window.location.protocol}//${window.location.host}`;
         el("controller-base").value =
-          qs.get("controllerBase") || `${pathBase}/starters/web-phone-pointer/controller/index.html`;
+          qs.get("controllerBase") || `${pathBase}/examples/phone_imu_controller/index.html`;
         el("ingest-endpoint").value = qs.get("ingestUrl") || `${pathBase}/api/phone-imu/ingest`;
         refreshPhoneUrl();
         el("controller-base").addEventListener("input", refreshPhoneUrl);
@@ -454,15 +507,15 @@
         zoneUp.classList.toggle("active", top > 0);
         zoneDown.classList.toggle("active", bottom > 0);
         if (top > 0) {
-          scrollBy({ top: -16 * top, left: 0, behavior: "auto" });
+          scrollBy({ top: -24 * top, left: 0, behavior: "auto" });
         } else if (bottom > 0) {
-          scrollBy({ top: 16 * bottom, left: 0, behavior: "auto" });
+          scrollBy({ top: 24 * bottom, left: 0, behavior: "auto" });
         }
       }
 
       function animate() {
-        state.pointer.x += (state.pointer.targetX - state.pointer.x) * 0.18;
-        state.pointer.y += (state.pointer.targetY - state.pointer.y) * 0.18;
+        state.pointer.x += (state.pointer.targetX - state.pointer.x) * 0.34;
+        state.pointer.y += (state.pointer.targetY - state.pointer.y) * 0.34;
         cursor.style.transform = `translate(${state.pointer.x - 13}px,${state.pointer.y - 13}px)`;
         trackHover();
         updateZones();
@@ -503,12 +556,16 @@
             `pointer_neutralized alpha=${alpha.toFixed(1)} beta=${beta.toFixed(1)} gamma=${gamma.toFixed(1)}`
           );
         }
-        const yawDx = deadzone(angleDeltaDegrees(alpha, state.neutral.alpha), 5);
-        const rollDx = deadzone(gamma - state.neutral.gamma, 7) * 0.35;
+        const yawDx = deadzone(angleDeltaDegrees(alpha, state.neutral.alpha), 4);
+        const rollDx = deadzone(gamma - state.neutral.gamma, 6) * 0.22;
         const dx = -(yawDx !== 0 ? yawDx : rollDx);
-        const dy = deadzone(beta - state.neutral.beta, 4.5);
-        state.pointer.targetX = clamp(innerWidth * 0.5 + (dx / 40) * (innerWidth * 0.4), 24, innerWidth - 24);
-        state.pointer.targetY = clamp(innerHeight * 0.45 - (dy / 28) * (innerHeight * 0.34), 24, innerHeight - 24);
+        const dy = deadzone(beta - state.neutral.beta, 3.5);
+        state.pointer.targetX = clamp(innerWidth * 0.5 + (dx / 34) * (innerWidth * 0.42), 24, innerWidth - 24);
+        state.pointer.targetY = clamp(innerHeight * 0.45 - (dy / 24) * (innerHeight * 0.36), 24, innerHeight - 24);
+        if (state.sampleCount <= 2) {
+          state.pointer.x = state.pointer.targetX;
+          state.pointer.y = state.pointer.targetY;
+        }
         maybeHandleSnapClick(gamma);
         if (state.sampleCount <= 5 || state.sampleCount % 20 === 0) {
           log(
@@ -757,7 +814,7 @@
       motion.connect().catch((err) => log(`connect_error=${String(err)}`));
       setStory(
         "Ready to pair",
-        "Open the QR code on the phone, grant motion permission, and the cursor will wake up as soon as samples arrive."
+        "Scan the QR code, allow motion access, then hover one of the hand buttons and use an inward wrist snap to confirm it."
       );
     </script>
   </body>
