@@ -14,6 +14,7 @@ This directory contains the public, developer-facing documentation for `build-wi
 
 - [`concepts.md`](concepts.md)
 - [`architecture.md`](architecture.md)
+- [`open-source-building-blocks.md`](open-source-building-blocks.md)
 - [`runtime-requirements.md`](runtime-requirements.md)
 - [`repo-layout.md`](repo-layout.md)
 

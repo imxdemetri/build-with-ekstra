@@ -168,6 +168,7 @@ site/                  GitHub Pages landing site
 - [`docs/support-status.md`](docs/support-status.md)
 - [`docs/concepts.md`](docs/concepts.md)
 - [`docs/architecture.md`](docs/architecture.md)
+- [`docs/open-source-building-blocks.md`](docs/open-source-building-blocks.md)
 - [`docs/hosted-sandbox.md`](docs/hosted-sandbox.md)
 - [`docs/self-hosted-docker.md`](docs/self-hosted-docker.md)
 - [`docs/control-profiles.md`](docs/control-profiles.md)

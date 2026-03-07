@@ -24,11 +24,15 @@ Examples:
 - XR controllers
 - future device-specific integrations
 
+The important boundary is that providers do not need to agree on device APIs or vendor-specific payloads. Ekstra is responsible for normalizing those raw inputs into a common runtime motion model.
+
 ## `motion.samples`
 
 This is the primary low-level browser-facing topic for motion-driven experiences.
 
 Most front-end integrations should start here.
+
+This topic exists after the runtime has already normalized provider-specific input into a shared motion shape. That is the core platform responsibility.
 
 ## Detection Pipeline
 
