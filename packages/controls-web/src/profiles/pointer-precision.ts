@@ -5,7 +5,11 @@ export const pointerPrecision: ControlProfile = {
   title: "Pointer Precision",
   description: "Slower, steadier cursor profile for smaller targets and dense interfaces.",
   category: "pointer",
-  stability: "stable",
+  stability: "supported",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "yaw",
     vertical: "tilt"

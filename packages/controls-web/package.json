@@ -5,7 +5,34 @@
   "description": "Reference web control profiles for Ekstra.OS",
   "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "homepage": "https://ekstra.ai/build-with-ekstra",
+  "bugs": {
+    "url": "https://github.com/imxdemetri/build-with-ekstra/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imxdemetri/build-with-ekstra.git",
+    "directory": "packages/controls-web"
+  },
+  "keywords": [
+    "motion",
+    "controls",
+    "gesture",
+    "browser",
+    "ekstra"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -14,7 +41,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.9.2"

@@ -5,7 +5,11 @@ export const mediaRemote: ControlProfile = {
   title: "Media Remote",
   description: "Relaxed control profile for play, pause, scrub, and room-scale media control.",
   category: "media",
-  stability: "stable",
+  stability: "preview",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "yaw",
     vertical: "tilt"

@@ -6,6 +6,10 @@ export const relaxedPointer: ControlProfile = {
   description: "Softer pointer profile for casual browsing and higher-comfort movement.",
   category: "pointer",
   stability: "experimental",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "mixed",
     vertical: "tilt"

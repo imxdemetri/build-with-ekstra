@@ -6,6 +6,10 @@ export const docScroll: ControlProfile = {
   description: "Document and reading profile biased toward vertical movement and page travel.",
   category: "document",
   stability: "experimental",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "yaw",
     vertical: "tilt"

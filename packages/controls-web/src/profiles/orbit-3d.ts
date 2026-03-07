@@ -5,7 +5,11 @@ export const orbit3d: ControlProfile = {
   title: "Orbit 3D",
   description: "3D navigation profile for orbit, inspect, and item viewing.",
   category: "3d",
-  stability: "stable",
+  stability: "preview",
+  starter: {
+    slug: "orbit-3d",
+    availability: "planned",
+  },
   motionAxis: {
     horizontal: "yaw",
     vertical: "roll"

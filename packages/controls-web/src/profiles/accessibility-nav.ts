@@ -6,6 +6,10 @@ export const accessibilityNav: ControlProfile = {
   description: "Reduced-effort control profile for accessible browsing and selection.",
   category: "accessibility",
   stability: "experimental",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "mixed",
     vertical: "tilt"

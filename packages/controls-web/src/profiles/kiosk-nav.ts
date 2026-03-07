@@ -5,7 +5,11 @@ export const kioskNav: ControlProfile = {
   title: "Kiosk Nav",
   description: "Large-target navigation profile for menus, wayfinding, and kiosk surfaces.",
   category: "kiosk",
-  stability: "stable",
+  stability: "preview",
+  starter: {
+    slug: null,
+    availability: "none",
+  },
   motionAxis: {
     horizontal: "yaw",
     vertical: "tilt"

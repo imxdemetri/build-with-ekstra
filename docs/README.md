@@ -7,6 +7,8 @@ This directory contains the public, developer-facing documentation for `build-wi
 - [`start-here.md`](start-here.md)
 - [`hosted-sandbox.md`](hosted-sandbox.md)
 - [`self-hosted-docker.md`](self-hosted-docker.md)
+- [`public-contract.md`](public-contract.md)
+- [`support-status.md`](support-status.md)
 
 ## Concepts
 
@@ -25,6 +27,7 @@ This directory contains the public, developer-facing documentation for `build-wi
 - [`deployment-modes.md`](deployment-modes.md)
 - [`security-and-privacy.md`](security-and-privacy.md)
 - [`faq.md`](faq.md)
+- [`../CHANGELOG.md`](../CHANGELOG.md)
 
 ## External Links
 

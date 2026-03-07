@@ -5,7 +5,11 @@ export const pointerBasic: ControlProfile = {
   title: "Pointer Basic",
   description: "General browser pointer profile for phone-driven cursor control.",
   category: "pointer",
-  stability: "stable",
+  stability: "supported",
+  starter: {
+    slug: "web-phone-pointer",
+    availability: "supported",
+  },
   motionAxis: {
     horizontal: "mixed",
     vertical: "tilt"

@@ -15,16 +15,22 @@ It is not the full internal runtime source tree.
 - browser experiences controlled by a phone with no native app install
 - motion-aware websites and dashboards driven by `motion.samples`
 - gesture-driven web interactions built on top of Ekstra composition and routing
-- reusable control profiles such as pointer, presentation, kiosk, and 3D navigation modes
+- one supported pointer workflow plus preview control profiles for presentation, kiosk, media, and 3D navigation
 
 ## Start In 10 Minutes
 
 The fastest path is the hosted sandbox.
 
-1. Clone this repo.
-2. Serve [`starters/web-phone-pointer/`](starters/web-phone-pointer/).
-3. Point the starter at the hosted Ekstra sandbox.
-4. Open the page in a browser, scan the QR code, and use your phone as an input device.
+1. Try the live hosted demo.
+2. Clone this repo.
+3. Serve [`starters/web-phone-pointer/`](starters/web-phone-pointer/).
+4. Replace the demo UI or pointer logic with your own product behavior.
+
+Immediate live demo:
+
+```text
+https://ekstra.ai/build-with-ekstra/demo
+```
 
 Quickstart:
 
@@ -42,6 +48,11 @@ http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase
 
 Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 
+Before integrating against the hosted preview, read:
+
+- [`docs/public-contract.md`](docs/public-contract.md)
+- [`docs/support-status.md`](docs/support-status.md)
+
 ## Live Public Surfaces
 
 - Developer landing: `https://ekstra.ai/build-with-ekstra`
@@ -52,13 +63,18 @@ Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 - GitHub wiki: `https://github.com/imxdemetri/build-with-ekstra/wiki`
 - GitHub project board: `https://github.com/users/imxdemetri/projects/1`
 
-## Available Now vs Planned
+## Supported Now vs Preview vs Planned
 
-Available now:
+Supported now:
 - hosted sandbox runtime for evaluation and prototype work
 - `web-phone-pointer` starter
-- `@ekstra/controls-web` package scaffold
+- documented browser bridge and phone IMU ingest contract
 - public docs, GitHub Pages, and wiki
+
+Preview now:
+- `@ekstra/controls-web` package source
+- public control profile catalog beyond the pointer starter
+- same-domain `ekstra.ai` developer routes and hosted demo flow
 
 Planned next:
 - `presentation-remote` starter
@@ -123,12 +139,15 @@ site/                  GitHub Pages landing site
 
 - [`docs/README.md`](docs/README.md)
 - [`docs/start-here.md`](docs/start-here.md)
+- [`docs/public-contract.md`](docs/public-contract.md)
+- [`docs/support-status.md`](docs/support-status.md)
 - [`docs/concepts.md`](docs/concepts.md)
 - [`docs/architecture.md`](docs/architecture.md)
 - [`docs/hosted-sandbox.md`](docs/hosted-sandbox.md)
 - [`docs/self-hosted-docker.md`](docs/self-hosted-docker.md)
 - [`docs/control-profiles.md`](docs/control-profiles.md)
 - [`docs/web-phone-pointer.md`](docs/web-phone-pointer.md)
+- [`CHANGELOG.md`](CHANGELOG.md)
 - [`docs/faq.md`](docs/faq.md)
 
 ## Community and Support
@@ -142,4 +161,4 @@ site/                  GitHub Pages landing site
 
 ## Status
 
-Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments.
+Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments. The current supported public wedge is the browser phone IMU flow, with broader profiles and modalities exposed more cautiously as preview or directional surfaces.
