@@ -1,6 +1,6 @@
 {
   "name": "@ekstra/controls-web",
-  "version": "0.1.0",
+  "version": "0.1.0-preview.1",
   "private": false,
   "description": "Reference web control profiles for Ekstra.OS",
   "type": "module",
@@ -37,11 +37,13 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "release:check": "node ./scripts/release-check.mjs",
     "prepack": "npm run build",
     "prepublishOnly": "npm run build"
   },

@@ -8,7 +8,7 @@ It currently exposes typed profile metadata, named exports, and lookup helpers f
 
 - package surface: `public preview`
 - source is public in this repo
-- first npm release is being prepared
+- first npm preview release is being prepared
 - supported profiles today: `pointer.basic` and `presentation.remote`
 
 This package is not yet a full runtime SDK. It sits above the runtime and helps developers standardize control behavior in browser products.
@@ -37,6 +37,16 @@ console.log(supportedControlProfiles.map((profile) => profile.id));
 console.log(getControlProfile("presentation.remote")?.stability);
 console.log(controlProfiles.length);
 ```
+
+## Install
+
+The first npm preview release is intended to publish on the `preview` dist-tag.
+
+```bash
+npm install @ekstra/controls-web@preview
+```
+
+Until that first publish lands, use the package source directly from this repo.
 
 ## Profile Status Matrix
 
@@ -88,3 +98,7 @@ For runtime contracts, see:
 
 - [`../../docs/public-contract.md`](../../docs/public-contract.md)
 - [`../../docs/support-status.md`](../../docs/support-status.md)
+
+For package release steps, see:
+
+- [`./RELEASING.md`](./RELEASING.md)

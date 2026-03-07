@@ -12,6 +12,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    defaults:
+      run:
+        working-directory: packages/controls-web
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,13 +26,30 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
-        working-directory: packages/controls-web
         run: npm ci
 
-      - name: Build package
-        working-directory: packages/controls-web
-        run: npm run build
+      - name: Validate release metadata
+        run: npm run release:check
+
+      - name: Resolve version and dist-tag
+        id: meta
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            EXPECTED_TAG="controls-web-v${VERSION}"
+            if [[ "${GITHUB_REF_NAME}" != "${EXPECTED_TAG}" ]]; then
+              echo "Tag ${GITHUB_REF_NAME} does not match package version ${VERSION}" >&2
+              exit 1
+            fi
+          fi
+          if [[ "${VERSION}" == *-* ]]; then
+            DIST_TAG="preview"
+          else
+            DIST_TAG="latest"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=${DIST_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Publish controls package
-        working-directory: packages/controls-web
-        run: npm publish --access public --provenance
+        run: npm publish --access public --provenance --tag "${{ steps.meta.outputs.dist_tag }}"
