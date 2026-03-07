@@ -10,6 +10,12 @@ This directory contains the public, developer-facing documentation for `build-wi
 - [`public-contract.md`](public-contract.md)
 - [`support-status.md`](support-status.md)
 
+## How-To Guides
+
+- [`how-to-map-a-custom-gesture.md`](how-to-map-a-custom-gesture.md)
+- [`how-to-build-a-control-profile.md`](how-to-build-a-control-profile.md)
+- [`how-to-deploy-to-your-own-server.md`](how-to-deploy-to-your-own-server.md)
+
 ## Concepts
 
 - [`concepts.md`](concepts.md)

@@ -114,3 +114,9 @@ See [`self-hosted-docker.md`](self-hosted-docker.md).
 - [`architecture.md`](architecture.md)
 - [`web-phone-pointer.md`](web-phone-pointer.md)
 - [`presentation-remote.md`](presentation-remote.md)
+
+## Common Next Tasks
+
+- Map a product-specific gesture: [`how-to-map-a-custom-gesture.md`](how-to-map-a-custom-gesture.md)
+- Build your own control profile: [`how-to-build-a-control-profile.md`](how-to-build-a-control-profile.md)
+- Move to self-hosted deployment: [`how-to-deploy-to-your-own-server.md`](how-to-deploy-to-your-own-server.md)

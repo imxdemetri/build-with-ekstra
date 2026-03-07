@@ -168,6 +168,9 @@ site/                  GitHub Pages landing site
 
 - [`docs/README.md`](docs/README.md)
 - [`docs/start-here.md`](docs/start-here.md)
+- [`docs/how-to-map-a-custom-gesture.md`](docs/how-to-map-a-custom-gesture.md)
+- [`docs/how-to-build-a-control-profile.md`](docs/how-to-build-a-control-profile.md)
+- [`docs/how-to-deploy-to-your-own-server.md`](docs/how-to-deploy-to-your-own-server.md)
 - [`docs/public-contract.md`](docs/public-contract.md)
 - [`docs/support-status.md`](docs/support-status.md)
 - [`docs/concepts.md`](docs/concepts.md)

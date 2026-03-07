@@ -35,4 +35,5 @@ Current public hardening work:
 - stable `@ekstraai/controls-web@0.1.0` package release for supported profiles
 - dedicated controls package API reference
 - publicly pullable GHCR runtime image and validated self-hosted Docker path
+- task-oriented how-to guides for custom gestures, control profiles, and self-hosted deployment
 
