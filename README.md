@@ -39,14 +39,16 @@ Quickstart:
 ```powershell
 git clone https://github.com/imxdemetri/build-with-ekstra
 cd build-with-ekstra\starters\web-phone-pointer
-python -m http.server 8080
+python -m http.server 18080
 ```
 
 Then open:
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:18080/index.html
 ```
+
+When a supported starter is served from `localhost` or `127.0.0.1`, it automatically targets the hosted `ekstra.ai` sandbox unless you override the endpoints.
 
 Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 

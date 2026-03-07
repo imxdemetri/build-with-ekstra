@@ -184,11 +184,18 @@
     <script type="module">
       import { createMotionClient } from "./vendor/ekstra-motion-web.js";
       const qs = new URLSearchParams(window.location.search);
-      const actorId = qs.get("actorId") || "actor-1";
+      const isLocalPreviewHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+      const actorId = getOrCreateSessionId(
+        "web-phone-pointer:actorId",
+        qs.get("actorId"),
+        "actor"
+      );
       const surfaceId = qs.get("surfaceId") || "surface:web-pointer-demo";
       const wsUrl =
         qs.get("wsUrl") ||
-        `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.hostname}:8787/ws`;
+        (isLocalPreviewHost
+          ? "wss://ekstra.ai/ws"
+          : `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.hostname}:8787/ws`);
       const el = (id) => document.getElementById(id);
       const state = {
         sampleCount: 0,
@@ -253,6 +260,35 @@
 
       function nowIso() {
         return new Date().toISOString().split("T")[1].replace("Z", "Z");
+      }
+
+      function getOrCreateSessionId(storageKey, queryValue, prefix) {
+        if (queryValue) {
+          try {
+            sessionStorage.setItem(storageKey, queryValue);
+          } catch (_) {
+            // Keep session IDs resilient even if storage is unavailable.
+          }
+          return queryValue;
+        }
+        try {
+          const existing = sessionStorage.getItem(storageKey);
+          if (existing) {
+            return existing;
+          }
+        } catch (_) {
+          // Ignore sessionStorage failures and fall through to generation.
+        }
+        const generated = `${prefix}-${(crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
+          .toString()
+          .replace(/[^a-zA-Z0-9-]/g, "")
+          .slice(0, 12)}`;
+        try {
+          sessionStorage.setItem(storageKey, generated);
+        } catch (_) {
+          // Ignore sessionStorage failures and just use the generated value.
+        }
+        return generated;
       }
 
       function log(line) {
@@ -392,6 +428,8 @@
           window.location.hostname.endsWith(".ekstra.ai")
         ) {
           candidates.push(`${window.location.origin}/build-with-ekstra/qr?data=${encoded}`);
+        } else if (isLocalPreviewHost) {
+          candidates.push(`https://ekstra.ai/build-with-ekstra/qr?data=${encoded}`);
         }
         candidates.push(
           `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encoded}`
@@ -447,16 +485,23 @@
         url.searchParams.set("endpoint", endpoint);
         url.searchParams.set("demo", "web_phone_pointer_demo");
         url.searchParams.set("build", "2026-03-06-2");
+        url.searchParams.set("actorId", actorId);
         el("phone-url").value = url.toString();
         renderPhoneQr(url.toString());
         updateStats();
       }
 
       function initPairing() {
-        const pathBase = `${window.location.protocol}//${window.location.host}`;
         el("controller-base").value =
-          qs.get("controllerBase") || `${pathBase}/examples/phone_imu_controller/index.html`;
-        el("ingest-endpoint").value = qs.get("ingestUrl") || `${pathBase}/api/phone-imu/ingest`;
+          qs.get("controllerBase") ||
+          (isLocalPreviewHost
+            ? "https://ekstra.ai/build-with-ekstra/controller"
+            : `${window.location.protocol}//${window.location.host}/examples/phone_imu_controller/index.html`);
+        el("ingest-endpoint").value =
+          qs.get("ingestUrl") ||
+          (isLocalPreviewHost
+            ? "https://ekstra.ai/api/phone-imu/ingest"
+            : `${window.location.protocol}//${window.location.host}/api/phone-imu/ingest`);
         refreshPhoneUrl();
         el("controller-base").addEventListener("input", refreshPhoneUrl);
         el("ingest-endpoint").addEventListener("input", refreshPhoneUrl);

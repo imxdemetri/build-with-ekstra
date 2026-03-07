@@ -38,23 +38,26 @@ Pointer:
 
 ```powershell
 cd starters\web-phone-pointer
-python -m http.server 8080
+python -m http.server 18080
 ```
 
 Presentation remote:
 
 ```powershell
 cd starters\presentation-remote
-python -m http.server 8080
+python -m http.server 18081
 ```
 
 ### 4. Open the starter against the hosted sandbox
 
-Use this URL in a desktop browser:
+Use either supported starter URL in a desktop browser:
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:18080/index.html
+http://127.0.0.1:18081/index.html
 ```
+
+When a supported starter is served from `localhost` or `127.0.0.1`, it automatically points at the hosted `ekstra.ai` WebSocket bridge, phone controller, and ingest endpoint. You only need query parameters if you want to override the defaults.
 
 ### 5. Pair the phone
 

@@ -28,6 +28,16 @@ See:
 - [`../deploy/docker/`](../deploy/docker/)
 - [`../../deploy/docker/README.md`](../../deploy/docker/README.md)
 
+## First Bring-Up
+
+Make sure Docker Desktop or Docker Engine is installed and the daemon is running before you start. Then bring the stack up with:
+
+```powershell
+docker compose -f deploy/docker/docker-compose.yml up -d
+```
+
+After the services are healthy, point a supported starter at your self-hosted WebSocket bridge, phone controller, and ingest endpoint.
+
 ## Operational Expectations
 
 Production-minded self-hosted setups should provide:

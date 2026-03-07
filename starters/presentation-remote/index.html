@@ -434,7 +434,12 @@
       import { createMotionClient } from "./vendor/ekstra-motion-web.js";
 
       const qs = new URLSearchParams(window.location.search);
-      const actorId = qs.get("actorId") || "actor-1";
+      const actorId = getOrCreateSessionId(
+        "presentation-remote:actorId",
+        qs.get("actorId"),
+        "actor"
+      );
+      const isLocalPreviewHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
       const wsUrl = qs.get("wsUrl") || "wss://ekstra.ai/ws";
 
       const slides = [
@@ -539,6 +544,35 @@
 
       function nowIso() {
         return new Date().toISOString().split("T")[1].replace("Z", "Z");
+      }
+
+      function getOrCreateSessionId(storageKey, queryValue, prefix) {
+        if (queryValue) {
+          try {
+            sessionStorage.setItem(storageKey, queryValue);
+          } catch (_) {
+            // Keep session IDs resilient even if storage is unavailable.
+          }
+          return queryValue;
+        }
+        try {
+          const existing = sessionStorage.getItem(storageKey);
+          if (existing) {
+            return existing;
+          }
+        } catch (_) {
+          // Ignore sessionStorage failures and fall through to generation.
+        }
+        const generated = `${prefix}-${(crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`)
+          .toString()
+          .replace(/[^a-zA-Z0-9-]/g, "")
+          .slice(0, 12)}`;
+        try {
+          sessionStorage.setItem(storageKey, generated);
+        } catch (_) {
+          // Ignore sessionStorage failures and just use the generated value.
+        }
+        return generated;
       }
 
       function log(line) {
@@ -734,6 +768,9 @@
 
       function handleSample(msg) {
         const event = msg.event || {};
+        if (String(event.actor_id || "") !== actorId) {
+          return;
+        }
         const raw = event.metadata?.raw_euler_deg;
         if (!raw) {
           return;
@@ -772,6 +809,7 @@
         url.searchParams.set("endpoint", endpoint);
         url.searchParams.set("demo", "presentation_remote");
         url.searchParams.set("build", "2026-03-07-1");
+        url.searchParams.set("actorId", actorId);
         el("phone-url").value = url.toString();
         renderPhoneQr(url.toString());
         renderDebug();
@@ -785,6 +823,8 @@
           window.location.hostname.endsWith(".ekstra.ai")
         ) {
           candidates.push(`${window.location.origin}/build-with-ekstra/qr?data=${encoded}`);
+        } else if (isLocalPreviewHost) {
+          candidates.push(`https://ekstra.ai/build-with-ekstra/qr?data=${encoded}`);
         }
         candidates.push(
           `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encoded}`
@@ -818,7 +858,7 @@
           qrEl.removeAttribute("src");
           qrEl.style.display = "none";
           qrStatusEl.textContent = "QR unavailable right now. Use the direct controller link below.";
-          addLog("qr_generation_unavailable using=direct_link");
+          log("qr_generation_unavailable using=direct_link");
         };
 
         qrEl.src = candidates[attempt];

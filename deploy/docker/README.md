@@ -24,3 +24,17 @@ For the first production-style deployment, use:
 - Caddy for HTTPS
 
 GitHub Pages is for docs only.
+
+## Before you run it
+
+- install Docker Desktop or Docker Engine
+- confirm the Docker daemon is actually running
+- authenticate to GHCR if your image visibility requires it
+
+The fastest local bring-up is:
+
+```powershell
+docker compose -f deploy/docker/docker-compose.yml up -d
+```
+
+After startup, verify the browser-facing surface and phone ingest endpoint before opening a starter.

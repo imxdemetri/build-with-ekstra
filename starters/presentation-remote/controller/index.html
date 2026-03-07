@@ -150,11 +150,15 @@
       const endpointFromQuery = qs.get("endpoint");
       const demoName = qs.get("demo");
       const buildTag = qs.get("build");
+      const actorId = qs.get("actorId");
       endpointEl.value = `${window.location.origin}/api/phone-imu/ingest`;
       if (demoName || buildTag) {
         const parts = ["QR-prefill ready"];
         if (demoName) {
           parts.push(`demo=${demoName}`);
+        }
+        if (actorId) {
+          parts.push(`actor=${actorId}`);
         }
         if (buildTag) {
           parts.push(`build=${buildTag}`);
@@ -215,6 +219,7 @@
             lastHealthStatus,
             lastHealthDetail,
             endpoint: endpointEl.value.trim(),
+            actorId,
             latest,
           },
           null,
@@ -301,6 +306,7 @@
 
       async function postSample() {
         const body = {
+          actor_id: actorId,
           source_timestamp_ms: Date.now(),
           alpha: latest.alpha,
           beta: latest.beta,

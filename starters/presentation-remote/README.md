@@ -19,22 +19,24 @@ Serve the starter locally:
 
 ```powershell
 cd starters\presentation-remote
-python -m http.server 8080
+python -m http.server 18081
 ```
 
 Then open:
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:18081/index.html
 ```
 
 ## Runtime Inputs
 
-This starter expects three query parameters:
+This starter can be configured with three query parameters:
 
 - `wsUrl`
 - `controllerBase`
 - `ingestUrl`
+
+If you serve it from `localhost` or `127.0.0.1`, it defaults to the hosted `ekstra.ai` sandbox automatically.
 
 ## Included Files
 

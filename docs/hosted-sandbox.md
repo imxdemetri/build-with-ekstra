@@ -83,5 +83,7 @@ https://ekstra.ai/build-with-ekstra/demo
 Local starter against the hosted sandbox:
 
 ```text
-http://127.0.0.1:8080/index.html?wsUrl=wss%3A%2F%2Fekstra.ai%2Fws&controllerBase=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller&ingestUrl=https%3A%2F%2Fekstra.ai%2Fapi%2Fphone-imu%2Fingest
+http://127.0.0.1:18080/index.html
 ```
+
+Supported starters automatically point at the hosted `ekstra.ai` sandbox when served from `localhost` or `127.0.0.1`.
