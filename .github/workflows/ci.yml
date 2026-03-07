@@ -25,6 +25,10 @@ jobs:
         working-directory: packages/controls-web
         run: npm run typecheck
 
+      - name: Build controls package
+        working-directory: packages/controls-web
+        run: npm run build
+
       - name: Validate release metadata
         working-directory: packages/controls-web
         run: npm run release:check
