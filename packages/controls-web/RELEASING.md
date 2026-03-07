@@ -2,6 +2,11 @@
 
 This package is published from `build-with-ekstra` using the GitHub workflow in `.github/workflows/npm-controls-web.yml`.
 
+The workflow supports two publish modes:
+
+- npm trusted publishing with GitHub Actions OIDC
+- `NPM_TOKEN` fallback for the first publish or for account-side recovery
+
 ## Release Shape
 
 - prerelease versions such as `0.1.0-preview.2` publish to npm dist-tag `preview`
@@ -34,6 +39,8 @@ git push origin controls-web-v<version>
 ```
 
 5. GitHub Actions publishes the package with provenance.
+
+If trusted publishing is not configured yet, add a repository secret named `NPM_TOKEN` from the `ekstraai` npm account and rerun the release tag.
 
 ## Verification
 

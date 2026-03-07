@@ -57,5 +57,12 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "dist_tag=${DIST_TAG}" >> "$GITHUB_OUTPUT"
 
-      - name: Publish controls package
+      - name: Publish controls package with npm token
+        if: ${{ secrets.NPM_TOKEN != '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance --tag "${{ steps.meta.outputs.dist_tag }}"
+
+      - name: Publish controls package with trusted publishing
+        if: ${{ secrets.NPM_TOKEN == '' }}
         run: npm publish --access public --provenance --tag "${{ steps.meta.outputs.dist_tag }}"
