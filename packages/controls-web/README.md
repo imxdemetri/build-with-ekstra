@@ -67,6 +67,98 @@ npm install @ekstraai/controls-web@preview
 
 This package is published as a preview release and should still be treated as a narrow, browser-focused public surface.
 
+## Supported Profiles Today
+
+### `pointer.basic`
+
+Use when:
+
+- you want a general browser pointer profile
+- your product starts from the public `web-phone-pointer` starter
+- wrist-snap click is acceptable for confirmation
+
+Current shape:
+
+| Field | Value |
+| --- | --- |
+| `id` | `pointer.basic` |
+| `stability` | `supported` |
+| `starter.slug` | `web-phone-pointer` |
+| `starter.availability` | `supported` |
+| `motionAxis.horizontal` | `mixed` |
+| `motionAxis.vertical` | `tilt` |
+| `clickMode` | `wrist_snap` |
+
+Example:
+
+```ts
+import { pointerBasic } from "@ekstraai/controls-web";
+
+console.log(pointerBasic.id);
+console.log(pointerBasic.motionAxis.horizontal);
+console.log(pointerBasic.clickMode);
+```
+
+### `pointer.precision`
+
+Use when:
+
+- you need smaller-target browser interactions
+- you want a calmer pointer profile than the default pointer starter
+- you are tuning dashboard or form-like experiences
+
+Current shape:
+
+| Field | Value |
+| --- | --- |
+| `id` | `pointer.precision` |
+| `stability` | `supported` |
+| `starter.slug` | `null` |
+| `starter.availability` | `none` |
+| `motionAxis.horizontal` | `yaw` |
+| `motionAxis.vertical` | `tilt` |
+| `clickMode` | `wrist_snap` |
+
+Example:
+
+```ts
+import { pointerPrecision } from "@ekstraai/controls-web";
+
+console.log(pointerPrecision.id);
+console.log(pointerPrecision.starter.availability);
+console.log(pointerPrecision.notes);
+```
+
+### `presentation.remote`
+
+Use when:
+
+- your product needs discrete next/previous style commands
+- you want a phone to behave more like a handheld remote than a cursor
+- you are building decks, meeting controls, or room media navigation
+
+Current shape:
+
+| Field | Value |
+| --- | --- |
+| `id` | `presentation.remote` |
+| `stability` | `supported` |
+| `starter.slug` | `presentation-remote` |
+| `starter.availability` | `supported` |
+| `motionAxis.horizontal` | `yaw` |
+| `motionAxis.vertical` | `tilt` |
+| `clickMode` | `gesture` |
+
+Example:
+
+```ts
+import { presentationRemote } from "@ekstraai/controls-web";
+
+console.log(presentationRemote.id);
+console.log(presentationRemote.starter.slug);
+console.log(presentationRemote.motionAxis);
+```
+
 ## Profile Status Matrix
 
 | Profile | Status | Starter availability | Notes |
