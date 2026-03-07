@@ -23,4 +23,5 @@ Current public hardening work:
 - tighter security and hosted sandbox expectations
 - stronger package metadata and control profile support semantics
 - `presentation-remote` as the second public starter
+- first published npm preview release for `@ekstraai/controls-web`
 

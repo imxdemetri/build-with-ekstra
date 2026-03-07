@@ -2,7 +2,7 @@
 
 ## 0.1.0-preview.2 - 2026-03-06
 
-Initial npm preview release preparation for `@ekstraai/controls-web`.
+First public npm preview release for `@ekstraai/controls-web`.
 
 - typed metadata exports for public control profiles
 - supported browser-facing profiles:

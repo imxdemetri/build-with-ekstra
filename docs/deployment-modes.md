@@ -63,7 +63,7 @@ GitHub is used for:
 
 - documentation
 - starter code
-- public package source
+- published browser package surface
 - CI workflows
 - Pages
 

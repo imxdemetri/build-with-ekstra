@@ -8,10 +8,19 @@ It currently exposes typed profile metadata, named exports, and lookup helpers f
 
 - package surface: `public preview`
 - source is public in this repo
-- first npm preview release is being prepared
-- supported profiles today: `pointer.basic` and `presentation.remote`
+- first npm preview release is published on npm
+- supported profiles today: `pointer.basic`, `pointer.precision`, and `presentation.remote`
 
 This package is not yet a full runtime SDK. It sits above the runtime and helps developers standardize control behavior in browser products.
+
+## What You Can Do With It Today
+
+Use this package to:
+
+- discover which public profiles are currently supported
+- bind your UI or starter selection to stable profile IDs
+- surface starter and motion-shape metadata in your own browser app
+- keep profile naming and support semantics aligned with the public Ekstra repo
 
 ## What The Package Exports
 
@@ -26,27 +35,37 @@ This package is not yet a full runtime SDK. It sits above the runtime and helps 
 
 ```ts
 import {
-  controlProfiles,
   getControlProfile,
-  pointerBasic,
   supportedControlProfiles,
 } from "@ekstraai/controls-web";
 
-console.log(pointerBasic.id);
-console.log(supportedControlProfiles.map((profile) => profile.id));
-console.log(getControlProfile("presentation.remote")?.stability);
-console.log(controlProfiles.length);
+const supportedIds = supportedControlProfiles.map((profile) => profile.id);
+const profile = getControlProfile("presentation.remote");
+
+if (supportedIds.includes("presentation.remote") && profile) {
+  console.log(profile.id);
+  console.log(profile.title);
+  console.log(profile.stability);
+  console.log(profile.starter?.slug);
+  console.log(profile.motionAxis);
+}
 ```
+
+In practice, this means you can:
+
+- list the profiles your product is willing to expose
+- gate features on `supported` versus `preview`
+- choose the right public starter as a baseline for a given interaction mode
 
 ## Install
 
-The first npm preview release is intended to publish on the `preview` dist-tag.
+The current public preview release is published on npm.
 
 ```bash
 npm install @ekstraai/controls-web@preview
 ```
 
-Until that first publish lands, use the package source directly from this repo.
+This package is published as a preview release and should still be treated as a narrow, browser-focused public surface.
 
 ## Profile Status Matrix
 

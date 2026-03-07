@@ -10,7 +10,7 @@ It is the document a developer should read before wiring Ekstra into a real prod
 - release phase: `public developer preview`
 - contract source of truth:
   - this document
-  - the `@ekstraai/controls-web` package source in this repo
+  - the published `@ekstraai/controls-web` package and package source in this repo
   - [`CHANGELOG.md`](../CHANGELOG.md)
 
 For the public preview, breaking changes to documented surfaces should be called out in the changelog before they are reflected in the hosted sandbox and starter docs.

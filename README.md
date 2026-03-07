@@ -75,13 +75,24 @@ Supported now:
 - public docs, GitHub Pages, and wiki
 
 Preview now:
-- `@ekstraai/controls-web` package source
+- published `@ekstraai/controls-web` preview package
 - public control profile catalog beyond the two supported starters
 - same-domain `ekstra.ai` developer routes and hosted demo flow
 
 Planned next:
 - `orbit-3d` starter
-- broader control-profile coverage and published npm package releases
+- broader control-profile coverage and stable npm package releases
+
+## Latest Package Release
+
+- npm package: `@ekstraai/controls-web@0.1.0-preview.2`
+- GitHub prerelease: `controls-web-v0.1.0-preview.2`
+
+Install:
+
+```bash
+npm install @ekstraai/controls-web@preview
+```
 
 ## Platform Model
 
