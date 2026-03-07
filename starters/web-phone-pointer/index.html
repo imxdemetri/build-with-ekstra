@@ -5,50 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ekstra.OS Phone Pointer Demo</title>
     <style>
-      :root{--bg:#f3ede1;--ink:#1b2228;--muted:#5f6b75;--line:rgba(27,34,40,.12);--panel:rgba(255,252,246,.92);--accent:#0d8968;--shadow:0 24px 60px rgba(27,34,40,.14)}
-      *{box-sizing:border-box} html{scroll-behavior:auto} body{margin:0;color:var(--ink);font-family:"Avenir Next","Segoe UI",Tahoma,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,173,.35),transparent 28%),linear-gradient(180deg,#fbf7ef 0%,var(--bg) 56%,#e8dfd0 100%)}
-      .shell{max-width:1020px;margin:0 auto;padding:28px 20px 120px;display:grid;gap:20px}
-      .panel{background:var(--panel);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);backdrop-filter:blur(10px);padding:24px}
-      .eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(13,137,104,.09);border:1px solid rgba(13,137,104,.18);color:#0b6e54;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap");
+      :root{--bg:#05070c;--bg2:#0b1324;--panel:rgba(12,18,31,.84);--panel-strong:rgba(12,18,31,.94);--line:rgba(255,255,255,.1);--line-soft:rgba(255,255,255,.06);--text:#edf3fb;--muted:#9aa8bb;--primary:#4b95ff;--accent:#f05fd0;--gold:#ffcb72;--ok:#7ce6b3;--warn:#ffc28f;--shadow:0 30px 70px rgba(0,0,0,.42)}
+      *{box-sizing:border-box}html{scroll-behavior:auto}
+      body{margin:0;min-height:100vh;color:var(--text);font-family:"IBM Plex Sans","Segoe UI",sans-serif;background:
+        radial-gradient(circle at 12% 10%,rgba(75,149,255,.22),transparent 24%),
+        radial-gradient(circle at 86% 12%,rgba(240,95,208,.17),transparent 26%),
+        radial-gradient(circle at 80% 80%,rgba(255,203,114,.09),transparent 28%),
+        linear-gradient(180deg,#04060a 0%,#09111f 52%,#04060a 100%)}
+      body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(180deg,transparent 0%,black 12%,black 86%,transparent 100%);opacity:.4;pointer-events:none}
+      .shell{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:32px 20px 120px;display:grid;gap:20px}
+      .panel{background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),var(--panel);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:24px}
+      .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(75,149,255,.08);border:1px solid rgba(75,149,255,.22);color:var(--primary);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+      .eyebrow::before{content:"";width:8px;height:8px;border-radius:999px;background:var(--ok);box-shadow:0 0 0 6px rgba(124,230,179,.08)}
       .hero{text-align:center}
-      .brand-logo{display:block;width:132px;height:132px;object-fit:contain;margin:0 auto 10px}
-      h1{margin:14px 0 10px;font-size:clamp(38px,6vw,66px);line-height:.96;letter-spacing:-.05em}
+      .brand-logo{display:block;width:120px;height:120px;object-fit:contain;margin:0 auto 10px;filter:drop-shadow(0 0 22px rgba(75,149,255,.14))}
+      h1,h2,h4,strong{font-family:"Space Grotesk","IBM Plex Sans",sans-serif;color:#fff}
+      h1{margin:14px 0 10px;font-size:clamp(42px,6vw,72px);line-height:.94;letter-spacing:-.05em}
       .lede,.sub,.pair-note,.target-card p,.log,.advanced-copy{color:var(--muted)}
-      .lede{max-width:66ch;margin:0 auto 18px;font-size:17px;line-height:1.55}
-      .pill-row,.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(27,34,40,.1);background:rgba(255,255,255,.78);font-size:13px}.ok{color:#0b6e54;background:rgba(13,137,104,.1);border-color:rgba(13,137,104,.22)}.warn{color:#8d3f1d;background:rgba(201,91,47,.1);border-color:rgba(201,91,47,.22)}
-      button,a.action{border:1px solid rgba(27,34,40,.12);border-radius:999px;padding:10px 15px;background:rgba(255,255,255,.82);color:var(--ink);font:inherit;text-decoration:none;cursor:pointer}
-      .pair-shell{display:grid;grid-template-columns:minmax(180px,1fr) minmax(260px,340px) minmax(180px,1fr);gap:18px;align-items:center;margin-top:22px}
-      .hand-choice{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;min-height:220px;padding:24px;border-radius:26px;border:1px solid rgba(27,34,40,.12);background:rgba(255,255,255,.72);transition:transform .12s ease,background .12s ease,border-color .12s ease}
-      .hand-choice strong{font-size:28px;letter-spacing:-.03em}
-      .hand-choice span{max-width:16ch;color:var(--muted);text-align:center;line-height:1.4}
-      .hand-choice.mode-on{background:rgba(13,137,104,.12);border-color:rgba(13,137,104,.32);color:#0b6e54;transform:translateY(-2px)}
-      .qr-card{padding:16px;border-radius:24px;background:linear-gradient(180deg,#fffdf8 0%,#f4ebdd 100%);border:1px solid rgba(27,34,40,.08)}
-      .qr-wrap{padding:12px;border-radius:20px;background:#fff}
-      .qr-wrap img{display:block;width:100%;aspect-ratio:1;border-radius:14px;background:#fff}
+      .lede{max-width:64ch;margin:0 auto 18px;font-size:17px;line-height:1.6}
+      .pill-row,.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+      .pill{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-size:13px;color:var(--muted)}
+      .ok{color:var(--ok);background:rgba(124,230,179,.08);border-color:rgba(124,230,179,.18)}
+      .warn{color:var(--warn);background:rgba(255,194,143,.08);border-color:rgba(255,194,143,.18)}
+      button,a.action{border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:11px 16px;background:rgba(255,255,255,.04);color:var(--text);font:inherit;text-decoration:none;cursor:pointer;transition:transform .14s ease,background .14s ease,border-color .14s ease}
+      button:hover,a.action:hover{transform:translateY(-1px);background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
+      .pair-shell{display:grid;grid-template-columns:minmax(200px,1fr) minmax(290px,360px) minmax(200px,1fr);gap:18px;align-items:stretch;margin-top:22px}
+      .hand-choice{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;min-height:228px;padding:24px;border-radius:28px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),rgba(10,14,24,.78);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);transition:transform .14s ease,background .14s ease,border-color .14s ease}
+      .hand-choice strong{font-size:30px;letter-spacing:-.03em}
+      .hand-choice span{max-width:17ch;color:var(--muted);text-align:center;line-height:1.5}
+      .hand-choice.mode-on{background:linear-gradient(160deg,rgba(75,149,255,.14),rgba(240,95,208,.08)),rgba(10,14,24,.86);border-color:rgba(75,149,255,.3);color:#fff;transform:translateY(-2px)}
+      .qr-card{padding:18px;border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+      .qr-wrap{padding:12px;border-radius:22px;background:#fff;box-shadow:0 18px 40px rgba(0,0,0,.24)}
+      .qr-wrap img{display:block;width:100%;aspect-ratio:1;border-radius:16px;background:#fff}
       .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
-      .step,.story,.stat,.target-card,details{border:1px solid rgba(27,34,40,.08);border-radius:18px;background:rgba(255,255,255,.76)}
-      .step,.story,.stat{padding:14px}
-      .step strong,.stat strong{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+      .step,.story,.stat,.target-card,details{border:1px solid rgba(255,255,255,.08);border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),rgba(10,14,24,.76)}
+      .step,.story,.stat{padding:16px}
+      .step strong,.stat strong{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
       .step span,.stat span{display:block;margin-top:8px}
       .targets-head h2,.targets-head p,.story p,.advanced-copy p{margin:0}
       .targets-head p,.story p{margin-top:10px}
       .target-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
-      .target-card{padding:18px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
-      .target-card .meta{font-size:12px;color:#0b6e54;text-transform:uppercase;letter-spacing:.08em}
-      .target-card h4{margin:8px 0}.target-card button{align-self:flex-start}
-      .spacer{min-height:42vh;display:flex;align-items:center;justify-content:center;margin-top:18px;padding:20px;border-radius:24px;border:1px dashed rgba(27,34,40,.16);color:var(--muted);text-align:center;background:rgba(255,255,255,.48)}
-      .story strong{display:block;font-size:26px;line-height:1}
+      .target-card{padding:20px;min-height:186px;display:flex;flex-direction:column;justify-content:space-between}
+      .target-card .meta{font-size:12px;color:var(--primary);text-transform:uppercase;letter-spacing:.14em}
+      .target-card h4{margin:8px 0}
+      .target-card button{align-self:flex-start;background:linear-gradient(135deg,rgba(75,149,255,.16),rgba(240,95,208,.1));border-color:rgba(75,149,255,.24)}
+      .spacer{min-height:42vh;display:flex;align-items:center;justify-content:center;margin-top:18px;padding:20px;border-radius:24px;border:1px dashed rgba(255,255,255,.12);color:var(--muted);text-align:center;background:rgba(255,255,255,.02)}
+      .story strong{display:block;font-size:28px;line-height:1}
       .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
-      .stat span{font-size:20px}
-      details{padding:16px;margin-top:16px} summary{cursor:pointer;font-weight:600}
+      .stat span{font-size:20px;color:#fff}
+      details{padding:16px;margin-top:16px}
+      summary{cursor:pointer;font-weight:600}
       .advanced-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px}
-      .field{margin-bottom:12px}.field label{display:block;margin-bottom:6px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.field input{width:100%;padding:11px 12px;border-radius:14px;border:1px solid rgba(27,34,40,.12);background:rgba(255,255,255,.82);font:inherit}
-      .log{margin-top:10px;padding:12px;min-height:220px;max-height:320px;overflow:auto;border-radius:18px;background:#10181d;color:#befad8;font:12px/1.5 Consolas,monospace}.debug-state{min-height:180px;max-height:260px;color:#dcecf5}
-      [data-ekstra-clickable].ekstra-hover,button.ekstra-hover,a.ekstra-hover,summary.ekstra-hover,[role='button'].ekstra-hover{outline:3px solid rgba(13,137,104,.34);outline-offset:3px}
-      .cursor{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:999px;pointer-events:none;z-index:40;transform:translate(-999px,-999px);background:radial-gradient(circle at 35% 35%,#fff 0%,#f7fef9 18%,#2fb88d 19%,#0f7f61 100%);box-shadow:0 12px 22px rgba(15,127,97,.35)}.cursor.click{box-shadow:0 0 0 12px rgba(47,184,141,.14),0 16px 28px rgba(15,127,97,.42)}
-      .cursor-label{position:absolute;left:32px;top:-4px;padding:6px 9px;border-radius:999px;background:rgba(16,24,29,.92);color:#eafaf3;font-size:12px;white-space:nowrap}
-      .zone{position:fixed;left:18px;right:18px;height:90px;border-radius:22px;border:1px dashed transparent;pointer-events:none;z-index:10;opacity:0}.zone.active{opacity:1}.zone.top{top:14px}.zone.bottom{bottom:14px}.zone.up.active{background:rgba(13,137,104,.08);border-color:rgba(13,137,104,.2)}.zone.down.active{background:rgba(201,91,47,.09);border-color:rgba(201,91,47,.2)}
-      @media (max-width:860px){.pair-shell,.steps,.target-grid,.stats{grid-template-columns:1fr}.hand-choice{min-height:150px}.brand-logo{width:110px;height:110px}}
+      .field{margin-bottom:12px}
+      .field label{display:block;margin-bottom:6px;font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+      .field input{width:100%;padding:11px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--text);font:inherit}
+      .log{margin-top:10px;padding:12px;min-height:220px;max-height:320px;overflow:auto;border-radius:18px;background:#091018;color:#bfe3ff;font:12px/1.5 "IBM Plex Mono",Consolas,monospace}
+      .debug-state{min-height:180px;max-height:260px;color:#dcecf5}
+      [data-ekstra-clickable].ekstra-hover,button.ekstra-hover,a.ekstra-hover,summary.ekstra-hover,[role='button'].ekstra-hover{outline:3px solid rgba(75,149,255,.34);outline-offset:3px}
+      .cursor{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:999px;pointer-events:none;z-index:40;transform:translate(-999px,-999px);background:radial-gradient(circle at 32% 32%,#fff 0%,#f8fbff 16%,#7ab2ff 18%,#4b95ff 58%,#f05fd0 100%);box-shadow:0 0 0 10px rgba(75,149,255,.12),0 18px 30px rgba(0,0,0,.34)}
+      .cursor.click{box-shadow:0 0 0 14px rgba(75,149,255,.18),0 16px 28px rgba(240,95,208,.18)}
+      .cursor-label{position:absolute;left:32px;top:-4px;padding:6px 9px;border-radius:999px;background:rgba(7,11,19,.92);color:#eaf1fb;font-size:12px;white-space:nowrap}
+      .zone{position:fixed;left:18px;right:18px;height:90px;border-radius:22px;border:1px dashed transparent;pointer-events:none;z-index:10;opacity:0}
+      .zone.active{opacity:1}.zone.top{top:14px}.zone.bottom{bottom:14px}.zone.up.active{background:rgba(75,149,255,.08);border-color:rgba(75,149,255,.22)}.zone.down.active{background:rgba(240,95,208,.08);border-color:rgba(240,95,208,.22)}
+      @media (max-width:860px){.pair-shell,.steps,.target-grid,.stats{grid-template-columns:1fr}.hand-choice{min-height:156px}.brand-logo{width:104px;height:104px}.shell{padding:20px 16px 84px}}
     </style>
   </head>
   <body>
@@ -58,9 +78,9 @@
     <div class="shell">
       <section class="panel hero">
         <img class="brand-logo" src="https://ekstra.ai/ekstra-logo.png" alt="Ekstra logo" />
-        <div class="eyebrow">Ekstra.OS live demo</div>
-        <h1>Use your phone as a pointer.</h1>
-        <p class="lede">Scan the QR code, grant motion access, and point your phone to move the cursor. Hover the hand you are using, then make a quick inward wrist snap to confirm it. Hover the top or bottom edge of the page to scroll.</p>
+        <div class="eyebrow">Ekstra live pointer demo</div>
+        <h1>Turn your phone into a live pointer.</h1>
+        <p class="lede">Scan the QR code, choose the hand you are using, grant motion access, and point your phone to move the cursor. A quick inward wrist snap confirms the hovered target. The runtime stays live the whole time.</p>
         <div class="pill-row" style="margin-top:16px">
           <span id="ws-pill" class="pill warn">ws: disconnected</span>
           <span id="sample-pill" class="pill">samples: waiting</span>
@@ -85,18 +105,18 @@
             <span>Hover this button and do a quick inward wrist snap to select right-hand mode.</span>
           </button>
         </div>
-        <p class="pair-note" style="margin-top:14px">iPhone Safari needs HTTPS for motion permission. This hosted demo already uses the correct secure path.</p>
+        <p class="pair-note" style="margin-top:14px">Safari on iPhone needs HTTPS for motion permission. This hosted demo already uses the secure Ekstra runtime path.</p>
         <div class="steps">
-          <div class="step"><strong>1. Scan</strong><span>Open the phone controller with the QR code or direct link.</span></div>
-          <div class="step"><strong>2. Allow motion</strong><span>Grant motion access, then start streaming on the phone.</span></div>
-          <div class="step"><strong>3. Point to move</strong><span>Point left, right, up, or down to steer the cursor.</span></div>
+          <div class="step"><strong>1. Pair the phone</strong><span>Open the controller with the QR code or direct link.</span></div>
+          <div class="step"><strong>2. Allow motion</strong><span>Grant motion access, then start streaming from the phone.</span></div>
+          <div class="step"><strong>3. Point to move</strong><span>Point left, right, up, or down to steer the pointer.</span></div>
           <div class="step"><strong>4. Snap to confirm</strong><span>Use a quick inward wrist snap to click the hovered target.</span></div>
         </div>
       </section>
       <section class="panel">
         <div class="targets-head">
-          <h2>Try the demo</h2>
-          <p>These cards are intentionally large. Move the phone until the cursor hovers a target, then use a quick inward wrist snap to click it.</p>
+          <h2>Try the live surface</h2>
+          <p>These targets are intentionally large. Hover one with the cursor, then use the same inward wrist snap to confirm it through the live Ekstra runtime.</p>
         </div>
         <div class="target-grid">
           <article class="target-card" data-ekstra-clickable data-demo-card="lights" data-click-label="Lights scene">
