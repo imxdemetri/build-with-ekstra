@@ -7,6 +7,7 @@ Current public status:
 - the manifests in this folder are public
 - the runtime image access path is still preview-grade until the GHCR package is opened for anonymous pulls
 - if the image is private in your environment, run `docker login ghcr.io` before compose bring-up
+- you can override the image source locally with `EKSTRA_IMAGE` and `EKSTRA_TAG`
 
 ## Required published image
 
@@ -44,3 +45,20 @@ docker compose -f deploy/docker/docker-compose.yml up -d
 ```
 
 After startup, verify the browser-facing surface and phone ingest endpoint before opening a starter.
+
+## Local Validation Before Publish
+
+You can validate the public compose path against a local or custom runtime image without changing the manifests:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File deploy/docker/validate-self-hosted.ps1
+```
+
+To validate against a locally built runtime image from a private checkout:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File deploy/docker/validate-self-hosted.ps1 `
+  -LocalBuildRepo C:\path\to\ekstra-os `
+  -Image ekstra-runtime-local `
+  -Tag latest
+```

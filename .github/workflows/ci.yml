@@ -92,3 +92,13 @@ jobs:
           test -d packages/controls-web
           test -d examples/reference
           test -d deploy/docker
+
+  docker-config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate public Docker compose config
+        run: docker compose -f deploy/docker/docker-compose.yml config

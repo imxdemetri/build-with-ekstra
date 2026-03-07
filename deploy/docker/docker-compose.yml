@@ -1,13 +1,13 @@
 services:
   motiond:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command: ["python", "-m", "ekstra_os.tools.motiond", "--host", "0.0.0.0", "--port", "8765"]
     ports:
       - "8765:8765"
 
   ws-bridge:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command:
       [
@@ -31,7 +31,7 @@ services:
       - "8787:8787"
 
   phone-imu-provider:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command:
       [
@@ -57,7 +57,7 @@ services:
       - "8090:8090"
 
   detection-pipeline:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command:
       [
@@ -79,7 +79,7 @@ services:
       - motiond
 
   surface-pack:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command:
       [
@@ -100,7 +100,7 @@ services:
       - motiond
 
   frontdoor:
-    image: ghcr.io/imxdemetri/ekstra-runtime:${EKSTRA_TAG:-latest}
+    image: ${EKSTRA_IMAGE:-ghcr.io/imxdemetri/ekstra-runtime}:${EKSTRA_TAG:-latest}
     restart: unless-stopped
     command:
       [

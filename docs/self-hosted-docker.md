@@ -7,6 +7,7 @@ Current public status:
 - deployment manifests are public in this repo
 - the runtime image path is still preview-grade until the GHCR package is opened for anonymous pulls
 - treat self-hosted Docker as a serious path, but not yet the zero-friction public onboarding wedge
+- the compose path can be validated against a local or custom runtime image before any public image publish
 
 ## Use Self-Hosted When
 
@@ -42,12 +43,28 @@ Make sure Docker Desktop or Docker Engine is installed and the daemon is running
 docker compose -f deploy/docker/docker-compose.yml up -d
 ```
 
+If you want to validate the compose path against a local runtime image before relying on GHCR, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File deploy/docker/validate-self-hosted.ps1 `
+  -LocalBuildRepo C:\path\to\ekstra-os `
+  -Image ekstra-runtime-local `
+  -Tag latest
+```
+
 After the services are healthy, point a supported starter at your self-hosted WebSocket bridge, phone controller, and ingest endpoint.
 
 If `docker compose` fails before containers start, check these two things first:
 
 - Docker Desktop or Docker Engine is actually running
 - you can authenticate to `ghcr.io` if the runtime image is not yet public to anonymous pulls
+
+You can also override the runtime image directly with:
+
+- `EKSTRA_IMAGE`
+- `EKSTRA_TAG`
+
+That makes it possible to validate the public manifests against a private or locally built image without editing the compose file.
 
 ## Operational Expectations
 
