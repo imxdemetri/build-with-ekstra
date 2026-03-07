@@ -8,6 +8,8 @@
 
 Ekstra lets developers add motion-native input to web products using phones, cameras, XR devices, and other motion providers. This repository is the external-facing surface for getting started: docs, supported starters, reference integrations, and the browser control-profile package.
 
+The current public wedge is browser-first. The broader platform model is provider-to-receiver: motion and motion-relevant state can eventually be routed from people, machines, environments, and public live feeds into applications, automations, devices, and other valid receivers.
+
 It is not the full internal runtime source tree.
 
 ## What You Can Build Today
@@ -91,6 +93,10 @@ Ekstra is one platform with multiple developer surfaces:
   - reusable control profiles such as pointer, presentation, and 3D navigation
 - `Starters`
   - reference application slices developers can copy and adapt
+
+For the broader platform vision beyond the current web-first public wedge, see the wiki:
+
+- `https://github.com/imxdemetri/build-with-ekstra/wiki/Signals-Beyond-Human-Input`
 
 For browser developers, the important runtime path is:
 
