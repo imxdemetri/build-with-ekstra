@@ -623,7 +623,7 @@
         }
         const yawDx = deadzone(angleDeltaDegrees(alpha, state.neutral.alpha), 4);
         const rollDx = deadzone(gamma - state.neutral.gamma, 6) * 0.22;
-        const dx = -(yawDx !== 0 ? yawDx : rollDx);
+        const dx = yawDx !== 0 ? yawDx : rollDx;
         const dy = deadzone(beta - state.neutral.beta, 3.5);
         state.pointer.targetX = clamp(innerWidth * 0.5 + (dx / 34) * (innerWidth * 0.42), 24, innerWidth - 24);
         state.pointer.targetY = clamp(innerHeight * 0.45 - (dy / 24) * (innerHeight * 0.36), 24, innerHeight - 24);
