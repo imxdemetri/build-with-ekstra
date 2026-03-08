@@ -1,3 +1,7 @@
+![GitHub issues](https://img.shields.io/github/issues/build)
+![GitHub stars](https://img.shields.io/github/stars/build)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 <p align="center">
   <img src="site/assets/ekstra-logo.png" alt="Ekstra logo" width="180" />
 </p>
@@ -200,3 +204,14 @@ site/                  GitHub Pages landing site
 
 Ekstra is currently in early public developer preview. The hosted sandbox is intended for evaluation and prototyping, not for production SLA commitments. The current supported public wedge is the browser phone IMU flow across pointer and presentation starters. `@ekstraai/controls-web` is now stable for the supported profile surface, while broader profiles and modalities remain preview or directional surfaces.
 
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
