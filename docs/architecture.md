@@ -1,80 +1,78 @@
 # Architecture
 
-Ekstra is a local-first motion platform with browser-facing developer surfaces.
+Ekstra is a platform for physical intelligence with multiple developer surfaces,
+all accessed through `ekstra.ai`.
 
-## Browser Input Path
+## Platform Overview
 
-The simplest supported path today is the phone IMU browser flow:
-
-```text
-Phone Browser
-  -> POST /api/phone-imu/ingest
-  -> phone_imu_provider
-  -> motiond
-  -> ws_bridge
-  -> Web App
+```
+ekstra.ai
+├── Platform API        /api/v1/*           Devices, auth, campaigns, network, map
+├── Developer API       /api/developer/*    Projects, API keys, packages, deployments
+├── Platform UI         /OS                 Canvas, map, Director AI chat
+├── Runtime WebSocket   wss://ekstra.ai/ws  Real-time motion events
+├── Phone IMU           /api/phone-imu/*    Phone orientation data ingest
+└── Starters/Demos      /build-with-ekstra  Phone pointer, presentation remote
 ```
 
-In this mode, the web app subscribes to `motion.samples` and defines its own interaction behavior.
+## Runtime Path (Motion)
+
+The core motion path for browser developers:
+
+```
+Phone Browser
+  → POST /api/phone-imu/ingest
+  → phone_imu_provider
+  → motiond (central motion daemon)
+  → ws_bridge (WebSocket bridge)
+  → Your Web App
+```
 
 ## Gesture and Action Path
 
-Experiences that want higher-level gestures can add worker processes:
+For higher-level gesture recognition:
 
-```text
+```
 motion.samples
-  -> detection pipeline
-  -> events.composition
-  -> surface pack
-  -> surface.actions
-  -> Web App or connector
+  → detection pipeline (impulse, crossing, hold, tilt)
+  → ML inference (ONNX models)
+  → composition engine (gesture phrases)
+  → surface routing (with safety controls)
+  → Your App or connector
 ```
 
-## Responsibilities By Layer
+## Intelligence Layer
 
-### Runtime layer
+The Director is a conversational AI that combines 27 real-time data sources
+(weather, transit, hazards, economic, news, mobility, and more).
+Covers any global coordinate. Access via Platform UI or Director API.
 
-- provider ingest
-- normalization
-- event transport
-- policy and routing
+## Developer Platform
 
-### Controls layer
+Email-verified authentication, project management, API keys, package publishing.
+Access via `ekstra.ai/api/developer/cloud/*`.
 
-- pointer behavior
-- gesture interpretation defaults
-- handedness and interaction tuning
+## Layers
 
-### App layer
+| Layer | What It Does |
+|-------|-------------|
+| **Runtime** | Motion processing, detection, composition, routing |
+| **Intelligence** | 27 data adapters, Director AI, metrics |
+| **Platform** | Device registry, auth, campaigns, developer CP |
+| **App** | Canvas, map, Director chat, device management |
+| **Starters** | Phone pointer, presentation remote, self-hosted Docker |
 
-- UI
-- domain actions
-- product-specific workflows
+## Deployment Modes
 
-## Current Public Sandbox Topology
+### Hosted sandbox
+Uses the hosted runtime at `ekstra.ai`. Starters from localhost auto-connect.
 
-The current hosted sandbox uses:
+### Self-hosted Docker
+Full runtime stack via Docker Compose. See [`self-hosted-docker.md`](self-hosted-docker.md).
 
-- one public frontdoor
-- one public WebSocket bridge
-- private internal runtime services
+## For More
 
-That is why public starters currently accept:
-
-- `wsUrl`
-- `controllerBase`
-- `ingestUrl`
-
-## Recommended Long-Term Topology
-
-For production deployments, the cleanest public shape is:
-
-```text
-https://your-host.example/
-https://your-host.example/ws
-https://your-host.example/api/phone-imu/ingest
-https://your-host.example/api/phone-imu/health
-https://your-host.example/controller
-```
-
-That lets both the desktop page and the phone controller live behind a single public domain.
+- [Platform API Reference](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/platform-api.md)
+- [Director API Guide](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/director-api.md)
+- [Runtime & SDK Guide](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/runtime-sdk.md)
+- [Availability](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/availability.md)

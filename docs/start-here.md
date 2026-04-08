@@ -2,121 +2,105 @@
 
 This page is the recommended first-run path for new developers.
 
-## What You Need
+## Two paths into Ekstra
 
+### Path 1: Motion starters (runtime)
+Build motion-aware web apps using phone sensors. No account needed.
+
+### Path 2: Developer platform (API)
+Manage projects, API keys, and packages. Requires email-verified login.
+
+Both paths use `ekstra.ai` as the single platform surface.
+
+---
+
+## Path 1: Motion Starters
+
+### What you need
 - a modern desktop browser
 - a phone with a browser and motion sensors
-- either:
-  - the hosted Ekstra sandbox, or
-  - a self-hosted Ekstra runtime
+- the hosted Ekstra sandbox (or self-hosted runtime)
 
-## Recommended Path: Hosted Sandbox
+### 1. Try the live demo
 
-The hosted sandbox is the fastest way to validate the developer flow.
+Open on your laptop: [ekstra.ai/build-with-ekstra/demo](https://ekstra.ai/build-with-ekstra/demo)
 
-### 1. Try the live reference demo
+Scan the QR code with your phone. Grant motion permission. Tap Start.
+Your phone becomes a live pointer controlling the cursor on screen.
 
-Open:
+### 2. Clone and serve locally
 
-```text
-https://ekstra.ai/build-with-ekstra/demo
-https://ekstra.ai/build-with-ekstra/presentation-remote
-```
-
-This is the fastest way to validate the end-to-end browser flow before editing local code.
-The current hosted reference demos are the pointer flow and the presentation remote. The same hosted runtime powers both.
-
-### 2. Clone the repo
-
-```powershell
+```bash
 git clone https://github.com/imxdemetri/build-with-ekstra
-cd build-with-ekstra
+cd build-with-ekstra/starters/web-phone-pointer
+python3 -m http.server 8080
 ```
 
-### 3. Serve a supported starter locally
+Open `http://localhost:8080` in your desktop browser. When served from
+localhost, the starter automatically connects to the hosted `ekstra.ai`
+WebSocket bridge and phone ingest endpoint.
 
-Pointer:
+### 3. Pair the phone
 
-```powershell
-cd starters\web-phone-pointer
-python -m http.server 18080
+1. Open the page on the desktop
+2. Scan the QR code with your phone
+3. Grant motion permission on the phone
+4. Tap Start Streaming
+5. Verify: the desktop shows `ws: connected` and the cursor follows your phone
+
+### 4. Start building
+
+The starters are deliberately simple — replace the demo UI with your own
+while keeping the motion connection path intact.
+
+---
+
+## Path 2: Developer Platform
+
+### 1. Request a login link
+
+```bash
+curl -X POST https://ekstra.ai/api/developer/cloud/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@example.com"}'
 ```
 
-Presentation remote:
+### 2. Verify your email
 
-```powershell
-cd starters\presentation-remote
-python -m http.server 18081
+Click the link in the email from `noreply@ekstra.ai` to get a session token.
+
+### 3. Use the platform
+
+```bash
+# List projects
+curl https://ekstra.ai/api/developer/cloud/projects \
+  -H "Authorization: Bearer YOUR_SESSION_TOKEN"
+
+# Create an API key
+curl -X POST https://ekstra.ai/api/developer/cloud/api-keys \
+  -H "Authorization: Bearer YOUR_SESSION_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "my-key", "scope": "project"}'
 ```
 
-### 4. Open the starter against the hosted sandbox
+See the full [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/quickstart.md).
 
-Use either supported starter URL in a desktop browser:
+---
 
-```text
-http://127.0.0.1:18080/index.html
-http://127.0.0.1:18081/index.html
-```
+## Platform API
 
-When a supported starter is served from `localhost` or `127.0.0.1`, it automatically points at the hosted `ekstra.ai` WebSocket bridge, phone controller, and ingest endpoint. You only need query parameters if you want to override the defaults.
+The Platform API at `ekstra.ai/api/v1/*` provides device registry, auth,
+campaigns, network stats, map queries, and screen management.
 
-### 5. Pair the phone
+See the full [Platform API Reference](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/platform-api.md).
 
-1. Open the page on the desktop.
-2. Scan the QR code on the page.
-3. On the phone, grant motion permission.
-4. Tap `Start Streaming`.
-5. Return to the desktop page and verify that motion samples are arriving.
+---
 
-### 6. Verify the starter health signals
+## What to read next
 
-Before modifying the app, confirm:
-
-- the desktop page shows `ws: connected`
-- the sample counter starts increasing
-- the debug panel shows a non-null `ingestHealth`
-- the phone page shows `status=streaming`
-- the phone page `sent` counter increases over time
-
-If the phone streams but the desktop does not move, use [`web-phone-pointer.md`](web-phone-pointer.md) or [`presentation-remote.md`](presentation-remote.md) for troubleshooting.
-
-### 7. Start modifying the starter
-
-The supported starters are deliberately simple:
-
-- browser page receives `motion.samples` over WebSocket
-- phone controller posts IMU data over HTTPS
-- the page maps motion into pointer or presentation behavior
-
-The normal first change is to replace the demo UI with your own UI while keeping the motion connection path intact.
-
-## Read Before You Integrate
-
-For the current public preview, these two docs define the safe public boundary:
-
-- [`public-contract.md`](public-contract.md)
-- [`support-status.md`](support-status.md)
-
-## When To Move To Self-Hosted
-
-Use self-hosted mode when you need:
-
-- private data handling
-- lower latency and local networking
-- custom runtime or provider behavior
-- repeatable team environments
-
-See [`self-hosted-docker.md`](self-hosted-docker.md).
-
-## What To Read Next
-
-- [`concepts.md`](concepts.md)
-- [`architecture.md`](architecture.md)
-- [`web-phone-pointer.md`](web-phone-pointer.md)
-- [`presentation-remote.md`](presentation-remote.md)
-
-## Common Next Tasks
-
-- Map a product-specific gesture: [`how-to-map-a-custom-gesture.md`](how-to-map-a-custom-gesture.md)
-- Build your own control profile: [`how-to-build-a-control-profile.md`](how-to-build-a-control-profile.md)
-- Move to self-hosted deployment: [`how-to-deploy-to-your-own-server.md`](how-to-deploy-to-your-own-server.md)
+- [`concepts.md`](concepts.md) — core runtime concepts
+- [`architecture.md`](architecture.md) — platform architecture
+- [`web-phone-pointer.md`](web-phone-pointer.md) — phone pointer starter details
+- [`public-contract.md`](public-contract.md) — API stability guarantees
+- [`support-status.md`](support-status.md) — what's supported now vs preview
+- [Availability](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/availability.md) — what's available now / in development / planned
