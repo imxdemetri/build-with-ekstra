@@ -4,120 +4,330 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Build with Ekstra</title>
+    <meta
+      name="description"
+      content="Two ways to build on Ekstra: motion interaction (a hand raise triggers an action) or camera observation (read real-world signal like parking availability)."
+    />
     <link rel="icon" href="./assets/ekstra-logo.png" type="image/png" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="shell">
+      <!-- ───────────────────────────── HERO ───────────────────────────── -->
       <section class="hero">
         <div class="brand">
           <img src="./assets/ekstra-logo.png" alt="Ekstra logo" class="brand-mark" />
           <div class="brand-copy">Ekstra</div>
         </div>
-        <div class="badge">Public Developer Surface</div>
-        <h1>Build motion-native web products with Ekstra.</h1>
+        <div class="badge">Developer Platform</div>
+        <h1>Build on the motion and presence layer of the real world.</h1>
         <p class="lede">
-          Ekstra gives developers a motion runtime, browser integration path, and reusable control profiles for products controlled by phones and other motion sources.
+          Ekstra is a runtime, API, and SDK for products that read motion from a phone, webcam, or
+          XR headset, and products that read the real world through public cameras. You pick a
+          track, pull a starter, and ship.
         </p>
         <div class="actions">
-          <a href="https://github.com/imxdemetri/build-with-ekstra">GitHub Repo</a>
+          <a class="primary" href="https://ekstra.ai/demo">Live Demo</a>
+          <a href="https://github.com/imxdemetri/build-with-ekstra">GitHub</a>
           <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Quickstart</a>
-          <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/public-contract.md">Public Contract</a>
-          <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/support-status.md">Support Status</a>
-          <a href="https://github.com/imxdemetri/build-with-ekstra/wiki">Wiki</a>
-          <a href="https://github.com/users/imxdemetri/projects/1">Project Board</a>
-          <a href="https://ekstra.ai/build-with-ekstra/demo">Live Demo</a>
+          <a href="https://ekstra.ai/api/v1/openapi.json">OpenAPI spec</a>
+          <a href="https://www.npmjs.com/package/@ekstraai/controls-web">npm: @ekstraai/controls-web</a>
         </div>
       </section>
 
-      <section class="intro">
-        <article class="panel">
-          <h2>Available now</h2>
-          <ul>
-            <li>Hosted Ekstra sandbox for evaluation and prototyping</li>
-            <li>`web-phone-pointer` starter with phone browser control</li>
-            <li>`presentation-remote` starter for deck navigation</li>
-            <li>Public docs, GitHub wiki, and Pages site</li>
-            <li>Published `@ekstraai/controls-web` preview package with supported pointer and presentation profiles</li>
-          </ul>
-        </article>
-        <article class="panel">
-          <h2>Developer workflow</h2>
-          <ol>
-            <li>Clone the repo</li>
-            <li>Serve `starters/web-phone-pointer` or `starters/presentation-remote` locally</li>
-            <li>Point it at the hosted sandbox</li>
-            <li>Scan the QR code with a phone and start streaming motion</li>
-          </ol>
-        </article>
-      </section>
+      <!-- ─────────────────── THE TWO TRACKS (core decision) ──────────── -->
+      <div class="section-head">
+        <span class="eyebrow">Step 01 · Pick your track</span>
+        <h2>Two ways to build on Ekstra.</h2>
+        <p>
+          Every app on Ekstra falls into one of two shapes. Motion in — something a person does
+          becomes an action in your product. World out — you read a signal Ekstra derives from a
+          public sensor. They share the same runtime, docs, and billing, but the starters, APIs,
+          and consent model are different. Pick the one that matches your product.
+        </p>
+      </div>
 
-      <section class="grid">
-        <article class="card">
-          <h2>Runtime Model</h2>
-          <p>
-            Ekstra is not just a static library. The runtime is a set of services:
-            <code>motiond</code>, <code>ws_bridge</code>, <code>phone_imu_provider</code>,
-            and a browser-facing frontdoor.
+      <section class="tracks">
+        <!-- ─────────────── TRACK A: MOTION INTERACTION ──────────────── -->
+        <article class="track">
+          <div class="track-tag">Track A · Motion interaction</div>
+          <h3>A hand raise becomes a click.</h3>
+          <p class="example">
+            A person moves. Your app reacts. Phone IMU, webcam hand tracking, or XR pose — Ekstra
+            turns raw sensor data into a normalized Motion Packet your code can subscribe to.
           </p>
-        </article>
-        <article class="card">
-          <h2>Starters</h2>
-          <ul>
-            <li>Web phone pointer: supported now</li>
-            <li>Presentation remote: supported now</li>
-            <li>Orbit 3D: planned next</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h2>Controls</h2>
-          <ul>
-            <li>pointer.basic</li>
-            <li>pointer.precision</li>
-            <li>presentation.remote</li>
-            <li>orbit.3d</li>
-            <li>kiosk.nav</li>
-            <li>media.remote</li>
-            <li>accessibility.nav</li>
-            <li>doc.scroll</li>
-            <li>model.inspect</li>
-            <li>pointer.relaxed</li>
-          </ul>
-        </article>
-      </section>
 
-      <section class="docs-grid">
-        <article class="panel">
-          <h2>Documentation</h2>
+          <dl>
+            <dt>What it is</dt>
+            <dd>
+              A browser runtime + <code>@ekstraai/controls-web</code> package that streams motion
+              events from a phone (via QR pair) or a local camera/XR device into any web page.
+            </dd>
+
+            <dt>What it's for</dt>
+            <dd>
+              Replacing mouse, remote, or touchscreen in cases where those inputs are wrong —
+              presentations from across the room, 3D inspection, accessibility navigation,
+              kiosks, DOOH interactivity, VR/AR pointers.
+            </dd>
+
+            <dt>How it fits</dt>
+            <dd>
+              Sensor → <code>phone-imu-provider</code> (or camera/XR provider) →
+              <code>motiond</code> → <code>ws-bridge</code> → your page via
+              <code>controls-web</code>. You write event handlers, not drivers.
+            </dd>
+          </dl>
+
+          <div class="divider"></div>
+          <div class="subhead">Ships today</div>
           <ul>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Start Here</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/public-contract.md">Public Contract</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/support-status.md">Support Status</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/concepts.md">Core Concepts</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/architecture.md">Architecture</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/hosted-sandbox.md">Hosted Sandbox</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/presentation-remote.md">Presentation Remote</a></li>
-            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/self-hosted-docker.md">Self-Hosted Docker</a></li>
+            <li><code>starters/web-phone-pointer</code> — phone IMU → on-screen pointer</li>
+            <li><code>starters/presentation-remote</code> — phone → deck navigation</li>
+            <li><code>@ekstraai/controls-web@0.1.0</code> on npm (pointer + presentation profiles)</li>
+            <li>Hosted sandbox: <code>ekstra.ai/build-with-ekstra/controller</code></li>
           </ul>
+
+          <div class="subhead">Consent model</div>
+          <ul>
+            <li>User pairs their own device (QR scan, one tap).</li>
+            <li>Only derived Motion Packets leave the device — never raw video or sensor streams.</li>
+          </ul>
+
+          <div class="track-actions">
+            <a class="primary" href="https://github.com/imxdemetri/build-with-ekstra/tree/main/starters/web-phone-pointer">Phone pointer starter</a>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/web-phone-pointer.md">Docs</a>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/control-profiles.md">Control profiles</a>
+          </div>
         </article>
-        <article class="panel">
-          <h2>Hosted Sandbox</h2>
-          <p>
-            The current public sandbox is intended for evaluation and prototype work. It is the fastest path for developers who want to integrate Ekstra without first operating the runtime themselves.
+
+        <!-- ─────────────── TRACK B: CAMERA OBSERVATION ──────────────── -->
+        <article class="track">
+          <div class="track-tag">Track B · Camera observation</div>
+          <h3>Find parking in Midtown right now.</h3>
+          <p class="example">
+            Nobody moves. Your app reads the world. Ekstra ingests public DOT cameras, curb-rule
+            data, meter occupancy, and router presence, and exposes them as a single queryable
+            feed — so you don't have to stitch 50 state APIs together.
           </p>
-          <div class="actions compact">
-            <a href="https://ekstra.ai/build-with-ekstra/controller">Phone Controller</a>
-            <a href="https://ekstra.ai/api/phone-imu/health">Ingest Health</a>
-            <a href="https://github.com/imxdemetri/build-with-ekstra/tree/main/starters/web-phone-pointer">Starter Source</a>
+
+          <dl>
+            <dt>What it is</dt>
+            <dd>
+              A REST API over 9,719 registered public cameras, 45,000+ NYC curb rules, live Seattle
+              meter occupancy, and a growing pool of derived space signals (curb gaps, lot spaces,
+              presence, traffic).
+            </dd>
+
+            <dt>What it's for</dt>
+            <dd>
+              Location intelligence without running the infrastructure. Parking apps, traffic
+              dashboards, DOOH audience measurement, retail foot-traffic analytics, smart-city
+              apps, research tools.
+            </dd>
+
+            <dt>How it fits</dt>
+            <dd>
+              Your client hits <code>GET /api/v1/curb-rules/near</code>,
+              <code>/api/v1/cameras</code>, or a derived-signal endpoint. Ekstra handles ingestion,
+              normalization, rate-limiting to upstream DOTs, and regulatory posture.
+            </dd>
+          </dl>
+
+          <div class="divider"></div>
+          <div class="subhead">Ships today</div>
+          <ul>
+            <li><code>starters/parking-map</code> — curb rules on a Mapbox map in ~250 lines</li>
+            <li><code>GET /api/v1/curb-rules/near?lat=&amp;lng=&amp;radius_m=</code> (live)</li>
+            <li><code>GET /api/v1/cameras</code> — 9,719 cameras across 18 sources (live)</li>
+            <li>Full spec: <code>/api/v1/openapi.json</code></li>
+          </ul>
+
+          <div class="subhead">Consent model</div>
+          <ul>
+            <li>All feeds are public infrastructure; Ekstra redistributes derivatives only.</li>
+            <li>No personal data, no face recognition, no plate recognition. See regulatory notes in docs.</li>
+          </ul>
+
+          <div class="track-actions">
+            <a class="primary" href="https://github.com/imxdemetri/build-with-ekstra/tree/main/starters/parking-map">Parking map starter</a>
+            <a href="https://ekstra.ai/api/v1/openapi.json">OpenAPI</a>
+            <a href="https://ekstra.ai/demo">See cameras live</a>
           </div>
         </article>
       </section>
 
+      <div class="decision">
+        <strong>Still not sure?</strong> If your product needs a user to <em>do</em> something and
+        your code <em>reacts</em>, you want Track A. If your product needs to <em>read</em> what's
+        happening in a place and present that to a user, you want Track B. Apps that do both
+        (e.g. a gym that measures form <em>and</em> tracks occupancy) run both tracks side by
+        side on the same runtime.
+      </div>
+
+      <!-- ─────────────────── WHAT SITS UNDER BOTH ────────────────────── -->
+      <div class="section-head">
+        <span class="eyebrow">Step 02 · What sits underneath</span>
+        <h2>One runtime. One auth. One billing surface.</h2>
+        <p>
+          Both tracks run on the same Ekstra OS. You don't need to learn two systems — you just
+          call different endpoints and pull a different starter.
+        </p>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Runtime</h2>
+          <p>
+            <code>motiond</code> (central daemon), <code>ws-bridge</code> (browser connectivity),
+            <code>phone-ingest</code>, <code>inference-sidecar</code>, <code>model-server</code>.
+            All running on Railway. You don't deploy any of it for the hosted sandbox.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Data layer</h2>
+          <p>
+            PostgreSQL + PostGIS for spatial queries, 27 ingestion adapters for public data
+            sources (DOT cameras, curb rules, meter occupancy, weather, events, transit, roadwork),
+            continuously refreshed.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Identity &amp; billing</h2>
+          <p>
+            Motion Addresses (<code>ekst1</code>-prefixed ed25519 keypairs) identify devices.
+            Developer API keys (<code>eko_…</code>) identify apps. Revenue split is
+            80% developer, 15% Ekstra, 5% XTRA stakers.
+          </p>
+        </article>
+      </section>
+
+      <!-- ─────────────────────── TRACK A DEEP-LINKS ───────────────────── -->
+      <div class="section-head">
+        <span class="eyebrow">Step 03 · Motion interaction, in depth</span>
+        <h2>If you picked Track A.</h2>
+        <p>
+          Control profiles are the contract between a motion source and your app. Pick one that
+          matches what you're building; the runtime handles the mapping from raw sensor data to
+          your handlers.
+        </p>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Supported profiles</h2>
+          <ul>
+            <li><code>pointer.basic</code></li>
+            <li><code>pointer.precision</code></li>
+            <li><code>pointer.relaxed</code></li>
+            <li><code>presentation.remote</code></li>
+            <li><code>orbit.3d</code> (planned)</li>
+            <li><code>kiosk.nav</code> (planned)</li>
+            <li><code>media.remote</code> (planned)</li>
+            <li><code>accessibility.nav</code> (planned)</li>
+            <li><code>doc.scroll</code> (planned)</li>
+            <li><code>model.inspect</code> (planned)</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>Minimal integration</h2>
+          <p>
+            <code>npm i @ekstraai/controls-web</code>, render a QR tag in your page, pair a phone,
+            subscribe to the profile's events. No backend to deploy; use the hosted sandbox until
+            you're ready to self-host.
+          </p>
+          <div class="actions compact">
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/controls-web-api-reference.md">API reference</a>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/how-to-build-a-control-profile.md">Build a profile</a>
+          </div>
+        </article>
+        <article class="card">
+          <h2>Production path</h2>
+          <p>
+            The hosted sandbox is fine for demos and prototypes. For production, self-host the
+            runtime via Docker (one compose file) or connect to a dedicated Ekstra cluster.
+          </p>
+          <div class="actions compact">
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/self-hosted-docker.md">Self-hosted Docker</a>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/deployment-modes.md">Deployment modes</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────────────────── TRACK B DEEP-LINKS ───────────────────── -->
+      <div class="section-head">
+        <span class="eyebrow">Step 04 · Camera observation, in depth</span>
+        <h2>If you picked Track B.</h2>
+        <p>
+          The camera observation track is a straight REST API with no auth required for public
+          reads. Rate limits apply; production keys unlock higher throughput and derived signals.
+        </p>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Endpoints available</h2>
+          <ul>
+            <li><code>GET /api/v1/curb-rules/near</code> — 45k+ NYC rules, time-aware</li>
+            <li><code>GET /api/v1/cameras</code> — 9,719 public DOT cameras, paginated</li>
+            <li>Each camera record carries <code>image_url</code> for direct upstream fetch</li>
+            <li><code>GET /api/v1/openapi.json</code> — full machine-readable spec</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>Coverage today</h2>
+          <p>
+            NYC (all 5 boroughs, live), LA / SF / San Diego / Sacramento, Seattle (+ live meter
+            occupancy), Portland, Chicago, Philadelphia, Austin, Las Vegas, Louisville, and 8
+            more metros. Full list in the camera coverage doc.
+          </p>
+        </article>
+        <article class="card">
+          <h2>What you can't do</h2>
+          <p>
+            No face recognition, no license-plate reads, no raw-frame redistribution. Ekstra does
+            derivative analysis only — the space object (lat/lng, occupancy, confidence) is what
+            leaves the system. This is enforced in the platform, not a policy.
+          </p>
+        </article>
+      </section>
+
+      <!-- ─────────────────────── PRIMARY DOCS ─────────────────────────── -->
+      <div class="section-head">
+        <span class="eyebrow">Step 05 · Go deeper</span>
+        <h2>Documentation.</h2>
+      </div>
+
+      <section class="docs-grid">
+        <article class="panel">
+          <h2>Core</h2>
+          <ul>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/start-here.md">Start Here</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/concepts.md">Core Concepts</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/architecture.md">Architecture</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/public-contract.md">Public Contract</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/support-status.md">Support Status (what's stable vs. preview)</a></li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>Operate</h2>
+          <ul>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/hosted-sandbox.md">Hosted Sandbox</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/self-hosted-docker.md">Self-Hosted Docker</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/runtime-requirements.md">Runtime Requirements</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/security-and-privacy.md">Security &amp; Privacy</a></li>
+            <li><a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/faq.md">FAQ</a></li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ─────────────────────── SUPPORT ─────────────────────────────── -->
       <section class="docs-grid">
         <article class="panel">
           <h2>Community</h2>
           <p>
-            Follow the public build surface and launch updates through the official community channels.
+            Launch updates, office hours, and roadmap discussion happen through the public
+            channels below.
           </p>
           <div class="actions compact">
             <a href="mailto:info@ekstra.ai">info@ekstra.ai</a>
@@ -129,7 +339,8 @@
         <article class="panel">
           <h2>Support</h2>
           <p>
-            For starter bugs, doc gaps, and integration questions, use the public repo support surface first. For direct contact, email info@ekstra.ai.
+            Starter bugs, doc gaps, and integration questions — use the public repo first. For
+            direct contact, email <a href="mailto:info@ekstra.ai">info@ekstra.ai</a>.
           </p>
           <div class="actions compact">
             <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/SUPPORT.md">Support Guide</a>
@@ -140,4 +351,3 @@
     </main>
   </body>
 </html>
-

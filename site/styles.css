@@ -55,8 +55,12 @@ h1 {
   letter-spacing: -0.05em;
 }
 
+h2 {
+  letter-spacing: -0.02em;
+}
+
 .lede {
-  max-width: 58ch;
+  max-width: 62ch;
   font-size: 18px;
   line-height: 1.55;
   color: #5a6974;
@@ -73,13 +77,21 @@ h1 {
   margin-top: 14px;
 }
 
-.actions a {
+.actions a,
+.actions a:visited {
   padding: 10px 14px;
   border-radius: 999px;
   border: 1px solid rgba(23, 32, 39, 0.12);
   background: rgba(255, 255, 255, 0.84);
-  color: inherit;
+  color: #172027;
   text-decoration: none;
+  font-size: 14px;
+}
+
+.actions a.primary {
+  background: #172027;
+  color: #f9f3e8;
+  border-color: #172027;
 }
 
 .coming-soon {
@@ -90,7 +102,158 @@ h1 {
   border: 1px solid rgba(23, 32, 39, 0.12);
   background: rgba(255, 255, 255, 0.58);
   color: #5a6974;
+  font-size: 14px;
 }
+
+/* ── Section heads ───────────────────────────────── */
+
+.section-head {
+  margin: 40px 0 14px;
+}
+
+.section-head .eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5a6974;
+  background: rgba(23, 32, 39, 0.05);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.section-head h2 {
+  margin: 0 0 8px;
+  font-size: clamp(26px, 4vw, 34px);
+  letter-spacing: -0.03em;
+}
+
+.section-head p {
+  margin: 0;
+  color: #5a6974;
+  max-width: 60ch;
+}
+
+/* ── Track cards (the two entry points) ──────────── */
+
+.tracks {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 8px;
+}
+
+.track {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(255, 251, 245, 0.92);
+  border: 1px solid rgba(23, 32, 39, 0.1);
+  box-shadow: 0 22px 50px rgba(23, 32, 39, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.track-tag {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0b7258;
+  margin-bottom: 8px;
+}
+
+.track h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.track .example {
+  font-size: 13px;
+  color: #5a6974;
+  margin: 0 0 14px;
+  font-style: italic;
+}
+
+.track dl {
+  margin: 0 0 14px;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  row-gap: 6px;
+  column-gap: 10px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.track dt {
+  color: #5a6974;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+.track dd {
+  margin: 0;
+  color: #172027;
+}
+
+.track .divider {
+  height: 1px;
+  background: rgba(23, 32, 39, 0.08);
+  margin: 6px 0 12px;
+}
+
+.track .subhead {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5a6974;
+  margin: 0 0 6px;
+}
+
+.track ul {
+  margin: 0 0 12px;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.track ul li code,
+.track dd code {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: rgba(23, 32, 39, 0.05);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.track .track-actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+/* ── Decision helper ─────────────────────────────── */
+
+.decision {
+  margin: 12px 0 8px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(23, 32, 39, 0.18);
+  font-size: 14px;
+  line-height: 1.55;
+  color: #3c4650;
+}
+
+.decision strong {
+  color: #172027;
+}
+
+/* ── Existing grids preserved ────────────────────── */
 
 .intro,
 .grid,
@@ -124,6 +287,7 @@ h1 {
 .card h2,
 .panel h2 {
   margin-top: 0;
+  font-size: 18px;
 }
 
 .card ul,
@@ -131,6 +295,23 @@ h1 {
 .panel ol {
   margin: 0;
   padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.card p,
+.panel p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #3c4650;
+}
+
+.panel code {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: rgba(23, 32, 39, 0.05);
+  padding: 1px 5px;
+  border-radius: 4px;
 }
 
 a {
@@ -138,6 +319,7 @@ a {
 }
 
 @media (max-width: 860px) {
+  .tracks,
   .intro,
   .grid,
   .docs-grid {
