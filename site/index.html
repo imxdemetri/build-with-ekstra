@@ -60,8 +60,11 @@
           <dl>
             <dt>What it is</dt>
             <dd>
-              A browser runtime + <code>@ekstraai/controls-web</code> package that streams motion
-              events from a phone (via QR pair) or a local camera/XR device into any web page.
+              A hosted browser bridge (<code>wss://ekstra.ai/ws</code>) and a phone IMU ingest
+              endpoint that, paired through a QR code, streams motion events into any web page.
+              <code>@ekstraai/controls-web</code> is a companion metadata package — it describes
+              the supported control profiles; the runtime wiring lives in each starter's vendored
+              script.
             </dd>
 
             <dt>What it's for</dt>
@@ -82,10 +85,11 @@
           <div class="divider"></div>
           <div class="subhead">Ships today</div>
           <ul>
-            <li><code>starters/web-phone-pointer</code> — phone IMU → on-screen pointer</li>
-            <li><code>starters/presentation-remote</code> — phone → deck navigation</li>
-            <li><code>@ekstraai/controls-web@0.1.0</code> on npm (pointer + presentation profiles)</li>
+            <li><code>starters/web-phone-pointer</code> — phone IMU → on-screen pointer (Supported)</li>
+            <li><code>starters/presentation-remote</code> — phone → deck navigation (Supported)</li>
+            <li><code>@ekstraai/controls-web@0.1.0</code> on npm — profile metadata, not a runtime</li>
             <li>Hosted sandbox: <code>ekstra.ai/build-with-ekstra/controller</code></li>
+            <li>Phone IMU ingest: <code>POST ekstra.ai/api/phone-imu/ingest</code> (live)</li>
           </ul>
 
           <div class="subhead">Consent model</div>
@@ -196,8 +200,9 @@
           <h2>Identity &amp; billing</h2>
           <p>
             Motion Addresses (<code>ekst1</code>-prefixed ed25519 keypairs) identify devices.
-            Developer API keys (<code>eko_…</code>) identify apps. Revenue split is
-            80% developer, 15% Ekstra, 5% XTRA stakers.
+            Developer API keys (<code>eko_…</code>) identify apps. A revenue share for published
+            apps is the design target (80 / 15 / 5 — developer / Ekstra / stakers) — there is
+            no live payout flow today.
           </p>
         </article>
       </section>
@@ -215,26 +220,28 @@
 
       <section class="grid">
         <article class="card">
-          <h2>Supported profiles</h2>
+          <h2>Control profiles</h2>
+          <p>Status labels per <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/support-status.md">support-status.md</a>.</p>
           <ul>
-            <li><code>pointer.basic</code></li>
-            <li><code>pointer.precision</code></li>
-            <li><code>pointer.relaxed</code></li>
-            <li><code>presentation.remote</code></li>
-            <li><code>orbit.3d</code> (planned)</li>
-            <li><code>kiosk.nav</code> (planned)</li>
-            <li><code>media.remote</code> (planned)</li>
-            <li><code>accessibility.nav</code> (planned)</li>
-            <li><code>doc.scroll</code> (planned)</li>
-            <li><code>model.inspect</code> (planned)</li>
+            <li><code>pointer.basic</code> — Supported</li>
+            <li><code>pointer.precision</code> — Supported</li>
+            <li><code>presentation.remote</code> — Supported</li>
+            <li><code>orbit.3d</code> — Preview</li>
+            <li><code>kiosk.nav</code> — Preview</li>
+            <li><code>media.remote</code> — Preview</li>
+            <li><code>accessibility.nav</code> — Experimental</li>
+            <li><code>doc.scroll</code> — Experimental</li>
+            <li><code>model.inspect</code> — Experimental</li>
+            <li><code>relaxed.pointer</code> — Experimental</li>
           </ul>
         </article>
         <article class="card">
           <h2>Minimal integration</h2>
           <p>
-            <code>npm i @ekstraai/controls-web</code>, render a QR tag in your page, pair a phone,
-            subscribe to the profile's events. No backend to deploy; use the hosted sandbox until
-            you're ready to self-host.
+            Clone <code>starters/web-phone-pointer</code>, open the HTML, point it at the hosted
+            sandbox, scan the QR with a phone. The vendored <code>ekstra-motion-web.js</code> in
+            the starter is the runtime; <code>@ekstraai/controls-web</code> gives you typed profile
+            metadata if you need it. No backend to deploy.
           </p>
           <div class="actions compact">
             <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/controls-web-api-reference.md">API reference</a>
