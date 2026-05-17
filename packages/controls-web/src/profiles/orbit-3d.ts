@@ -8,7 +8,7 @@ export const orbit3d: ControlProfile = {
   stability: "preview",
   starter: {
     slug: "orbit-3d",
-    availability: "planned",
+    availability: "supported",
   },
   motionAxis: {
     horizontal: "yaw",

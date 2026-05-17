@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ekstra.OS Orbit 3D Demo</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap");
+      :root {
+        --bg: #05070c;
+        --panel: rgba(12, 18, 31, 0.84);
+        --panel-strong: rgba(12, 18, 31, 0.94);
+        --line: rgba(255, 255, 255, 0.1);
+        --line-soft: rgba(255, 255, 255, 0.06);
+        --text: #edf3fb;
+        --muted: #9aa8bb;
+        --primary: #4b95ff;
+        --accent: #f05fd0;
+        --gold: #ffcb72;
+        --ok: #7ce6b3;
+        --warn: #ffc28f;
+        --shadow: 0 30px 70px rgba(0, 0, 0, 0.42);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100vh; }
+      body {
+        color: var(--text);
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at 10% 8%, rgba(75, 149, 255, 0.18), transparent 26%),
+          radial-gradient(circle at 88% 12%, rgba(240, 95, 208, 0.14), transparent 28%),
+          radial-gradient(circle at 50% 92%, rgba(255, 203, 114, 0.06), transparent 32%),
+          linear-gradient(180deg, #04060a 0%, #09111f 52%, #04060a 100%);
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed; inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 86%, transparent 100%);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+      .shell {
+        position: relative; z-index: 1;
+        max-width: 1240px; margin: 0 auto;
+        padding: 28px 20px 100px;
+        display: grid; gap: 18px;
+      }
+      .panel {
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)), var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+        padding: 24px;
+      }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 14px; border-radius: 999px;
+        background: rgba(75, 149, 255, 0.08);
+        border: 1px solid rgba(75, 149, 255, 0.22);
+        color: var(--primary);
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+      }
+      .eyebrow::before {
+        content: ""; width: 8px; height: 8px; border-radius: 999px;
+        background: var(--ok); box-shadow: 0 0 0 6px rgba(124, 230, 179, 0.08);
+      }
+      .hero { text-align: center; }
+      .brand-logo {
+        display: block; width: 110px; height: 110px;
+        object-fit: contain; margin: 0 auto 10px;
+        filter: drop-shadow(0 0 22px rgba(75, 149, 255, 0.14));
+      }
+      h1, h2, h4, strong {
+        font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+        color: #fff;
+      }
+      h1 {
+        margin: 12px 0 8px;
+        font-size: clamp(36px, 5vw, 60px);
+        line-height: 0.96; letter-spacing: -0.04em;
+      }
+      .lede {
+        max-width: 60ch; margin: 0 auto 14px;
+        color: var(--muted); font-size: 16px; line-height: 1.6;
+      }
+      .pill-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+      .pill {
+        padding: 7px 12px; border-radius: 999px;
+        border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
+        font-size: 12px; color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .ok   { color: var(--ok);   background: rgba(124, 230, 179, 0.08); border-color: rgba(124, 230, 179, 0.18); }
+      .warn { color: var(--warn); background: rgba(255, 194, 143, 0.08); border-color: rgba(255, 194, 143, 0.18); }
+      button, a.action {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        padding: 10px 16px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text); font: inherit;
+        text-decoration: none; cursor: pointer;
+        transition: transform 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+      }
+      button:hover, a.action:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+      button.primary {
+        background: linear-gradient(135deg, rgba(75, 149, 255, 0.18), rgba(240, 95, 208, 0.12));
+        border-color: rgba(75, 149, 255, 0.28);
+      }
+
+      .stage-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+        gap: 18px;
+        align-items: stretch;
+      }
+      .scene-panel {
+        position: relative; overflow: hidden;
+        padding: 0; min-height: 520px;
+      }
+      #scene { position: absolute; inset: 0; }
+      .scene-hud {
+        position: absolute; top: 14px; left: 14px;
+        display: flex; flex-direction: column; gap: 6px;
+        pointer-events: none;
+      }
+      .scene-hud .badge {
+        background: rgba(7, 11, 19, 0.7);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 6px 10px;
+        font: 11px/1.4 "IBM Plex Mono", monospace;
+        color: var(--muted);
+      }
+      .scene-hud .badge strong { color: #fff; font-family: "IBM Plex Mono", monospace; font-weight: 500; }
+      .scene-toolbar {
+        position: absolute; bottom: 14px; left: 14px; right: 14px;
+        display: flex; justify-content: space-between; gap: 10px;
+        pointer-events: none;
+      }
+      .scene-toolbar > * { pointer-events: auto; }
+      .scene-toolbar .axis {
+        background: rgba(7, 11, 19, 0.7);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font: 11px/1.2 "IBM Plex Mono", monospace;
+        color: var(--muted);
+      }
+      .scene-toolbar .axis em { color: var(--primary); font-style: normal; }
+
+      .pair-panel { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+      .qr-card {
+        padding: 16px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+        border: 1px solid var(--line);
+      }
+      .qr-wrap {
+        padding: 10px; border-radius: 18px; background: #fff;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+      }
+      .qr-wrap img { display: block; width: 100%; aspect-ratio: 1; border-radius: 12px; background: #fff; }
+      .qr-status {
+        margin-top: 10px;
+        font: 11px/1.4 "IBM Plex Mono", monospace;
+        color: var(--muted);
+      }
+      .field { margin-bottom: 10px; }
+      .field label {
+        display: block; margin-bottom: 4px;
+        font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+      }
+      .field input {
+        width: 100%; padding: 9px 11px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text); font: inherit;
+      }
+      .stats {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px; margin-top: 10px;
+      }
+      .stat {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .stat strong {
+        display: block;
+        font: 10px/1 "IBM Plex Mono", monospace;
+        letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+      }
+      .stat span { display: block; margin-top: 6px; font: 14px/1 "IBM Plex Mono", monospace; color: #fff; }
+      .log {
+        margin-top: 10px; padding: 10px 12px;
+        min-height: 90px; max-height: 160px; overflow: auto;
+        border-radius: 14px; background: #091018;
+        color: #bfe3ff; font: 11px/1.5 "IBM Plex Mono", monospace;
+      }
+      details { padding: 14px; margin-top: 8px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255, 255, 255, 0.02); }
+      summary { cursor: pointer; font-weight: 600; }
+
+      .footer-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; color: var(--muted); font-size: 13px; }
+      .footer-row a { color: var(--primary); }
+
+      @media (max-width: 980px) {
+        .stage-grid { grid-template-columns: 1fr; }
+        .scene-panel { min-height: 420px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- ── HERO ───────────────────────────────────────────────────── -->
+      <section class="panel hero">
+        <img class="brand-logo" src="https://ekstra.ai/ekstra-logo.png" alt="Ekstra logo" />
+        <span class="eyebrow">Ekstra · Orbit 3D</span>
+        <h1>Tilt your phone, orbit the model.</h1>
+        <p class="lede">
+          A reference 3D-inspection starter for Ekstra. Phone IMU streams over the
+          public runtime, the camera azimuth tracks yaw and the polar angle tracks
+          roll. Pitch dollies the camera in and out. Nothing native to install — the
+          phone is just a browser tab.
+        </p>
+        <div class="pill-row">
+          <span class="pill" id="ws-pill">runtime: connecting…</span>
+          <span class="pill" id="sample-pill">samples: waiting…</span>
+          <span class="pill" id="paired-pill">phone: unpaired</span>
+        </div>
+      </section>
+
+      <!-- ── STAGE: 3D scene + pair flow ───────────────────────────── -->
+      <div class="stage-grid">
+        <section class="panel scene-panel">
+          <canvas id="scene"></canvas>
+          <div class="scene-hud">
+            <div class="badge">profile · <strong>orbit.3d</strong></div>
+            <div class="badge">azimuth <strong id="hud-az">0.00°</strong></div>
+            <div class="badge">polar <strong id="hud-polar">90.00°</strong></div>
+            <div class="badge">radius <strong id="hud-radius">6.0</strong></div>
+          </div>
+          <div class="scene-toolbar">
+            <div class="axis">horizontal · <em>yaw (alpha)</em> &nbsp; vertical · <em>roll (gamma)</em> &nbsp; zoom · <em>pitch (beta)</em></div>
+            <button id="reset-neutral" class="primary">Set neutral</button>
+          </div>
+        </section>
+
+        <aside class="pair-panel">
+          <section class="panel qr-card">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+              <span class="eyebrow" style="background:transparent;border:none;padding:0">Pair the phone</span>
+              <a class="action" id="phone-open-link" style="display:none;padding:6px 10px;font-size:12px" target="_blank" rel="noopener">Open link</a>
+            </div>
+            <div class="qr-wrap"><img id="qr" alt="Phone controller QR code" /></div>
+            <div class="qr-status" id="qr-status">Generating phone pairing QR code…</div>
+
+            <div class="stats">
+              <div class="stat"><strong>WS</strong><span id="stat-ws">disconnected</span></div>
+              <div class="stat"><strong>Samples</strong><span id="stat-samples">0</span></div>
+              <div class="stat"><strong>Alpha</strong><span id="stat-alpha">—</span></div>
+              <div class="stat"><strong>Gamma</strong><span id="stat-gamma">—</span></div>
+            </div>
+
+            <details>
+              <summary>Pairing endpoints</summary>
+              <div style="margin-top:12px">
+                <div class="field">
+                  <label for="controller-base">Controller page</label>
+                  <input id="controller-base" type="url" />
+                </div>
+                <div class="field">
+                  <label for="ingest-endpoint">Phone IMU ingest</label>
+                  <input id="ingest-endpoint" type="url" />
+                </div>
+                <div class="field">
+                  <label for="phone-url">Direct phone URL</label>
+                  <input id="phone-url" type="text" readonly />
+                </div>
+                <button id="copy-url" type="button">Copy phone URL</button>
+              </div>
+            </details>
+            <div class="log" id="log">orbit-3d demo loaded.</div>
+          </section>
+        </aside>
+      </div>
+
+      <!-- ── FOOTER ────────────────────────────────────────────────── -->
+      <section class="panel">
+        <div class="footer-row">
+          <span>
+            Ekstra starter · <code>starters/orbit-3d/</code> ·
+            profile <code>orbit.3d</code> from
+            <code>@ekstraai/controls-web</code>.
+          </span>
+          <span>
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/starters/orbit-3d/README.md">README</a> ·
+            <a href="https://github.com/imxdemetri/build-with-ekstra/blob/main/docs/controls-web-api-reference.md">controls-web reference</a>
+          </span>
+        </div>
+      </section>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.165.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { createMotionClient } from "./vendor/ekstra-motion-web.js";
+      import * as THREE from "three";
+
+      /* ── helpers ───────────────────────────────────────────────── */
+      const el = (id) => document.getElementById(id);
+      const qs = new URLSearchParams(window.location.search);
+      const isLocalPreviewHost = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+      const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+      const deadzone = (v, dz) => (Math.abs(v) < dz ? 0 : v - Math.sign(v) * dz);
+      const angleDelta = (a, b) => {
+        let d = a - b;
+        while (d > 180) d -= 360;
+        while (d < -180) d += 360;
+        return d;
+      };
+
+      function getOrCreateSessionId(key, override) {
+        if (override) return override;
+        try {
+          const existing = window.sessionStorage.getItem(key);
+          if (existing) return existing;
+          const v = "actor-" + Math.random().toString(36).slice(2, 10);
+          window.sessionStorage.setItem(key, v);
+          return v;
+        } catch {
+          return "actor-" + Math.random().toString(36).slice(2, 10);
+        }
+      }
+
+      const actorId = getOrCreateSessionId("orbit-3d:actorId", qs.get("actorId"));
+      const wsUrl =
+        qs.get("wsUrl") ||
+        (isLocalPreviewHost
+          ? "wss://ekstra.ai/ws"
+          : `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.hostname}:8787/ws`);
+
+      const logEl = el("log");
+      function log(msg) {
+        const ts = new Date().toISOString().slice(11, 19);
+        logEl.textContent = `${ts} ${msg}\n` + logEl.textContent;
+        if (logEl.textContent.length > 6000) {
+          logEl.textContent = logEl.textContent.slice(0, 6000);
+        }
+      }
+      function setPill(node, text, kind) {
+        node.textContent = text;
+        node.classList.remove("ok", "warn");
+        if (kind) node.classList.add(kind);
+      }
+
+      /* ── three.js scene ───────────────────────────────────────── */
+      const canvas = el("scene");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x04060a, 0.045);
+
+      const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+
+      // Lighting
+      scene.add(new THREE.AmbientLight(0x6f8aff, 0.55));
+      const key = new THREE.DirectionalLight(0xffffff, 1.1);
+      key.position.set(5, 8, 4);
+      scene.add(key);
+      const rim = new THREE.DirectionalLight(0xf05fd0, 0.6);
+      rim.position.set(-6, 3, -4);
+      scene.add(rim);
+
+      // Floor grid
+      const grid = new THREE.GridHelper(40, 40, 0x1c2a44, 0x101828);
+      grid.position.y = -2.4;
+      scene.add(grid);
+
+      // Central object — torus knot wireframe + filled glass twin
+      const knotGeo = new THREE.TorusKnotGeometry(1.2, 0.4, 220, 32);
+      const knotMatWire = new THREE.MeshBasicMaterial({
+        color: 0x4b95ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.55,
+      });
+      const knot = new THREE.Mesh(knotGeo, knotMatWire);
+      scene.add(knot);
+
+      const knotInnerMat = new THREE.MeshStandardMaterial({
+        color: 0x0d1424,
+        metalness: 0.35,
+        roughness: 0.4,
+        emissive: 0xf05fd0,
+        emissiveIntensity: 0.18,
+      });
+      const knotInner = new THREE.Mesh(knotGeo, knotInnerMat);
+      knotInner.scale.setScalar(0.985);
+      scene.add(knotInner);
+
+      // Particles for spatial depth
+      const particleGeo = new THREE.BufferGeometry();
+      const particleCount = 600;
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount; i += 1) {
+        positions[i * 3] = (Math.random() - 0.5) * 30;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 16;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+      }
+      particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const particleMat = new THREE.PointsMaterial({
+        color: 0x7ab2ff,
+        size: 0.04,
+        transparent: true,
+        opacity: 0.55,
+      });
+      scene.add(new THREE.Points(particleGeo, particleMat));
+
+      // Camera orbit state — current and target spherical coords.
+      // azimuth: horizontal angle (radians); polar: vertical (0..π); radius: distance.
+      const orbit = {
+        azimuth: Math.PI * 0.25,
+        polar: Math.PI * 0.42,
+        radius: 6.0,
+        targetAz: Math.PI * 0.25,
+        targetPolar: Math.PI * 0.42,
+        targetRadius: 6.0,
+      };
+
+      function setCameraFromOrbit() {
+        const r = orbit.radius;
+        const p = orbit.polar;
+        const a = orbit.azimuth;
+        camera.position.set(
+          r * Math.sin(p) * Math.cos(a),
+          r * Math.cos(p),
+          r * Math.sin(p) * Math.sin(a),
+        );
+        camera.lookAt(0, 0, 0);
+      }
+      setCameraFromOrbit();
+
+      function resize() {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      new ResizeObserver(resize).observe(canvas);
+
+      const azEl = el("hud-az");
+      const polarEl = el("hud-polar");
+      const radiusEl = el("hud-radius");
+      const statAlpha = el("stat-alpha");
+      const statGamma = el("stat-gamma");
+      const statSamples = el("stat-samples");
+
+      function tick() {
+        // Damp the camera toward the target with simple critically-damped easing.
+        const k = 0.12;
+        orbit.azimuth += angleDelta(orbit.targetAz * 57.2958, orbit.azimuth * 57.2958) * k / 57.2958;
+        orbit.polar += (orbit.targetPolar - orbit.polar) * k;
+        orbit.radius += (orbit.targetRadius - orbit.radius) * k;
+        // Idle auto-spin when no samples yet, so the page doesn't look dead.
+        if (!state.gotSample) orbit.targetAz += 0.0028;
+        setCameraFromOrbit();
+        knot.rotation.y += 0.002;
+        knotInner.rotation.y += 0.002;
+        renderer.render(scene, camera);
+
+        azEl.textContent = ((orbit.azimuth * 57.2958) % 360).toFixed(1) + "°";
+        polarEl.textContent = (orbit.polar * 57.2958).toFixed(1) + "°";
+        radiusEl.textContent = orbit.radius.toFixed(1);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      /* ── motion runtime ───────────────────────────────────────── */
+      const state = {
+        sampleCount: 0,
+        neutral: null,
+        latest: null,
+        gotSample: false,
+      };
+
+      const wsPill = el("ws-pill");
+      const samplePill = el("sample-pill");
+      const pairedPill = el("paired-pill");
+      const statWs = el("stat-ws");
+
+      const motion = createMotionClient({ url: wsUrl });
+      motion.onState((s) => {
+        statWs.textContent = s;
+        setPill(wsPill, `runtime: ${s}`, s === "connected" ? "ok" : (s === "error" ? "warn" : ""));
+      });
+      motion.connect().catch((err) => log(`ws_connect_error detail=${err?.message || err}`));
+
+      motion.onTopic("motion.samples", (msg) => {
+        const sample = msg.event || {};
+        if (String(sample.actor_id || "") !== actorId) return;
+        const raw = sample?.metadata?.raw_euler_deg;
+        if (!raw) return;
+        const alpha = Number(raw.alpha ?? 0);
+        const beta = Number(raw.beta ?? 0);
+        const gamma = Number(raw.gamma ?? 0);
+        if (![alpha, beta, gamma].every(Number.isFinite)) return;
+
+        state.latest = { alpha, beta, gamma };
+        state.sampleCount += 1;
+        state.gotSample = true;
+        if (!state.neutral) state.neutral = { alpha, beta, gamma };
+
+        // Map per profile orbit.3d: horizontal=yaw(alpha), vertical=roll(gamma).
+        // beta (pitch) becomes a zoom dolly — a useful extra without breaking the profile.
+        const dAlpha = angleDelta(alpha, state.neutral.alpha);   // -180..180
+        const dGamma = deadzone(gamma - state.neutral.gamma, 4); // -90..90 ish
+        const dBeta  = deadzone(beta  - state.neutral.beta,  4); // -90..90 ish
+
+        // Scale: ±60° of yaw → full 360° azimuth sweep; ±35° of roll → ±55° polar swing.
+        orbit.targetAz = Math.PI * 0.25 + (dAlpha / 60) * Math.PI;
+        orbit.targetPolar = clamp(Math.PI * 0.42 - (dGamma / 35) * (Math.PI * 0.30), 0.25, Math.PI - 0.25);
+        // Pitch forward → dolly in; pitch back → dolly out.
+        orbit.targetRadius = clamp(6.0 - (dBeta / 35) * 3.0, 2.5, 14.0);
+
+        setPill(samplePill, `samples: live (${state.sampleCount})`, "ok");
+        setPill(pairedPill, "phone: paired", "ok");
+        statSamples.textContent = String(state.sampleCount);
+        statAlpha.textContent = alpha.toFixed(1) + "°";
+        statGamma.textContent = gamma.toFixed(1) + "°";
+        if (state.sampleCount <= 3 || state.sampleCount % 60 === 0) {
+          log(`sample n=${state.sampleCount} α=${alpha.toFixed(1)} β=${beta.toFixed(1)} γ=${gamma.toFixed(1)}`);
+        }
+      });
+
+      el("reset-neutral").addEventListener("click", () => {
+        if (!state.latest) {
+          log("set_neutral_ignored reason=no_samples_yet");
+          return;
+        }
+        state.neutral = { ...state.latest };
+        log(`neutral_set α=${state.neutral.alpha.toFixed(1)} β=${state.neutral.beta.toFixed(1)} γ=${state.neutral.gamma.toFixed(1)}`);
+      });
+
+      /* ── pairing / QR ─────────────────────────────────────────── */
+      function qrCandidates(urlString) {
+        const encoded = encodeURIComponent(urlString);
+        const out = [];
+        if (window.location.hostname === "ekstra.ai" || window.location.hostname.endsWith(".ekstra.ai")) {
+          out.push(`${window.location.origin}/build-with-ekstra/qr?data=${encoded}`);
+        } else if (isLocalPreviewHost) {
+          out.push(`https://ekstra.ai/build-with-ekstra/qr?data=${encoded}`);
+        }
+        out.push(`https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encoded}`);
+        return out;
+      }
+
+      const qrEl = el("qr");
+      const qrStatusEl = el("qr-status");
+      const phoneLinkEl = el("phone-open-link");
+      function renderQr(urlString) {
+        const candidates = qrCandidates(urlString);
+        let attempt = 0;
+        phoneLinkEl.href = urlString;
+        phoneLinkEl.style.display = "inline-flex";
+        qrEl.style.display = "block";
+        qrStatusEl.textContent = "Scan with your phone to open the controller.";
+        qrEl.onerror = () => {
+          attempt += 1;
+          if (attempt < candidates.length) {
+            qrStatusEl.textContent = "Primary QR source unavailable. Trying fallback…";
+            qrEl.src = candidates[attempt];
+            return;
+          }
+          qrEl.removeAttribute("src");
+          qrEl.style.display = "none";
+          qrStatusEl.textContent = "QR unavailable. Open the direct controller link below.";
+          log("qr_generation_unavailable");
+        };
+        qrEl.src = candidates[attempt];
+      }
+
+      function defaultControllerBase() {
+        if (isLocalPreviewHost) return "https://ekstra.ai/build-with-ekstra/orbit-3d/controller";
+        return `${window.location.protocol}//${window.location.host}/build-with-ekstra/orbit-3d/controller`;
+      }
+      function defaultIngest() {
+        if (isLocalPreviewHost) return "https://ekstra.ai/api/phone-imu/ingest";
+        return `${window.location.protocol}//${window.location.host}/api/phone-imu/ingest`;
+      }
+
+      function refreshPhoneUrl() {
+        const base = el("controller-base").value.trim();
+        const ingest = el("ingest-endpoint").value.trim();
+        if (!base || !ingest) {
+          el("phone-url").value = "";
+          qrEl.removeAttribute("src");
+          qrEl.style.display = "none";
+          qrStatusEl.textContent = "Enter controller and ingest URLs to generate a phone link.";
+          phoneLinkEl.style.display = "none";
+          return;
+        }
+        const url = new URL(base, window.location.href);
+        url.searchParams.set("endpoint", ingest);
+        url.searchParams.set("demo", "orbit_3d");
+        url.searchParams.set("actorId", actorId);
+        el("phone-url").value = url.toString();
+        renderQr(url.toString());
+      }
+
+      el("controller-base").value = qs.get("controllerBase") || defaultControllerBase();
+      el("ingest-endpoint").value = qs.get("ingestUrl") || defaultIngest();
+      el("controller-base").addEventListener("input", refreshPhoneUrl);
+      el("ingest-endpoint").addEventListener("input", refreshPhoneUrl);
+      el("copy-url").addEventListener("click", async () => {
+        const v = el("phone-url").value.trim();
+        if (!v) return;
+        try {
+          await navigator.clipboard.writeText(v);
+          log("phone_url_copied");
+        } catch (err) {
+          log(`copy_failed detail=${err?.message || err}`);
+        }
+      });
+      refreshPhoneUrl();
+      log(`actor_id=${actorId} ws=${wsUrl}`);
+    </script>
+  </body>
+</html>
