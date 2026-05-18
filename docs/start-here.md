@@ -2,6 +2,16 @@
 
 This page is the recommended first-run path for new developers.
 
+For AI coding-agent demos, start with the repo-local
+[`llms.txt`](../llms.txt). The raw file is:
+
+```text
+https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt
+```
+
+It lists the verified live endpoints and the personalization contract for
+"build something with this, and show me a demo" flows.
+
 ## Two paths into Ekstra
 
 ### Path 1: Motion starters (runtime)
@@ -67,7 +77,13 @@ curl -X POST https://ekstra.ai/api/developer/cloud/login \
 
 ### 2. Verify your email
 
-Click the link in the email from `noreply@ekstra.ai` to get a session token.
+Enter the 6-digit code from the email and exchange it for a session token:
+
+```bash
+curl -X POST https://ekstra.ai/api/developer/cloud/verify \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@example.com", "code": "123456"}'
+```
 
 ### 3. Use the platform
 
@@ -93,6 +109,12 @@ The Platform API at `ekstra.ai/api/v1/*` provides device registry, auth,
 campaigns, network stats, map queries, and screen management.
 
 See the full [Platform API Reference](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/platform-api.md).
+
+To verify the live public contract from this repo:
+
+```bash
+node scripts/smoke-live-contract.mjs
+```
 
 ---
 

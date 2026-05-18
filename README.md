@@ -34,6 +34,22 @@ python3 -m http.server 8080
 
 Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 
+## AI Agent Demo Source
+
+For "drop this into an agent and build something" demos, use the repo-local
+[`llms.txt`](llms.txt):
+
+- GitHub view: `https://github.com/imxdemetri/build-with-ekstra/blob/main/llms.txt`
+- Raw agent source: `https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt`
+
+This file mirrors the live Build with Ekstra contract, links to
+`https://ekstra.ai/llms-full.txt`, and lists only endpoints that are expected
+to be live. Verify the contract with:
+
+```bash
+node scripts/smoke-live-contract.mjs
+```
+
 ## Platform Surfaces
 
 Ekstra is one platform with multiple developer surfaces, all at `ekstra.ai`:
@@ -52,7 +68,7 @@ Ekstra is one platform with multiple developer surfaces, all at `ekstra.ai`:
 Ekstra has a full developer platform with email-verified authentication:
 
 1. **Login** — `POST /api/developer/cloud/login` with your email
-2. **Verify** — Click the link in your email to get a session token
+2. **Verify** — Enter the 6-digit email code at `POST /api/developer/cloud/verify`
 3. **Build** — Create projects, generate API keys, publish packages
 
 See the [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/quickstart.md) for the full flow.
@@ -64,6 +80,7 @@ See the [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/moti
 - Phone controller: `https://ekstra.ai/build-with-ekstra/controller`
 - WebSocket bridge: `wss://ekstra.ai/ws`
 - Phone ingest: `https://ekstra.ai/api/phone-imu/ingest`
+- Live contract: `https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt`
 
 ## Latest Package Release
 

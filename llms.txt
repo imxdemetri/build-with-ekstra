@@ -1,0 +1,149 @@
+# Build with Ekstra - LLM demo context
+# Canonical GitHub source: https://github.com/imxdemetri/build-with-ekstra/blob/main/llms.txt
+# Raw source for agents: https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt
+# Last verified: 2026-05-18
+
+## Purpose
+
+This is the compact AI-agent entrypoint for the public Build with Ekstra
+starter repo. It is intended for demos where a user drops this file into a
+coding agent and says: "Build something with this, and show me a demo."
+
+Use this file to build a small, working Ekstra demo. For complete API details,
+use the live developer context pack:
+
+- https://ekstra.ai/llms-full.txt
+- https://ekstra.ai/downloads/ekstra-vibe-coder-guide.json
+- https://ekstra.ai/api/v1/openapi.json
+
+## What Ekstra Is
+
+Ekstra is a motion, presence, and physical-intelligence platform. It gives
+developers two practical build lanes:
+
+1. Data apps: consume public Ekstra signals through REST APIs.
+2. Motion apps: use phones, cameras, or other devices as motion/control inputs.
+
+Raw camera video is not the first demo path. Prefer public data reads,
+browser-local motion, phone IMU, signed Motion Packets, and visible proofs.
+
+## Personalized Demo Contract
+
+When asked to build a demo:
+
+1. Use only visible conversation context, files the user shared, repo context,
+   and preferences the user explicitly provided.
+2. If prior assistant memory exists, use only relevant high-level preferences
+   that can be explained back to the user.
+3. Never invent hidden personal history, sensitive personal details, or claims
+   that are not grounded in the current context.
+4. Ask at most two questions if context is thin; otherwise choose a tasteful
+   default and build.
+5. Choose one lane: Data, Motion, or Hybrid.
+6. Ship a visible one-screen proof with run steps.
+7. Include a short personalization capsule: assumptions used, why they fit,
+   and how the user can retarget the demo.
+8. Do not require wallet connection, XTRA, raw camera upload, or developer
+   login for the first local proof unless the requested feature specifically
+   needs it.
+
+Recommended prompt:
+
+```text
+Use this Build with Ekstra llms.txt as your source of truth. Build me a small
+working Ekstra demo and show me how to run it. Personalize the idea using only
+what you know from this conversation or what I explicitly tell you. Ask at most
+two questions if needed; otherwise make a tasteful default.
+```
+
+## Verified Live API And Runtime Contract
+
+The following endpoints were smoke-tested and should be treated as the public
+demo contract. A protected endpoint returning `401` without credentials is live
+and healthy; it is enforcing auth.
+
+### Machine-readable context
+
+- `GET https://ekstra.ai/llms.txt` -> `200 text/plain`
+- `GET https://ekstra.ai/llms-full.txt` -> `200 text/plain`
+- `GET https://ekstra.ai/downloads/ekstra-vibe-coder-guide.json` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/openapi.json` -> `200 application/json`
+
+### Public data APIs
+
+- `GET https://ekstra.ai/api/v1/network/devices?limit=1` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/network/stats` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/platform/facts` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/curb-rules/near?lat=40.7580&lng=-73.9855&radius_m=200` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/curb-rules/stats` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/spaces/near?lat=40.7580&lng=-73.9855&radius_m=200` -> `200 application/json`
+- `GET https://ekstra.ai/api/v1/cameras?limit=1` -> `200 application/json`
+
+### Developer control plane
+
+- `POST https://ekstra.ai/api/developer/cloud/login` with invalid/missing email -> JSON error response
+- `POST https://ekstra.ai/api/developer/cloud/verify` with invalid/missing code -> JSON error response
+- `GET https://ekstra.ai/api/developer/cloud/overview` without bearer token -> `401 application/json`
+- `GET https://ekstra.ai/api/developer/cloud/projects` without bearer token -> `401 application/json`
+- `GET https://ekstra.ai/api/developer/cloud/api-keys` without bearer token -> `401 application/json`
+- `GET https://ekstra.ai/api/developer/cloud/packages` without bearer token -> `401 application/json`
+
+Use the real login flow only when the user intends to authenticate:
+
+```bash
+curl -X POST https://ekstra.ai/api/developer/cloud/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'
+```
+
+### Motion runtime and hosted sandbox
+
+- `GET https://ekstra.ai/api/phone-imu/health` -> `200 application/json`
+- `POST https://ekstra.ai/api/phone-imu/ingest` with `{}` -> `200 application/json` and `received:false`
+- `POST https://ekstra.ai/api/v1/runtime/packets/ingest` without auth -> `401 application/json`
+- `wss://ekstra.ai/ws` -> WebSocket handshake opens
+
+### Build with Ekstra hosted surfaces
+
+- `GET https://ekstra.ai/build-with-ekstra` -> `200 text/html`
+- `GET https://ekstra.ai/build-with-ekstra/demo` -> `200 text/html`
+- `GET https://ekstra.ai/build-with-ekstra/presentation-remote` -> `200 text/html`
+- `GET https://ekstra.ai/build-with-ekstra/controller` -> `200 text/html`
+- `GET https://ekstra.ai/build-with-ekstra/presentation-controller` -> `200 text/html`
+- `GET https://ekstra.ai/build-with-ekstra/qr?data=https%3A%2F%2Fekstra.ai%2Fbuild-with-ekstra%2Fcontroller` -> `200 image/png`
+- `GET https://ekstra.ai/demo` -> `200 text/html`
+- `GET https://ekstra.ai/OS?from=build` -> `200 text/html`
+- `GET https://ekstra.ai/status` -> `200 text/html`
+
+## Good First Demos
+
+### Data demo
+
+Build a parking, curb, or camera-map page using public REST endpoints. Start
+with `curb-rules/near`, `network/stats`, or `cameras?limit=1`.
+
+### Motion demo
+
+Build a browser experience controlled by a phone. Start with:
+
+- https://ekstra.ai/build-with-ekstra/demo
+- `starters/web-phone-pointer`
+- `starters/presentation-remote`
+- `wss://ekstra.ai/ws`
+- `https://ekstra.ai/api/phone-imu/ingest`
+
+### Hybrid demo
+
+Combine a live data view with a motion-controlled interaction: a map that can
+be panned by phone tilt, a kiosk-style stats board, a presentation remote for
+live network metrics, or a one-screen city signal dashboard.
+
+## Output Expected From An Agent
+
+- Demo concept in one paragraph
+- Chosen lane: Data, Motion, or Hybrid
+- Working app code or patch
+- Run instructions
+- Personalization capsule
+- Honest constraints if a route is protected, degraded, or requires auth
+
