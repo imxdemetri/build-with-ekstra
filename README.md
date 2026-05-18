@@ -36,15 +36,16 @@ Start with [`docs/start-here.md`](docs/start-here.md) for the full flow.
 
 ## AI Agent Demo Source
 
-For "drop this into an agent and build something" demos, use the repo-local
-[`llms.txt`](llms.txt):
+For "drop this into an agent and build something" demos, use the live Ekstra
+developer context pack:
 
-- GitHub view: `https://github.com/imxdemetri/build-with-ekstra/blob/main/llms.txt`
-- Raw agent source: `https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt`
+```text
+https://ekstra.ai/llms-full.txt
+```
 
-This file mirrors the live Build with Ekstra contract, links to
-`https://ekstra.ai/llms-full.txt`, and lists only endpoints that are expected
-to be live. Verify the contract with:
+This repository keeps a compact mirror at [`llms.txt`](llms.txt), but the live
+URL above is the canonical source to paste into other people's agents. Verify
+the live contract with:
 
 ```bash
 node scripts/smoke-live-contract.mjs
@@ -80,7 +81,7 @@ See the [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/moti
 - Phone controller: `https://ekstra.ai/build-with-ekstra/controller`
 - WebSocket bridge: `wss://ekstra.ai/ws`
 - Phone ingest: `https://ekstra.ai/api/phone-imu/ingest`
-- Live contract: `https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt`
+- Live agent contract: `https://ekstra.ai/llms-full.txt`
 
 ## Latest Package Release
 

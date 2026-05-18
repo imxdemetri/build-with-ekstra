@@ -2,15 +2,16 @@
 
 This page is the recommended first-run path for new developers.
 
-For AI coding-agent demos, start with the repo-local
-[`llms.txt`](../llms.txt). The raw file is:
+For AI coding-agent demos, start with the live Ekstra developer context pack:
 
 ```text
-https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt
+https://ekstra.ai/llms-full.txt
 ```
 
 It lists the verified live endpoints and the personalization contract for
-"build something with this, and show me a demo" flows.
+"build something with this, and show me a demo" flows. This repo keeps a
+compact mirror at [`llms.txt`](../llms.txt), but the live URL is the canonical
+drop-in source for other agents.
 
 ## Two paths into Ekstra
 

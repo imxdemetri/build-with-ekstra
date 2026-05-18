@@ -1,16 +1,21 @@
 # Build with Ekstra - LLM demo context
-# Canonical GitHub source: https://github.com/imxdemetri/build-with-ekstra/blob/main/llms.txt
-# Raw source for agents: https://raw.githubusercontent.com/imxdemetri/build-with-ekstra/main/llms.txt
+# Canonical live agent source: https://ekstra.ai/llms-full.txt
+# GitHub mirror: https://github.com/imxdemetri/build-with-ekstra/blob/main/llms.txt
 # Last verified: 2026-05-18
 
 ## Purpose
 
-This is the compact AI-agent entrypoint for the public Build with Ekstra
-starter repo. It is intended for demos where a user drops this file into a
-coding agent and says: "Build something with this, and show me a demo."
+This is a compact GitHub mirror for the public Build with Ekstra starter repo.
+For demos where a user drops a link into a coding agent and says "Build
+something with this, and show me a demo," use the canonical live URL:
 
-Use this file to build a small, working Ekstra demo. For complete API details,
-use the live developer context pack:
+```text
+https://ekstra.ai/llms-full.txt
+```
+
+Use that live file to build a small, working Ekstra demo. This mirror exists
+for repository discoverability and live-contract smoke testing. For complete
+API details, use:
 
 - https://ekstra.ai/llms-full.txt
 - https://ekstra.ai/downloads/ekstra-vibe-coder-guide.json
@@ -50,7 +55,7 @@ When asked to build a demo:
 Recommended prompt:
 
 ```text
-Use this Build with Ekstra llms.txt as your source of truth. Build me a small
+Use https://ekstra.ai/llms-full.txt as your source of truth. Build me a small
 working Ekstra demo and show me how to run it. Personalize the idea using only
 what you know from this conversation or what I explicitly tell you. Ask at most
 two questions if needed; otherwise make a tasteful default.
@@ -146,4 +151,3 @@ live network metrics, or a one-screen city signal dashboard.
 - Run instructions
 - Personalization capsule
 - Honest constraints if a route is protected, degraded, or requires auth
-
