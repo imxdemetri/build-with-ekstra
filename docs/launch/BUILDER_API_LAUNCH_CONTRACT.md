@@ -2,7 +2,7 @@
 
 Date: 2026-05-22
 Base URL: `https://ekstra.ai/api/v1`
-Status: verified by launch E2E run `launch_e2e_1779419894206_f4d92865`
+Status: verified by launch E2E run `launch_e2e_1779422926471_b5c0bb48`
 OpenAPI status: `https://ekstra.ai/api/v1/openapi.json` includes all public launch endpoints below.
 
 ## Public Read Model
