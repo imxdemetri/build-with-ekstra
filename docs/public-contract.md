@@ -1,4 +1,4 @@
-# Public Contract
+﻿# Public Contract
 
 This page defines the browser-facing contract currently supported by `build-with-ekstra`.
 
@@ -39,7 +39,7 @@ The current hosted preview endpoints are:
 - developer landing: `https://ekstra.ai/build-with-ekstra`
 - live reference demo: `https://ekstra.ai/build-with-ekstra/demo`
 - phone controller: `https://ekstra.ai/build-with-ekstra/controller`
-- browser bridge: `wss://ekstra.ai/ws`
+- browser bridge: `wss://ekstra.ai/ws/events`
 - phone IMU ingest: `https://ekstra.ai/api/phone-imu/ingest`
 - phone IMU health: `https://ekstra.ai/api/phone-imu/health`
 
@@ -52,7 +52,7 @@ These endpoints are intended for onboarding, evaluation, and prototype work. The
 Clients connect to:
 
 ```text
-wss://ekstra.ai/ws
+wss://ekstra.ai/ws/events
 ```
 
 The bridge sends JSON messages over WebSocket.

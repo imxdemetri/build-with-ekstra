@@ -1,4 +1,4 @@
-# Hosted Sandbox
+﻿# Hosted Sandbox
 
 The hosted sandbox is the fastest way to build with Ekstra today.
 
@@ -16,7 +16,7 @@ For the current preview, the supported browser-facing pieces are:
 
 - the `ekstra.ai/build-with-ekstra` landing and demo routes
 - the same-domain `presentation-remote` route
-- the WebSocket bridge at `wss://ekstra.ai/ws`
+- the WebSocket bridge at `wss://ekstra.ai/ws/events`
 - the phone IMU ingest and health endpoints
 - the `web-phone-pointer` starter flow
 - the `presentation-remote` starter flow
@@ -28,7 +28,7 @@ For exact payloads and topic shapes, see [`public-contract.md`](public-contract.
 - developer landing: `https://ekstra.ai/build-with-ekstra`
 - live demo: `https://ekstra.ai/build-with-ekstra/demo`
 - presentation remote: `https://ekstra.ai/build-with-ekstra/presentation-remote`
-- WebSocket bridge: `wss://ekstra.ai/ws`
+- WebSocket bridge: `wss://ekstra.ai/ws/events`
 - phone controller: `https://ekstra.ai/build-with-ekstra/controller`
 - presentation controller: `https://ekstra.ai/build-with-ekstra/presentation-controller`
 - phone ingest: `https://ekstra.ai/api/phone-imu/ingest`

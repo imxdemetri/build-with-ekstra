@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
   <img src="site/assets/ekstra-logo.png" alt="Ekstra logo" width="180" />
 </p>
 
@@ -6,7 +6,7 @@
 
 `build-with-ekstra` is the public developer starter repo for Ekstra.
 
-Ekstra is a platform for physical intelligence — it connects sensors, screens, and devices into a shared network and provides tools for building motion-aware applications. This repository is the external-facing surface for getting started: docs, starters, reference integrations, and the browser control-profile package.
+Ekstra is a platform for physical intelligence â€” it connects sensors, screens, and devices into a shared network and provides tools for building motion-aware applications. This repository is the external-facing surface for getting started: docs, starters, reference integrations, and the browser control-profile package.
 
 ## What You Can Build Today
 
@@ -21,7 +21,7 @@ Ekstra is a platform for physical intelligence — it connects sensors, screens,
 1. Open the [live demo](https://ekstra.ai/build-with-ekstra/demo) on your laptop
 2. Scan the QR code with your phone
 3. Grant motion permission and tap Start
-4. Move your phone — the cursor follows on your laptop screen
+4. Move your phone â€” the cursor follows on your laptop screen
 
 Clone and serve locally:
 
@@ -60,7 +60,7 @@ Ekstra is one platform with multiple developer surfaces, all at `ekstra.ai`:
 | **Platform UI** | [ekstra.ai/OS](https://ekstra.ai/OS) | Canvas, map, Director AI chat, device management |
 | **Platform API** | ekstra.ai/api/v1/* | Device registry, auth, campaigns, network, map |
 | **Developer API** | ekstra.ai/api/developer/cloud/* | Developer login (email-verified), projects, API keys, packages |
-| **Runtime WebSocket** | wss://ekstra.ai/ws | Real-time motion events |
+| **Runtime WebSocket** | wss://ekstra.ai/ws/events | Real-time motion events |
 | **Director** | Via Platform UI or API | Conversational AI with 27 live data sources |
 | **Starters** | This repo | Phone pointer, presentation remote, npm package, Docker |
 
@@ -68,9 +68,9 @@ Ekstra is one platform with multiple developer surfaces, all at `ekstra.ai`:
 
 Ekstra has a full developer platform with email-verified authentication:
 
-1. **Login** — `POST /api/developer/cloud/login` with your email
-2. **Verify** — Enter the 6-digit email code at `POST /api/developer/cloud/verify`
-3. **Build** — Create projects, generate API keys, publish packages
+1. **Login** â€” `POST /api/developer/cloud/login` with your email
+2. **Verify** â€” Enter the 6-digit email code at `POST /api/developer/cloud/verify`
+3. **Build** â€” Create projects, generate API keys, publish packages
 
 See the [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/motion-os-wave1-conformance/docs/developer/quickstart.md) for the full flow.
 
@@ -79,7 +79,7 @@ See the [Developer Quickstart](https://github.com/imxdemetri/ekstra-os/blob/moti
 - Live demo: `https://ekstra.ai/build-with-ekstra/demo`
 - Presentation remote: `https://ekstra.ai/build-with-ekstra/presentation-remote`
 - Phone controller: `https://ekstra.ai/build-with-ekstra/controller`
-- WebSocket bridge: `wss://ekstra.ai/ws`
+- WebSocket bridge: `wss://ekstra.ai/ws/events`
 - Phone ingest: `https://ekstra.ai/api/phone-imu/ingest`
 - Live agent contract: `https://ekstra.ai/llms-full.txt`
 

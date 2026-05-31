@@ -1,4 +1,4 @@
-# Web Phone Pointer
+﻿# Web Phone Pointer
 
 `web-phone-pointer` is the first supported public Ekstra starter.
 
@@ -67,7 +67,7 @@ On the phone page you should see:
 ## Failure Modes To Expect
 
 - if the phone controller cannot reach `/api/phone-imu/ingest`, the phone page will keep logging post failures
-- if the desktop cannot reach `wss://ekstra.ai/ws`, the page will stay disconnected and the pointer will not move
+- if the desktop cannot reach `wss://ekstra.ai/ws/events`, the page will stay disconnected and the pointer will not move
 - if the phone has not emitted motion events yet, centering and motion mapping will not work
 - if the hosted sandbox is unavailable, the starter should be treated as unavailable rather than silently trusted
 

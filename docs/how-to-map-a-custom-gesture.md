@@ -1,4 +1,4 @@
-# How To Map a Custom Gesture
+﻿# How To Map a Custom Gesture
 
 This guide shows the safest way to add a new gesture-driven behavior to a browser product built on Ekstra.
 
@@ -46,7 +46,7 @@ This example listens to `motion.samples` and treats a fast roll change as a loca
 <script type="module">
   import { createMotionClient } from "./vendor/ekstra-motion-web.js";
 
-  const motion = createMotionClient({ url: "wss://ekstra.ai/ws" });
+  const motion = createMotionClient({ url: "wss://ekstra.ai/ws/events" });
   const actorId = "actor-demo";
   let lastGamma = null;
   let lastAt = 0;

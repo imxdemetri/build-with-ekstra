@@ -1,4 +1,4 @@
-# Architecture
+﻿# Architecture
 
 Ekstra is a platform for physical intelligence with multiple developer surfaces,
 all accessed through `ekstra.ai`.
@@ -7,12 +7,12 @@ all accessed through `ekstra.ai`.
 
 ```
 ekstra.ai
-├── Platform API        /api/v1/*           Devices, auth, campaigns, network, map
-├── Developer API       /api/developer/*    Projects, API keys, packages, deployments
-├── Platform UI         /OS                 Canvas, map, Director AI chat
-├── Runtime WebSocket   wss://ekstra.ai/ws  Real-time motion events
-├── Phone IMU           /api/phone-imu/*    Phone orientation data ingest
-└── Starters/Demos      /build-with-ekstra  Phone pointer, presentation remote
+â”œâ”€â”€ Platform API        /api/v1/*           Devices, auth, campaigns, network, map
+â”œâ”€â”€ Developer API       /api/developer/*    Projects, API keys, packages, deployments
+â”œâ”€â”€ Platform UI         /OS                 Canvas, map, Director AI chat
+â”œâ”€â”€ Runtime WebSocket   wss://ekstra.ai/ws/events  Real-time motion events
+â”œâ”€â”€ Phone IMU           /api/phone-imu/*    Phone orientation data ingest
+â””â”€â”€ Starters/Demos      /build-with-ekstra  Phone pointer, presentation remote
 ```
 
 ## Runtime Path (Motion)
@@ -21,11 +21,11 @@ The core motion path for browser developers:
 
 ```
 Phone Browser
-  → POST /api/phone-imu/ingest
-  → phone_imu_provider
-  → motiond (central motion daemon)
-  → ws_bridge (WebSocket bridge)
-  → Your Web App
+  â†’ POST /api/phone-imu/ingest
+  â†’ phone_imu_provider
+  â†’ motiond (central motion daemon)
+  â†’ ws_bridge (WebSocket bridge)
+  â†’ Your Web App
 ```
 
 ## Gesture and Action Path
@@ -34,11 +34,11 @@ For higher-level gesture recognition:
 
 ```
 motion.samples
-  → detection pipeline (impulse, crossing, hold, tilt)
-  → ML inference (ONNX models)
-  → composition engine (gesture phrases)
-  → surface routing (with safety controls)
-  → Your App or connector
+  â†’ detection pipeline (impulse, crossing, hold, tilt)
+  â†’ ML inference (ONNX models)
+  â†’ composition engine (gesture phrases)
+  â†’ surface routing (with safety controls)
+  â†’ Your App or connector
 ```
 
 ## Intelligence Layer
